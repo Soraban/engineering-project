@@ -1,0 +1,1 @@
+DROP TABLE "soraban-project_post" CASCADE;

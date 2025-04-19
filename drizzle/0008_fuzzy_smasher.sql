@@ -1,0 +1,1 @@
+ALTER TABLE "soraban-project_transaction_category" ADD COLUMN "id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL;

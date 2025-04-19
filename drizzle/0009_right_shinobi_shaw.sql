@@ -1,0 +1,1 @@
+ALTER TABLE "soraban-project_transaction" ADD COLUMN "was_approved" boolean DEFAULT false NOT NULL;

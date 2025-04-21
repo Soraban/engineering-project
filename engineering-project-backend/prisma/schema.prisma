@@ -1,0 +1,20 @@
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Transaction {
+  id          String    @id @default(uuid())
+  date        DateTime
+  description String
+  amount      Float
+  category    String?
+  isFlagged   Boolean    @default(false)
+  flagReason  String?
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}

@@ -1,0 +1,57 @@
+Started GET "/" for 172.18.0.1 at 2025-04-24 03:42:24 +0000
+  [1m[35m (3.1ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY) /*application='Api'*/[0m
+  [1m[35m (1.5ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL) /*application='Api'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Api'*/[0m
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /usr/local/bundle/gems/railties-8.0.2/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /usr/local/bundle/gems/railties-8.0.2/lib/rails/templates/rails/welcome/index.html.erb (Duration: 0.7ms | GC: 0.0ms)
+Completed 200 OK in 25ms (Views: 5.5ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/icon.png" for 172.18.0.1 at 2025-04-24 03:42:24 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/icon.png"):
+  
+  [1m[35mSQL (0.3ms)[0m  [1m[35mSET search_path TO public /*application='Api'*/[0m
+  [1m[35m (38.0ms)[0m  [1m[35mCREATE DATABASE "app_development" ENCODING = 'unicode' /*application='Api'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT pg_try_advisory_lock(5277929974492897470) /*application='Api'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Api'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='Api'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.5ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('environment', 'development', '2025-04-24 04:12:09.638790', '2025-04-24 04:12:09.638791') RETURNING "key" /*application='Api'*/[0m
+Migrating to CreateCategories (20250423000001)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Api'*/[0m
+  [1m[35m (13.9ms)[0m  [1m[35mCREATE TABLE "categories" ("id" bigserial primary key, "name" character varying NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL) /*application='Api'*/[0m
+  [1m[35m (0.6ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_categories_on_name" ON "categories" ("name") /*application='Api'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20250423000001') RETURNING "version" /*application='Api'*/[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mCOMMIT /*application='Api'*/[0m
+Migrating to CreateTransactions (20250423000002)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN /*application='Api'*/[0m
+  [1m[35m (2.5ms)[0m  [1m[35mCREATE TABLE "transactions" ("id" bigserial primary key, "date" date NOT NULL, "description" character varying, "amount" decimal(10,2) NOT NULL, "category_id" bigint, "flagged" boolean DEFAULT FALSE, "metadata" json DEFAULT '{}', "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, CONSTRAINT "fk_rails_0ea2ad3927"
+FOREIGN KEY ("category_id")
+  REFERENCES "categories" ("id")
+) /*application='Api'*/[0m
+  [1m[35m (0.5ms)[0m  [1m[35mCREATE INDEX "index_transactions_on_category_id" ON "transactions" ("category_id") /*application='Api'*/[0m
+  [1m[35m (0.6ms)[0m  [1m[35mCREATE INDEX "index_transactions_on_date" ON "transactions" ("date") /*application='Api'*/[0m
+  [1m[35m (0.6ms)[0m  [1m[35mCREATE INDEX "index_transactions_on_amount" ON "transactions" ("amount") /*application='Api'*/[0m
+  [1m[35m (1.1ms)[0m  [1m[35mCREATE INDEX "index_transactions_on_flagged" ON "transactions" ("flagged") /*application='Api'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20250423000002') RETURNING "version" /*application='Api'*/[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mCOMMIT /*application='Api'*/[0m
+Migrating to CreateRules (20250423000003)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Api'*/[0m
+  [1m[35m (2.8ms)[0m  [1m[35mCREATE TABLE "rules" ("id" bigserial primary key, "condition_field" character varying NOT NULL, "condition_operator" character varying NOT NULL, "condition_value" character varying NOT NULL, "category_id" bigint NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, CONSTRAINT "fk_rails_62bf5195cf"
+FOREIGN KEY ("category_id")
+  REFERENCES "categories" ("id")
+) /*application='Api'*/[0m
+  [1m[35m (0.6ms)[0m  [1m[35mCREATE INDEX "index_rules_on_category_id" ON "rules" ("category_id") /*application='Api'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20250423000003') RETURNING "version" /*application='Api'*/[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mCOMMIT /*application='Api'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT pg_advisory_unlock(5277929974492897470) /*application='Api'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Api'*/[0m
+Started GET "/" for 172.18.0.1 at 2025-04-24 04:12:58 +0000
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Api'*/[0m
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /usr/local/bundle/gems/railties-8.0.2/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /usr/local/bundle/gems/railties-8.0.2/lib/rails/templates/rails/welcome/index.html.erb (Duration: 0.5ms | GC: 0.0ms)
+Completed 200 OK in 11ms (Views: 2.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.2ms)
+
+

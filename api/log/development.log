@@ -666,3 +666,239 @@ Processing by Api::V1::TransactionsController#index as */*
 Completed 200 OK in 17ms (Views: 10.1ms | ActiveRecord: 0.5ms (2 queries, 0 cached) | GC: 0.0ms)
 
 
+Started POST "/api/v1/transactions" for 172.18.0.1 at 2025-04-28 04:06:28 +0000
+  [1m[35m (3.6ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY) /*application='Api'*/[0m
+  [1m[35m (1.5ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL) /*application='Api'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Api'*/[0m
+  
+ActiveRecord::PendingMigrationError (
+
+Migrations are pending. To resolve this issue, run:
+
+        bin/rails db:migrate
+
+You have 4 pending migrations:
+
+db/migrate/20250423000001_create_categories.rb
+db/migrate/20250423000002_create_transactions.rb
+db/migrate/20250423000003_create_rules.rb
+db/migrate/20250427000004_create_rule_applications.rb
+
+
+):
+  
+activerecord (8.0.2) lib/active_record/migration.rb:743:in 'ActiveRecord::Migration.check_pending_migrations'
+activerecord (8.0.2) lib/active_record/migration.rb:660:in 'block (2 levels) in ActiveRecord::Migration::CheckPending#call'
+activesupport (8.0.2) lib/active_support/file_update_checker.rb:85:in 'ActiveSupport::FileUpdateChecker#execute'
+activerecord (8.0.2) lib/active_record/migration.rb:665:in 'block in ActiveRecord::Migration::CheckPending#call'
+activerecord (8.0.2) lib/active_record/migration.rb:657:in 'Thread::Mutex#synchronize'
+activerecord (8.0.2) lib/active_record/migration.rb:657:in 'ActiveRecord::Migration::CheckPending#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/callbacks.rb:31:in 'block in ActionDispatch::Callbacks#call'
+activesupport (8.0.2) lib/active_support/callbacks.rb:100:in 'ActiveSupport::Callbacks#run_callbacks'
+actionpack (8.0.2) lib/action_dispatch/middleware/callbacks.rb:30:in 'ActionDispatch::Callbacks#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/executor.rb:16:in 'ActionDispatch::Executor#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/actionable_exceptions.rb:18:in 'ActionDispatch::ActionableExceptions#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/debug_exceptions.rb:31:in 'ActionDispatch::DebugExceptions#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/show_exceptions.rb:32:in 'ActionDispatch::ShowExceptions#call'
+railties (8.0.2) lib/rails/rack/logger.rb:41:in 'Rails::Rack::Logger#call_app'
+railties (8.0.2) lib/rails/rack/logger.rb:29:in 'Rails::Rack::Logger#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/remote_ip.rb:96:in 'ActionDispatch::RemoteIp#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/request_id.rb:34:in 'ActionDispatch::RequestId#call'
+rack (3.1.13) lib/rack/runtime.rb:24:in 'Rack::Runtime#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/server_timing.rb:61:in 'block in ActionDispatch::ServerTiming#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/server_timing.rb:26:in 'ActionDispatch::ServerTiming::Subscriber#collect_events'
+actionpack (8.0.2) lib/action_dispatch/middleware/server_timing.rb:60:in 'ActionDispatch::ServerTiming#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/executor.rb:16:in 'ActionDispatch::Executor#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/static.rb:27:in 'ActionDispatch::Static#call'
+rack (3.1.13) lib/rack/sendfile.rb:114:in 'Rack::Sendfile#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/host_authorization.rb:143:in 'ActionDispatch::HostAuthorization#call'
+railties (8.0.2) lib/rails/engine.rb:535:in 'Rails::Engine#call'
+puma (6.6.0) lib/puma/configuration.rb:279:in 'Puma::Configuration::ConfigMiddleware#call'
+puma (6.6.0) lib/puma/request.rb:99:in 'block in Puma::Request#handle_request'
+puma (6.6.0) lib/puma/thread_pool.rb:390:in 'Puma::ThreadPool#with_force_shutdown'
+puma (6.6.0) lib/puma/request.rb:98:in 'Puma::Request#handle_request'
+puma (6.6.0) lib/puma/server.rb:472:in 'Puma::Server#process_client'
+puma (6.6.0) lib/puma/server.rb:254:in 'block in Puma::Server#run'
+puma (6.6.0) lib/puma/thread_pool.rb:167:in 'block in Puma::ThreadPool#spawn_thread'
+  [1m[35mSQL (0.1ms)[0m  [1m[35mCREATE EXTENSION IF NOT EXISTS "plpgsql" SCHEMA pg_catalog /*application='Api'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "categories" CASCADE /*application='Api'*/[0m
+  [1m[35m (2.3ms)[0m  [1m[35mCREATE TABLE "categories" ("id" bigserial primary key, "name" character varying NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL) /*application='Api'*/[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_categories_on_name" ON "categories" ("name") /*application='Api'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "rules" CASCADE /*application='Api'*/[0m
+  [1m[35m (3.5ms)[0m  [1m[35mCREATE TABLE "rules" ("id" bigserial primary key, "condition_field" character varying NOT NULL, "condition_operator" character varying NOT NULL, "condition_value" character varying NOT NULL, "category_id" bigint NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL) /*application='Api'*/[0m
+  [1m[35m (0.5ms)[0m  [1m[35mCREATE INDEX "index_rules_on_category_id" ON "rules" ("category_id") /*application='Api'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "transactions" CASCADE /*application='Api'*/[0m
+  [1m[35m (1.2ms)[0m  [1m[35mCREATE TABLE "transactions" ("id" bigserial primary key, "date" date NOT NULL, "description" character varying, "amount" decimal(10,2) NOT NULL, "category_id" bigint, "flagged" boolean DEFAULT FALSE, "metadata" json DEFAULT '{}', "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL) /*application='Api'*/[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE INDEX "index_transactions_on_amount" ON "transactions" ("amount") /*application='Api'*/[0m
+  [1m[35m (1.1ms)[0m  [1m[35mCREATE INDEX "index_transactions_on_category_id" ON "transactions" ("category_id") /*application='Api'*/[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE INDEX "index_transactions_on_date" ON "transactions" ("date") /*application='Api'*/[0m
+  [1m[35m (0.5ms)[0m  [1m[35mCREATE INDEX "index_transactions_on_flagged" ON "transactions" ("flagged") /*application='Api'*/[0m
+  [1m[35m (0.8ms)[0m  [1m[35mALTER TABLE "rules" ADD CONSTRAINT "fk_rails_62bf5195cf"
+FOREIGN KEY ("category_id")
+  REFERENCES "categories" ("id")
+ /*application='Api'*/[0m
+  [1m[35m (0.9ms)[0m  [1m[35mALTER TABLE "transactions" ADD CONSTRAINT "fk_rails_0ea2ad3927"
+FOREIGN KEY ("category_id")
+  REFERENCES "categories" ("id")
+ /*application='Api'*/[0m
+  [1m[35m (1.2ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY) /*application='Api'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Api'*/[0m
+  [1m[35m (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES (20250423000003) /*application='Api'*/[0m
+  [1m[35m (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES
+(20250423000002),
+(20250423000001); /*application='Api'*/[0m
+  [1m[35m (1.2ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL) /*application='Api'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='Api'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.2ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('environment', 'development', '2025-04-28 04:12:05.017086', '2025-04-28 04:12:05.017087') RETURNING "key" /*application='Api'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='Api'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'schema_sha1' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='Api'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.1ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('schema_sha1', '48670b06f9eb0252c12a0a9af5dc547f8189768d', '2025-04-28 04:12:05.021513', '2025-04-28 04:12:05.021514') RETURNING "key" /*application='Api'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Api'*/[0m
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT pg_try_advisory_lock(5277929974492897470) /*application='Api'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Api'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='Api'*/[0m
+Migrating to CreateRuleApplications (20250427000004)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN /*application='Api'*/[0m
+  [1m[35m (2.9ms)[0m  [1m[35mCREATE TABLE "rule_applications" ("id" bigserial primary key, "transaction_id" bigint NOT NULL, "rule_id" bigint NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, CONSTRAINT "fk_rails_8538cb7245"
+FOREIGN KEY ("transaction_id")
+  REFERENCES "transactions" ("id")
+, CONSTRAINT "fk_rails_2288326428"
+FOREIGN KEY ("rule_id")
+  REFERENCES "rules" ("id")
+) /*application='Api'*/[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE INDEX "index_rule_applications_on_transaction_id" ON "rule_applications" ("transaction_id") /*application='Api'*/[0m
+  [1m[35m (0.6ms)[0m  [1m[35mCREATE INDEX "index_rule_applications_on_rule_id" ON "rule_applications" ("rule_id") /*application='Api'*/[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_rule_applications_on_transaction_id_and_rule_id" ON "rule_applications" ("transaction_id", "rule_id") /*application='Api'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20250427000004') RETURNING "version" /*application='Api'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mCOMMIT /*application='Api'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT pg_advisory_unlock(5277929974492897470) /*application='Api'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Api'*/[0m
+Started POST "/api/v1/transactions" for 172.18.0.1 at 2025-04-28 04:14:37 +0000
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Api'*/[0m
+Processing by Api::V1::TransactionsController#create as */*
+  Parameters: {"transaction" => {"date" => "2025-04-23", "description" => "Grocery shopping", "amount" => 50.25}}
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*action='create',application='Api',controller='transactions'*/[0m
+  ↳ app/controllers/api/v1/transactions_controller.rb:25:in 'Api::V1::TransactionsController#create'
+  [1m[36mTransaction Create (2.5ms)[0m  [1m[32mINSERT INTO "transactions" ("date", "description", "amount", "category_id", "flagged", "metadata", "created_at", "updated_at") VALUES ('2025-04-23', 'Grocery shopping', 50.25, NULL, FALSE, '{}', '2025-04-28 04:14:37.408219', '2025-04-28 04:14:37.408219') RETURNING "id" /*action='create',application='Api',controller='transactions'*/[0m
+  ↳ app/controllers/api/v1/transactions_controller.rb:25:in 'Api::V1::TransactionsController#create'
+  [1m[36mRule Load (0.4ms)[0m  [1m[34mSELECT "rules".* FROM "rules" ORDER BY "priority" DESC /*action='create',application='Api',controller='transactions'*/[0m
+  ↳ app/services/rule_application_service.rb:5:in 'RuleApplicationService.apply_rules_to_transaction'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK /*action='create',application='Api',controller='transactions'*/[0m
+  ↳ app/controllers/api/v1/transactions_controller.rb:25:in 'Api::V1::TransactionsController#create'
+Completed 500 Internal Server Error in 54ms (ActiveRecord: 6.5ms (2 queries, 0 cached) | GC: 0.0ms)
+
+
+  
+ActiveRecord::StatementInvalid (PG::UndefinedColumn: ERROR:  column "priority" does not exist
+LINE 1: SELECT "rules".* FROM "rules" ORDER BY "priority" DESC /*act...
+                                               ^
+)
+Caused by: PG::UndefinedColumn (ERROR:  column "priority" does not exist
+LINE 1: SELECT "rules".* FROM "rules" ORDER BY "priority" DESC /*act...
+                                               ^
+)
+
+Information for: ActiveRecord::StatementInvalid (PG::UndefinedColumn: ERROR:  column "priority" does not exist
+LINE 1: SELECT "rules".* FROM "rules" ORDER BY "priority" DESC /*act...
+                                               ^
+):
+  
+
+Information for cause: PG::UndefinedColumn (ERROR:  column "priority" does not exist
+LINE 1: SELECT "rules".* FROM "rules" ORDER BY "priority" DESC /*act...
+                                               ^
+):
+  
+app/services/rule_application_service.rb:5:in 'RuleApplicationService.apply_rules_to_transaction'
+app/models/transaction.rb:19:in 'Transaction#apply_rules'
+app/controllers/api/v1/transactions_controller.rb:25:in 'Api::V1::TransactionsController#create'
+  [1m[35mSQL (0.1ms)[0m  [1m[35mCREATE EXTENSION IF NOT EXISTS "plpgsql" SCHEMA pg_catalog /*application='Api'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "categories" CASCADE /*application='Api'*/[0m
+  [1m[35m (2.2ms)[0m  [1m[35mCREATE TABLE "categories" ("id" bigserial primary key, "name" character varying NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL) /*application='Api'*/[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_categories_on_name" ON "categories" ("name") /*application='Api'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "rule_applications" CASCADE /*application='Api'*/[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE TABLE "rule_applications" ("id" bigserial primary key, "transaction_id" bigint NOT NULL, "rule_id" bigint NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL) /*application='Api'*/[0m
+  [1m[35m (0.5ms)[0m  [1m[35mCREATE INDEX "index_rule_applications_on_rule_id" ON "rule_applications" ("rule_id") /*application='Api'*/[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_rule_applications_on_transaction_id_and_rule_id" ON "rule_applications" ("transaction_id", "rule_id") /*application='Api'*/[0m
+  [1m[35m (0.6ms)[0m  [1m[35mCREATE INDEX "index_rule_applications_on_transaction_id" ON "rule_applications" ("transaction_id") /*application='Api'*/[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "rules" CASCADE /*application='Api'*/[0m
+  [1m[35m (1.2ms)[0m  [1m[35mCREATE TABLE "rules" ("id" bigserial primary key, "condition_field" character varying NOT NULL, "condition_operator" character varying NOT NULL, "condition_value" character varying NOT NULL, "category_id" bigint NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL) /*application='Api'*/[0m
+  [1m[35m (0.6ms)[0m  [1m[35mCREATE INDEX "index_rules_on_category_id" ON "rules" ("category_id") /*application='Api'*/[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "transactions" CASCADE /*application='Api'*/[0m
+  [1m[35m (1.7ms)[0m  [1m[35mCREATE TABLE "transactions" ("id" bigserial primary key, "date" date NOT NULL, "description" character varying, "amount" decimal(10,2) NOT NULL, "category_id" bigint, "flagged" boolean DEFAULT FALSE, "metadata" json DEFAULT '{}', "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL) /*application='Api'*/[0m
+  [1m[35m (1.2ms)[0m  [1m[35mCREATE INDEX "index_transactions_on_amount" ON "transactions" ("amount") /*application='Api'*/[0m
+  [1m[35m (0.6ms)[0m  [1m[35mCREATE INDEX "index_transactions_on_category_id" ON "transactions" ("category_id") /*application='Api'*/[0m
+  [1m[35m (0.5ms)[0m  [1m[35mCREATE INDEX "index_transactions_on_date" ON "transactions" ("date") /*application='Api'*/[0m
+  [1m[35m (0.6ms)[0m  [1m[35mCREATE INDEX "index_transactions_on_flagged" ON "transactions" ("flagged") /*application='Api'*/[0m
+  [1m[35m (0.5ms)[0m  [1m[35mALTER TABLE "rule_applications" ADD CONSTRAINT "fk_rails_2288326428"
+FOREIGN KEY ("rule_id")
+  REFERENCES "rules" ("id")
+ /*application='Api'*/[0m
+  [1m[35m (0.3ms)[0m  [1m[35mALTER TABLE "rule_applications" ADD CONSTRAINT "fk_rails_8538cb7245"
+FOREIGN KEY ("transaction_id")
+  REFERENCES "transactions" ("id")
+ /*application='Api'*/[0m
+  [1m[35m (0.4ms)[0m  [1m[35mALTER TABLE "rules" ADD CONSTRAINT "fk_rails_62bf5195cf"
+FOREIGN KEY ("category_id")
+  REFERENCES "categories" ("id")
+ /*application='Api'*/[0m
+  [1m[35m (0.2ms)[0m  [1m[35mALTER TABLE "transactions" ADD CONSTRAINT "fk_rails_0ea2ad3927"
+FOREIGN KEY ("category_id")
+  REFERENCES "categories" ("id")
+ /*application='Api'*/[0m
+  [1m[35m (1.3ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY) /*application='Api'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Api'*/[0m
+  [1m[35m (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES (20250427000004) /*application='Api'*/[0m
+  [1m[35m (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES
+(20250423000003),
+(20250423000002),
+(20250423000001); /*application='Api'*/[0m
+  [1m[35m (1.2ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL) /*application='Api'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='Api'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.2ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('environment', 'development', '2025-04-28 06:06:38.952061', '2025-04-28 06:06:38.952062') RETURNING "key" /*application='Api'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='Api'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'schema_sha1' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='Api'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.1ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('schema_sha1', 'ac52e214f959e65c4fff3e5c430ab2c7c74e8c44', '2025-04-28 06:06:38.957105', '2025-04-28 06:06:38.957106') RETURNING "key" /*application='Api'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Api'*/[0m
+Started POST "/api/v1/transactions" for 172.18.0.1 at 2025-04-28 06:06:42 +0000
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Api'*/[0m
+Processing by Api::V1::TransactionsController#create as */*
+  Parameters: {"transaction" => {"date" => "2025-04-23", "description" => "Grocery shopping", "amount" => 50.25}}
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*action='create',application='Api',controller='transactions'*/[0m
+  ↳ app/controllers/api/v1/transactions_controller.rb:25:in 'Api::V1::TransactionsController#create'
+  [1m[36mTransaction Create (2.6ms)[0m  [1m[32mINSERT INTO "transactions" ("date", "description", "amount", "category_id", "flagged", "metadata", "created_at", "updated_at") VALUES ('2025-04-23', 'Grocery shopping', 50.25, NULL, FALSE, '{}', '2025-04-28 06:06:42.793181', '2025-04-28 06:06:42.793181') RETURNING "id" /*action='create',application='Api',controller='transactions'*/[0m
+  ↳ app/controllers/api/v1/transactions_controller.rb:25:in 'Api::V1::TransactionsController#create'
+  [1m[36mRule Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "rules" LIMIT 1 /*action='create',application='Api',controller='transactions'*/[0m
+  ↳ app/services/rule_application_service.rb:6:in 'RuleApplicationService.apply_rules_to_transaction'
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mCOMMIT /*action='create',application='Api',controller='transactions'*/[0m
+  ↳ app/controllers/api/v1/transactions_controller.rb:25:in 'Api::V1::TransactionsController#create'
+  [1m[36mCACHE Rule Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "rules" LIMIT 1[0m
+  ↳ app/services/rule_application_service.rb:6:in 'RuleApplicationService.apply_rules_to_transaction'
+Completed 201 Created in 41ms (Views: 1.4ms | ActiveRecord: 6.6ms (3 queries, 1 cached) | GC: 0.0ms)
+
+
+Started POST "/api/v1/transactions" for 172.18.0.1 at 2025-04-28 06:06:44 +0000
+Processing by Api::V1::TransactionsController#create as */*
+  Parameters: {"transaction" => {"date" => "2025-04-23", "description" => "Grocery shopping", "amount" => 50.25}}
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[35mBEGIN /*action='create',application='Api',controller='transactions'*/[0m
+  ↳ app/controllers/api/v1/transactions_controller.rb:25:in 'Api::V1::TransactionsController#create'
+  [1m[36mTransaction Create (2.6ms)[0m  [1m[32mINSERT INTO "transactions" ("date", "description", "amount", "category_id", "flagged", "metadata", "created_at", "updated_at") VALUES ('2025-04-23', 'Grocery shopping', 50.25, NULL, FALSE, '{}', '2025-04-28 06:06:45.006454', '2025-04-28 06:06:45.006454') RETURNING "id" /*action='create',application='Api',controller='transactions'*/[0m
+  ↳ app/controllers/api/v1/transactions_controller.rb:25:in 'Api::V1::TransactionsController#create'
+  [1m[36mRule Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "rules" LIMIT 1 /*action='create',application='Api',controller='transactions'*/[0m
+  ↳ app/services/rule_application_service.rb:6:in 'RuleApplicationService.apply_rules_to_transaction'
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mCOMMIT /*action='create',application='Api',controller='transactions'*/[0m
+  ↳ app/controllers/api/v1/transactions_controller.rb:25:in 'Api::V1::TransactionsController#create'
+  [1m[36mCACHE Rule Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "rules" LIMIT 1[0m
+  ↳ app/services/rule_application_service.rb:6:in 'RuleApplicationService.apply_rules_to_transaction'
+Completed 201 Created in 25ms (Views: 0.5ms | ActiveRecord: 3.1ms (3 queries, 1 cached) | GC: 0.0ms)
+
+
+Started GET "/api/v1/transactions" for 172.18.0.1 at 2025-04-28 06:06:46 +0000
+Processing by Api::V1::TransactionsController#index as */*
+  [1m[36mTransaction Count (0.4ms)[0m  [1m[34mSELECT COUNT(*) FROM "transactions" /*action='index',application='Api',controller='transactions'*/[0m
+  ↳ app/controllers/api/v1/transactions_controller.rb:14:in 'Api::V1::TransactionsController#index'
+  [1m[36mTransaction Load (0.2ms)[0m  [1m[34mSELECT "transactions".* FROM "transactions" ORDER BY "transactions"."date" DESC LIMIT 100 OFFSET 0 /*action='index',application='Api',controller='transactions'*/[0m
+  ↳ app/controllers/api/v1/transactions_controller.rb:10:in 'Api::V1::TransactionsController#index'
+Completed 200 OK in 44ms (Views: 35.5ms | ActiveRecord: 1.7ms (2 queries, 0 cached) | GC: 0.0ms)
+
+

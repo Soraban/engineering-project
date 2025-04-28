@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_23_000003) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_27_000004) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -19,6 +19,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_23_000003) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_categories_on_name", unique: true
+  end
+
+  create_table "rule_applications", force: :cascade do |t|
+    t.bigint "transaction_id", null: false
+    t.bigint "rule_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["rule_id"], name: "index_rule_applications_on_rule_id"
+    t.index ["transaction_id", "rule_id"], name: "index_rule_applications_on_transaction_id_and_rule_id", unique: true
+    t.index ["transaction_id"], name: "index_rule_applications_on_transaction_id"
   end
 
   create_table "rules", force: :cascade do |t|
@@ -46,6 +56,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_23_000003) do
     t.index ["flagged"], name: "index_transactions_on_flagged"
   end
 
+  add_foreign_key "rule_applications", "rules"
+  add_foreign_key "rule_applications", "transactions"
   add_foreign_key "rules", "categories"
   add_foreign_key "transactions", "categories"
 end

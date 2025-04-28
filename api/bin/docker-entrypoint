@@ -4,5 +4,16 @@ set -e
 # Remove a potentially pre-existing server.pid for Rails
 rm -f /app/tmp/pids/server.pid
 
+# Wait for database
+echo "Waiting for PostgreSQL..."
+while ! pg_isready -h db -p 5432 -U postgres -q; do
+  sleep 1
+done
+echo "PostgreSQL is up and running!"
+
+# Run migrations
+echo "Running database migrations..."
+bin/rails db:prepare
+
 # Then exec the container's main process (what's set as CMD in the Dockerfile)
 exec "$@"

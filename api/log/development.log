@@ -55,3 +55,614 @@ Processing by Rails::WelcomeController#index as HTML
 Completed 200 OK in 11ms (Views: 2.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.2ms)
 
 
+Started POST "/api/v1/transactions" for 172.18.0.1 at 2025-04-24 06:24:05 +0000
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Api'*/[0m
+  
+ActionController::RoutingError (uninitialized constant Api::V1)
+Caused by: ActionDispatch::MissingController (uninitialized constant Api::V1)
+Caused by: NameError (uninitialized constant Api::V1)
+
+Information for: ActionController::RoutingError (uninitialized constant Api::V1):
+  
+
+Information for cause: ActionDispatch::MissingController (uninitialized constant Api::V1):
+  
+actionpack (8.0.2) lib/action_dispatch/http/request.rb:102:in 'ActionDispatch::Request#controller_class_for'
+actionpack (8.0.2) lib/action_dispatch/http/request.rb:91:in 'ActionDispatch::Request#controller_class'
+actionpack (8.0.2) lib/action_dispatch/routing/route_set.rb:61:in 'ActionDispatch::Routing::RouteSet::Dispatcher#controller'
+actionpack (8.0.2) lib/action_dispatch/routing/route_set.rb:48:in 'ActionDispatch::Routing::RouteSet::Dispatcher#serve'
+actionpack (8.0.2) lib/action_dispatch/journey/router.rb:53:in 'block in ActionDispatch::Journey::Router#serve'
+actionpack (8.0.2) lib/action_dispatch/journey/router.rb:133:in 'block in ActionDispatch::Journey::Router#find_routes'
+actionpack (8.0.2) lib/action_dispatch/journey/router.rb:126:in 'Array#each'
+actionpack (8.0.2) lib/action_dispatch/journey/router.rb:126:in 'ActionDispatch::Journey::Router#find_routes'
+actionpack (8.0.2) lib/action_dispatch/journey/router.rb:34:in 'ActionDispatch::Journey::Router#serve'
+actionpack (8.0.2) lib/action_dispatch/routing/route_set.rb:908:in 'ActionDispatch::Routing::RouteSet#call'
+railties (8.0.2) lib/rails/engine/lazy_route_set.rb:68:in 'Rails::Engine::LazyRouteSet#call'
+rack (3.1.13) lib/rack/etag.rb:29:in 'Rack::ETag#call'
+rack (3.1.13) lib/rack/conditional_get.rb:43:in 'Rack::ConditionalGet#call'
+rack (3.1.13) lib/rack/head.rb:15:in 'Rack::Head#call'
+activerecord (8.0.2) lib/active_record/migration.rb:671:in 'ActiveRecord::Migration::CheckPending#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/callbacks.rb:31:in 'block in ActionDispatch::Callbacks#call'
+activesupport (8.0.2) lib/active_support/callbacks.rb:100:in 'ActiveSupport::Callbacks#run_callbacks'
+actionpack (8.0.2) lib/action_dispatch/middleware/callbacks.rb:30:in 'ActionDispatch::Callbacks#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/executor.rb:16:in 'ActionDispatch::Executor#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/actionable_exceptions.rb:18:in 'ActionDispatch::ActionableExceptions#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/debug_exceptions.rb:31:in 'ActionDispatch::DebugExceptions#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/show_exceptions.rb:32:in 'ActionDispatch::ShowExceptions#call'
+railties (8.0.2) lib/rails/rack/logger.rb:41:in 'Rails::Rack::Logger#call_app'
+railties (8.0.2) lib/rails/rack/logger.rb:29:in 'Rails::Rack::Logger#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/remote_ip.rb:96:in 'ActionDispatch::RemoteIp#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/request_id.rb:34:in 'ActionDispatch::RequestId#call'
+rack (3.1.13) lib/rack/runtime.rb:24:in 'Rack::Runtime#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/server_timing.rb:61:in 'block in ActionDispatch::ServerTiming#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/server_timing.rb:26:in 'ActionDispatch::ServerTiming::Subscriber#collect_events'
+actionpack (8.0.2) lib/action_dispatch/middleware/server_timing.rb:60:in 'ActionDispatch::ServerTiming#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/executor.rb:16:in 'ActionDispatch::Executor#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/static.rb:27:in 'ActionDispatch::Static#call'
+rack (3.1.13) lib/rack/sendfile.rb:114:in 'Rack::Sendfile#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/host_authorization.rb:143:in 'ActionDispatch::HostAuthorization#call'
+railties (8.0.2) lib/rails/engine.rb:535:in 'Rails::Engine#call'
+puma (6.6.0) lib/puma/configuration.rb:279:in 'Puma::Configuration::ConfigMiddleware#call'
+puma (6.6.0) lib/puma/request.rb:99:in 'block in Puma::Request#handle_request'
+puma (6.6.0) lib/puma/thread_pool.rb:390:in 'Puma::ThreadPool#with_force_shutdown'
+puma (6.6.0) lib/puma/request.rb:98:in 'Puma::Request#handle_request'
+puma (6.6.0) lib/puma/server.rb:472:in 'Puma::Server#process_client'
+puma (6.6.0) lib/puma/server.rb:254:in 'block in Puma::Server#run'
+puma (6.6.0) lib/puma/thread_pool.rb:167:in 'block in Puma::ThreadPool#spawn_thread'
+
+Information for cause: NameError (uninitialized constant Api::V1):
+  
+activesupport (8.0.2) lib/active_support/inflector/methods.rb:290:in 'ActiveSupport::Inflector#constantize'
+activesupport (8.0.2) lib/active_support/core_ext/string/inflections.rb:74:in 'String#constantize'
+actionpack (8.0.2) lib/action_dispatch/http/request.rb:99:in 'ActionDispatch::Request#controller_class_for'
+actionpack (8.0.2) lib/action_dispatch/http/request.rb:91:in 'ActionDispatch::Request#controller_class'
+actionpack (8.0.2) lib/action_dispatch/routing/route_set.rb:61:in 'ActionDispatch::Routing::RouteSet::Dispatcher#controller'
+actionpack (8.0.2) lib/action_dispatch/routing/route_set.rb:48:in 'ActionDispatch::Routing::RouteSet::Dispatcher#serve'
+actionpack (8.0.2) lib/action_dispatch/journey/router.rb:53:in 'block in ActionDispatch::Journey::Router#serve'
+actionpack (8.0.2) lib/action_dispatch/journey/router.rb:133:in 'block in ActionDispatch::Journey::Router#find_routes'
+actionpack (8.0.2) lib/action_dispatch/journey/router.rb:126:in 'Array#each'
+actionpack (8.0.2) lib/action_dispatch/journey/router.rb:126:in 'ActionDispatch::Journey::Router#find_routes'
+actionpack (8.0.2) lib/action_dispatch/journey/router.rb:34:in 'ActionDispatch::Journey::Router#serve'
+actionpack (8.0.2) lib/action_dispatch/routing/route_set.rb:908:in 'ActionDispatch::Routing::RouteSet#call'
+railties (8.0.2) lib/rails/engine/lazy_route_set.rb:68:in 'Rails::Engine::LazyRouteSet#call'
+rack (3.1.13) lib/rack/etag.rb:29:in 'Rack::ETag#call'
+rack (3.1.13) lib/rack/conditional_get.rb:43:in 'Rack::ConditionalGet#call'
+rack (3.1.13) lib/rack/head.rb:15:in 'Rack::Head#call'
+activerecord (8.0.2) lib/active_record/migration.rb:671:in 'ActiveRecord::Migration::CheckPending#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/callbacks.rb:31:in 'block in ActionDispatch::Callbacks#call'
+activesupport (8.0.2) lib/active_support/callbacks.rb:100:in 'ActiveSupport::Callbacks#run_callbacks'
+actionpack (8.0.2) lib/action_dispatch/middleware/callbacks.rb:30:in 'ActionDispatch::Callbacks#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/executor.rb:16:in 'ActionDispatch::Executor#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/actionable_exceptions.rb:18:in 'ActionDispatch::ActionableExceptions#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/debug_exceptions.rb:31:in 'ActionDispatch::DebugExceptions#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/show_exceptions.rb:32:in 'ActionDispatch::ShowExceptions#call'
+railties (8.0.2) lib/rails/rack/logger.rb:41:in 'Rails::Rack::Logger#call_app'
+railties (8.0.2) lib/rails/rack/logger.rb:29:in 'Rails::Rack::Logger#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/remote_ip.rb:96:in 'ActionDispatch::RemoteIp#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/request_id.rb:34:in 'ActionDispatch::RequestId#call'
+rack (3.1.13) lib/rack/runtime.rb:24:in 'Rack::Runtime#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/server_timing.rb:61:in 'block in ActionDispatch::ServerTiming#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/server_timing.rb:26:in 'ActionDispatch::ServerTiming::Subscriber#collect_events'
+actionpack (8.0.2) lib/action_dispatch/middleware/server_timing.rb:60:in 'ActionDispatch::ServerTiming#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/executor.rb:16:in 'ActionDispatch::Executor#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/static.rb:27:in 'ActionDispatch::Static#call'
+rack (3.1.13) lib/rack/sendfile.rb:114:in 'Rack::Sendfile#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/host_authorization.rb:143:in 'ActionDispatch::HostAuthorization#call'
+railties (8.0.2) lib/rails/engine.rb:535:in 'Rails::Engine#call'
+puma (6.6.0) lib/puma/configuration.rb:279:in 'Puma::Configuration::ConfigMiddleware#call'
+puma (6.6.0) lib/puma/request.rb:99:in 'block in Puma::Request#handle_request'
+puma (6.6.0) lib/puma/thread_pool.rb:390:in 'Puma::ThreadPool#with_force_shutdown'
+puma (6.6.0) lib/puma/request.rb:98:in 'Puma::Request#handle_request'
+puma (6.6.0) lib/puma/server.rb:472:in 'Puma::Server#process_client'
+puma (6.6.0) lib/puma/server.rb:254:in 'block in Puma::Server#run'
+puma (6.6.0) lib/puma/thread_pool.rb:167:in 'block in Puma::ThreadPool#spawn_thread'
+Started POST "/api/v1/transactions" for 172.18.0.1 at 2025-04-24 06:25:42 +0000
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Api'*/[0m
+  
+ActionController::RoutingError (uninitialized constant Api::V1::TransactionsController)
+Caused by: ActionDispatch::MissingController (uninitialized constant Api::V1::TransactionsController)
+Caused by: NameError (uninitialized constant Api::V1::TransactionsController)
+
+Information for: ActionController::RoutingError (uninitialized constant Api::V1::TransactionsController):
+  
+
+Information for cause: ActionDispatch::MissingController (uninitialized constant Api::V1::TransactionsController):
+  
+actionpack (8.0.2) lib/action_dispatch/http/request.rb:102:in 'ActionDispatch::Request#controller_class_for'
+actionpack (8.0.2) lib/action_dispatch/http/request.rb:91:in 'ActionDispatch::Request#controller_class'
+actionpack (8.0.2) lib/action_dispatch/routing/route_set.rb:61:in 'ActionDispatch::Routing::RouteSet::Dispatcher#controller'
+actionpack (8.0.2) lib/action_dispatch/routing/route_set.rb:48:in 'ActionDispatch::Routing::RouteSet::Dispatcher#serve'
+actionpack (8.0.2) lib/action_dispatch/journey/router.rb:53:in 'block in ActionDispatch::Journey::Router#serve'
+actionpack (8.0.2) lib/action_dispatch/journey/router.rb:133:in 'block in ActionDispatch::Journey::Router#find_routes'
+actionpack (8.0.2) lib/action_dispatch/journey/router.rb:126:in 'Array#each'
+actionpack (8.0.2) lib/action_dispatch/journey/router.rb:126:in 'ActionDispatch::Journey::Router#find_routes'
+actionpack (8.0.2) lib/action_dispatch/journey/router.rb:34:in 'ActionDispatch::Journey::Router#serve'
+actionpack (8.0.2) lib/action_dispatch/routing/route_set.rb:908:in 'ActionDispatch::Routing::RouteSet#call'
+railties (8.0.2) lib/rails/engine/lazy_route_set.rb:68:in 'Rails::Engine::LazyRouteSet#call'
+rack (3.1.13) lib/rack/etag.rb:29:in 'Rack::ETag#call'
+rack (3.1.13) lib/rack/conditional_get.rb:43:in 'Rack::ConditionalGet#call'
+rack (3.1.13) lib/rack/head.rb:15:in 'Rack::Head#call'
+activerecord (8.0.2) lib/active_record/migration.rb:671:in 'ActiveRecord::Migration::CheckPending#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/callbacks.rb:31:in 'block in ActionDispatch::Callbacks#call'
+activesupport (8.0.2) lib/active_support/callbacks.rb:100:in 'ActiveSupport::Callbacks#run_callbacks'
+actionpack (8.0.2) lib/action_dispatch/middleware/callbacks.rb:30:in 'ActionDispatch::Callbacks#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/executor.rb:16:in 'ActionDispatch::Executor#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/actionable_exceptions.rb:18:in 'ActionDispatch::ActionableExceptions#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/debug_exceptions.rb:31:in 'ActionDispatch::DebugExceptions#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/show_exceptions.rb:32:in 'ActionDispatch::ShowExceptions#call'
+railties (8.0.2) lib/rails/rack/logger.rb:41:in 'Rails::Rack::Logger#call_app'
+railties (8.0.2) lib/rails/rack/logger.rb:29:in 'Rails::Rack::Logger#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/remote_ip.rb:96:in 'ActionDispatch::RemoteIp#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/request_id.rb:34:in 'ActionDispatch::RequestId#call'
+rack (3.1.13) lib/rack/runtime.rb:24:in 'Rack::Runtime#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/server_timing.rb:61:in 'block in ActionDispatch::ServerTiming#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/server_timing.rb:26:in 'ActionDispatch::ServerTiming::Subscriber#collect_events'
+actionpack (8.0.2) lib/action_dispatch/middleware/server_timing.rb:60:in 'ActionDispatch::ServerTiming#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/executor.rb:16:in 'ActionDispatch::Executor#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/static.rb:27:in 'ActionDispatch::Static#call'
+rack (3.1.13) lib/rack/sendfile.rb:114:in 'Rack::Sendfile#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/host_authorization.rb:143:in 'ActionDispatch::HostAuthorization#call'
+railties (8.0.2) lib/rails/engine.rb:535:in 'Rails::Engine#call'
+puma (6.6.0) lib/puma/configuration.rb:279:in 'Puma::Configuration::ConfigMiddleware#call'
+puma (6.6.0) lib/puma/request.rb:99:in 'block in Puma::Request#handle_request'
+puma (6.6.0) lib/puma/thread_pool.rb:390:in 'Puma::ThreadPool#with_force_shutdown'
+puma (6.6.0) lib/puma/request.rb:98:in 'Puma::Request#handle_request'
+puma (6.6.0) lib/puma/server.rb:472:in 'Puma::Server#process_client'
+puma (6.6.0) lib/puma/server.rb:254:in 'block in Puma::Server#run'
+puma (6.6.0) lib/puma/thread_pool.rb:167:in 'block in Puma::ThreadPool#spawn_thread'
+
+Information for cause: NameError (uninitialized constant Api::V1::TransactionsController):
+  
+activesupport (8.0.2) lib/active_support/inflector/methods.rb:290:in 'ActiveSupport::Inflector#constantize'
+activesupport (8.0.2) lib/active_support/core_ext/string/inflections.rb:74:in 'String#constantize'
+actionpack (8.0.2) lib/action_dispatch/http/request.rb:99:in 'ActionDispatch::Request#controller_class_for'
+actionpack (8.0.2) lib/action_dispatch/http/request.rb:91:in 'ActionDispatch::Request#controller_class'
+actionpack (8.0.2) lib/action_dispatch/routing/route_set.rb:61:in 'ActionDispatch::Routing::RouteSet::Dispatcher#controller'
+actionpack (8.0.2) lib/action_dispatch/routing/route_set.rb:48:in 'ActionDispatch::Routing::RouteSet::Dispatcher#serve'
+actionpack (8.0.2) lib/action_dispatch/journey/router.rb:53:in 'block in ActionDispatch::Journey::Router#serve'
+actionpack (8.0.2) lib/action_dispatch/journey/router.rb:133:in 'block in ActionDispatch::Journey::Router#find_routes'
+actionpack (8.0.2) lib/action_dispatch/journey/router.rb:126:in 'Array#each'
+actionpack (8.0.2) lib/action_dispatch/journey/router.rb:126:in 'ActionDispatch::Journey::Router#find_routes'
+actionpack (8.0.2) lib/action_dispatch/journey/router.rb:34:in 'ActionDispatch::Journey::Router#serve'
+actionpack (8.0.2) lib/action_dispatch/routing/route_set.rb:908:in 'ActionDispatch::Routing::RouteSet#call'
+railties (8.0.2) lib/rails/engine/lazy_route_set.rb:68:in 'Rails::Engine::LazyRouteSet#call'
+rack (3.1.13) lib/rack/etag.rb:29:in 'Rack::ETag#call'
+rack (3.1.13) lib/rack/conditional_get.rb:43:in 'Rack::ConditionalGet#call'
+rack (3.1.13) lib/rack/head.rb:15:in 'Rack::Head#call'
+activerecord (8.0.2) lib/active_record/migration.rb:671:in 'ActiveRecord::Migration::CheckPending#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/callbacks.rb:31:in 'block in ActionDispatch::Callbacks#call'
+activesupport (8.0.2) lib/active_support/callbacks.rb:100:in 'ActiveSupport::Callbacks#run_callbacks'
+actionpack (8.0.2) lib/action_dispatch/middleware/callbacks.rb:30:in 'ActionDispatch::Callbacks#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/executor.rb:16:in 'ActionDispatch::Executor#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/actionable_exceptions.rb:18:in 'ActionDispatch::ActionableExceptions#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/debug_exceptions.rb:31:in 'ActionDispatch::DebugExceptions#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/show_exceptions.rb:32:in 'ActionDispatch::ShowExceptions#call'
+railties (8.0.2) lib/rails/rack/logger.rb:41:in 'Rails::Rack::Logger#call_app'
+railties (8.0.2) lib/rails/rack/logger.rb:29:in 'Rails::Rack::Logger#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/remote_ip.rb:96:in 'ActionDispatch::RemoteIp#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/request_id.rb:34:in 'ActionDispatch::RequestId#call'
+rack (3.1.13) lib/rack/runtime.rb:24:in 'Rack::Runtime#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/server_timing.rb:61:in 'block in ActionDispatch::ServerTiming#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/server_timing.rb:26:in 'ActionDispatch::ServerTiming::Subscriber#collect_events'
+actionpack (8.0.2) lib/action_dispatch/middleware/server_timing.rb:60:in 'ActionDispatch::ServerTiming#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/executor.rb:16:in 'ActionDispatch::Executor#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/static.rb:27:in 'ActionDispatch::Static#call'
+rack (3.1.13) lib/rack/sendfile.rb:114:in 'Rack::Sendfile#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/host_authorization.rb:143:in 'ActionDispatch::HostAuthorization#call'
+railties (8.0.2) lib/rails/engine.rb:535:in 'Rails::Engine#call'
+puma (6.6.0) lib/puma/configuration.rb:279:in 'Puma::Configuration::ConfigMiddleware#call'
+puma (6.6.0) lib/puma/request.rb:99:in 'block in Puma::Request#handle_request'
+puma (6.6.0) lib/puma/thread_pool.rb:390:in 'Puma::ThreadPool#with_force_shutdown'
+puma (6.6.0) lib/puma/request.rb:98:in 'Puma::Request#handle_request'
+puma (6.6.0) lib/puma/server.rb:472:in 'Puma::Server#process_client'
+puma (6.6.0) lib/puma/server.rb:254:in 'block in Puma::Server#run'
+puma (6.6.0) lib/puma/thread_pool.rb:167:in 'block in Puma::ThreadPool#spawn_thread'
+Started POST "/api/v1/transactions" for 172.18.0.1 at 2025-04-24 06:29:47 +0000
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Api'*/[0m
+  
+ActionController::RoutingError (uninitialized constant Api::V1::TransactionsController)
+Caused by: ActionDispatch::MissingController (uninitialized constant Api::V1::TransactionsController)
+Caused by: NameError (uninitialized constant Api::V1::TransactionsController)
+
+Information for: ActionController::RoutingError (uninitialized constant Api::V1::TransactionsController):
+  
+
+Information for cause: ActionDispatch::MissingController (uninitialized constant Api::V1::TransactionsController):
+  
+actionpack (8.0.2) lib/action_dispatch/http/request.rb:102:in 'ActionDispatch::Request#controller_class_for'
+actionpack (8.0.2) lib/action_dispatch/http/request.rb:91:in 'ActionDispatch::Request#controller_class'
+actionpack (8.0.2) lib/action_dispatch/routing/route_set.rb:61:in 'ActionDispatch::Routing::RouteSet::Dispatcher#controller'
+actionpack (8.0.2) lib/action_dispatch/routing/route_set.rb:48:in 'ActionDispatch::Routing::RouteSet::Dispatcher#serve'
+actionpack (8.0.2) lib/action_dispatch/journey/router.rb:53:in 'block in ActionDispatch::Journey::Router#serve'
+actionpack (8.0.2) lib/action_dispatch/journey/router.rb:133:in 'block in ActionDispatch::Journey::Router#find_routes'
+actionpack (8.0.2) lib/action_dispatch/journey/router.rb:126:in 'Array#each'
+actionpack (8.0.2) lib/action_dispatch/journey/router.rb:126:in 'ActionDispatch::Journey::Router#find_routes'
+actionpack (8.0.2) lib/action_dispatch/journey/router.rb:34:in 'ActionDispatch::Journey::Router#serve'
+actionpack (8.0.2) lib/action_dispatch/routing/route_set.rb:908:in 'ActionDispatch::Routing::RouteSet#call'
+railties (8.0.2) lib/rails/engine/lazy_route_set.rb:68:in 'Rails::Engine::LazyRouteSet#call'
+rack (3.1.13) lib/rack/etag.rb:29:in 'Rack::ETag#call'
+rack (3.1.13) lib/rack/conditional_get.rb:43:in 'Rack::ConditionalGet#call'
+rack (3.1.13) lib/rack/head.rb:15:in 'Rack::Head#call'
+activerecord (8.0.2) lib/active_record/migration.rb:671:in 'ActiveRecord::Migration::CheckPending#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/callbacks.rb:31:in 'block in ActionDispatch::Callbacks#call'
+activesupport (8.0.2) lib/active_support/callbacks.rb:100:in 'ActiveSupport::Callbacks#run_callbacks'
+actionpack (8.0.2) lib/action_dispatch/middleware/callbacks.rb:30:in 'ActionDispatch::Callbacks#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/executor.rb:16:in 'ActionDispatch::Executor#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/actionable_exceptions.rb:18:in 'ActionDispatch::ActionableExceptions#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/debug_exceptions.rb:31:in 'ActionDispatch::DebugExceptions#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/show_exceptions.rb:32:in 'ActionDispatch::ShowExceptions#call'
+railties (8.0.2) lib/rails/rack/logger.rb:41:in 'Rails::Rack::Logger#call_app'
+railties (8.0.2) lib/rails/rack/logger.rb:29:in 'Rails::Rack::Logger#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/remote_ip.rb:96:in 'ActionDispatch::RemoteIp#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/request_id.rb:34:in 'ActionDispatch::RequestId#call'
+rack (3.1.13) lib/rack/runtime.rb:24:in 'Rack::Runtime#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/server_timing.rb:61:in 'block in ActionDispatch::ServerTiming#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/server_timing.rb:26:in 'ActionDispatch::ServerTiming::Subscriber#collect_events'
+actionpack (8.0.2) lib/action_dispatch/middleware/server_timing.rb:60:in 'ActionDispatch::ServerTiming#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/executor.rb:16:in 'ActionDispatch::Executor#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/static.rb:27:in 'ActionDispatch::Static#call'
+rack (3.1.13) lib/rack/sendfile.rb:114:in 'Rack::Sendfile#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/host_authorization.rb:143:in 'ActionDispatch::HostAuthorization#call'
+railties (8.0.2) lib/rails/engine.rb:535:in 'Rails::Engine#call'
+puma (6.6.0) lib/puma/configuration.rb:279:in 'Puma::Configuration::ConfigMiddleware#call'
+puma (6.6.0) lib/puma/request.rb:99:in 'block in Puma::Request#handle_request'
+puma (6.6.0) lib/puma/thread_pool.rb:390:in 'Puma::ThreadPool#with_force_shutdown'
+puma (6.6.0) lib/puma/request.rb:98:in 'Puma::Request#handle_request'
+puma (6.6.0) lib/puma/server.rb:472:in 'Puma::Server#process_client'
+puma (6.6.0) lib/puma/server.rb:254:in 'block in Puma::Server#run'
+puma (6.6.0) lib/puma/thread_pool.rb:167:in 'block in Puma::ThreadPool#spawn_thread'
+
+Information for cause: NameError (uninitialized constant Api::V1::TransactionsController):
+  
+activesupport (8.0.2) lib/active_support/inflector/methods.rb:290:in 'ActiveSupport::Inflector#constantize'
+activesupport (8.0.2) lib/active_support/core_ext/string/inflections.rb:74:in 'String#constantize'
+actionpack (8.0.2) lib/action_dispatch/http/request.rb:99:in 'ActionDispatch::Request#controller_class_for'
+actionpack (8.0.2) lib/action_dispatch/http/request.rb:91:in 'ActionDispatch::Request#controller_class'
+actionpack (8.0.2) lib/action_dispatch/routing/route_set.rb:61:in 'ActionDispatch::Routing::RouteSet::Dispatcher#controller'
+actionpack (8.0.2) lib/action_dispatch/routing/route_set.rb:48:in 'ActionDispatch::Routing::RouteSet::Dispatcher#serve'
+actionpack (8.0.2) lib/action_dispatch/journey/router.rb:53:in 'block in ActionDispatch::Journey::Router#serve'
+actionpack (8.0.2) lib/action_dispatch/journey/router.rb:133:in 'block in ActionDispatch::Journey::Router#find_routes'
+actionpack (8.0.2) lib/action_dispatch/journey/router.rb:126:in 'Array#each'
+actionpack (8.0.2) lib/action_dispatch/journey/router.rb:126:in 'ActionDispatch::Journey::Router#find_routes'
+actionpack (8.0.2) lib/action_dispatch/journey/router.rb:34:in 'ActionDispatch::Journey::Router#serve'
+actionpack (8.0.2) lib/action_dispatch/routing/route_set.rb:908:in 'ActionDispatch::Routing::RouteSet#call'
+railties (8.0.2) lib/rails/engine/lazy_route_set.rb:68:in 'Rails::Engine::LazyRouteSet#call'
+rack (3.1.13) lib/rack/etag.rb:29:in 'Rack::ETag#call'
+rack (3.1.13) lib/rack/conditional_get.rb:43:in 'Rack::ConditionalGet#call'
+rack (3.1.13) lib/rack/head.rb:15:in 'Rack::Head#call'
+activerecord (8.0.2) lib/active_record/migration.rb:671:in 'ActiveRecord::Migration::CheckPending#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/callbacks.rb:31:in 'block in ActionDispatch::Callbacks#call'
+activesupport (8.0.2) lib/active_support/callbacks.rb:100:in 'ActiveSupport::Callbacks#run_callbacks'
+actionpack (8.0.2) lib/action_dispatch/middleware/callbacks.rb:30:in 'ActionDispatch::Callbacks#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/executor.rb:16:in 'ActionDispatch::Executor#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/actionable_exceptions.rb:18:in 'ActionDispatch::ActionableExceptions#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/debug_exceptions.rb:31:in 'ActionDispatch::DebugExceptions#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/show_exceptions.rb:32:in 'ActionDispatch::ShowExceptions#call'
+railties (8.0.2) lib/rails/rack/logger.rb:41:in 'Rails::Rack::Logger#call_app'
+railties (8.0.2) lib/rails/rack/logger.rb:29:in 'Rails::Rack::Logger#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/remote_ip.rb:96:in 'ActionDispatch::RemoteIp#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/request_id.rb:34:in 'ActionDispatch::RequestId#call'
+rack (3.1.13) lib/rack/runtime.rb:24:in 'Rack::Runtime#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/server_timing.rb:61:in 'block in ActionDispatch::ServerTiming#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/server_timing.rb:26:in 'ActionDispatch::ServerTiming::Subscriber#collect_events'
+actionpack (8.0.2) lib/action_dispatch/middleware/server_timing.rb:60:in 'ActionDispatch::ServerTiming#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/executor.rb:16:in 'ActionDispatch::Executor#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/static.rb:27:in 'ActionDispatch::Static#call'
+rack (3.1.13) lib/rack/sendfile.rb:114:in 'Rack::Sendfile#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/host_authorization.rb:143:in 'ActionDispatch::HostAuthorization#call'
+railties (8.0.2) lib/rails/engine.rb:535:in 'Rails::Engine#call'
+puma (6.6.0) lib/puma/configuration.rb:279:in 'Puma::Configuration::ConfigMiddleware#call'
+puma (6.6.0) lib/puma/request.rb:99:in 'block in Puma::Request#handle_request'
+puma (6.6.0) lib/puma/thread_pool.rb:390:in 'Puma::ThreadPool#with_force_shutdown'
+puma (6.6.0) lib/puma/request.rb:98:in 'Puma::Request#handle_request'
+puma (6.6.0) lib/puma/server.rb:472:in 'Puma::Server#process_client'
+puma (6.6.0) lib/puma/server.rb:254:in 'block in Puma::Server#run'
+puma (6.6.0) lib/puma/thread_pool.rb:167:in 'block in Puma::ThreadPool#spawn_thread'
+Started POST "/api/v1/transactions" for 172.18.0.1 at 2025-04-24 06:32:57 +0000
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Api'*/[0m
+  
+ActionController::RoutingError (uninitialized constant Api::V1::TransactionsController)
+Caused by: ActionDispatch::MissingController (uninitialized constant Api::V1::TransactionsController)
+Caused by: NameError (uninitialized constant Api::V1::TransactionsController)
+
+Information for: ActionController::RoutingError (uninitialized constant Api::V1::TransactionsController):
+  
+
+Information for cause: ActionDispatch::MissingController (uninitialized constant Api::V1::TransactionsController):
+  
+actionpack (8.0.2) lib/action_dispatch/http/request.rb:102:in 'ActionDispatch::Request#controller_class_for'
+actionpack (8.0.2) lib/action_dispatch/http/request.rb:91:in 'ActionDispatch::Request#controller_class'
+actionpack (8.0.2) lib/action_dispatch/routing/route_set.rb:61:in 'ActionDispatch::Routing::RouteSet::Dispatcher#controller'
+actionpack (8.0.2) lib/action_dispatch/routing/route_set.rb:48:in 'ActionDispatch::Routing::RouteSet::Dispatcher#serve'
+actionpack (8.0.2) lib/action_dispatch/journey/router.rb:53:in 'block in ActionDispatch::Journey::Router#serve'
+actionpack (8.0.2) lib/action_dispatch/journey/router.rb:133:in 'block in ActionDispatch::Journey::Router#find_routes'
+actionpack (8.0.2) lib/action_dispatch/journey/router.rb:126:in 'Array#each'
+actionpack (8.0.2) lib/action_dispatch/journey/router.rb:126:in 'ActionDispatch::Journey::Router#find_routes'
+actionpack (8.0.2) lib/action_dispatch/journey/router.rb:34:in 'ActionDispatch::Journey::Router#serve'
+actionpack (8.0.2) lib/action_dispatch/routing/route_set.rb:908:in 'ActionDispatch::Routing::RouteSet#call'
+railties (8.0.2) lib/rails/engine/lazy_route_set.rb:68:in 'Rails::Engine::LazyRouteSet#call'
+rack (3.1.13) lib/rack/etag.rb:29:in 'Rack::ETag#call'
+rack (3.1.13) lib/rack/conditional_get.rb:43:in 'Rack::ConditionalGet#call'
+rack (3.1.13) lib/rack/head.rb:15:in 'Rack::Head#call'
+activerecord (8.0.2) lib/active_record/migration.rb:671:in 'ActiveRecord::Migration::CheckPending#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/callbacks.rb:31:in 'block in ActionDispatch::Callbacks#call'
+activesupport (8.0.2) lib/active_support/callbacks.rb:100:in 'ActiveSupport::Callbacks#run_callbacks'
+actionpack (8.0.2) lib/action_dispatch/middleware/callbacks.rb:30:in 'ActionDispatch::Callbacks#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/executor.rb:16:in 'ActionDispatch::Executor#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/actionable_exceptions.rb:18:in 'ActionDispatch::ActionableExceptions#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/debug_exceptions.rb:31:in 'ActionDispatch::DebugExceptions#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/show_exceptions.rb:32:in 'ActionDispatch::ShowExceptions#call'
+railties (8.0.2) lib/rails/rack/logger.rb:41:in 'Rails::Rack::Logger#call_app'
+railties (8.0.2) lib/rails/rack/logger.rb:29:in 'Rails::Rack::Logger#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/remote_ip.rb:96:in 'ActionDispatch::RemoteIp#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/request_id.rb:34:in 'ActionDispatch::RequestId#call'
+rack (3.1.13) lib/rack/runtime.rb:24:in 'Rack::Runtime#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/server_timing.rb:61:in 'block in ActionDispatch::ServerTiming#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/server_timing.rb:26:in 'ActionDispatch::ServerTiming::Subscriber#collect_events'
+actionpack (8.0.2) lib/action_dispatch/middleware/server_timing.rb:60:in 'ActionDispatch::ServerTiming#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/executor.rb:16:in 'ActionDispatch::Executor#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/static.rb:27:in 'ActionDispatch::Static#call'
+rack (3.1.13) lib/rack/sendfile.rb:114:in 'Rack::Sendfile#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/host_authorization.rb:143:in 'ActionDispatch::HostAuthorization#call'
+railties (8.0.2) lib/rails/engine.rb:535:in 'Rails::Engine#call'
+puma (6.6.0) lib/puma/configuration.rb:279:in 'Puma::Configuration::ConfigMiddleware#call'
+puma (6.6.0) lib/puma/request.rb:99:in 'block in Puma::Request#handle_request'
+puma (6.6.0) lib/puma/thread_pool.rb:390:in 'Puma::ThreadPool#with_force_shutdown'
+puma (6.6.0) lib/puma/request.rb:98:in 'Puma::Request#handle_request'
+puma (6.6.0) lib/puma/server.rb:472:in 'Puma::Server#process_client'
+puma (6.6.0) lib/puma/server.rb:254:in 'block in Puma::Server#run'
+puma (6.6.0) lib/puma/thread_pool.rb:167:in 'block in Puma::ThreadPool#spawn_thread'
+
+Information for cause: NameError (uninitialized constant Api::V1::TransactionsController):
+  
+activesupport (8.0.2) lib/active_support/inflector/methods.rb:290:in 'ActiveSupport::Inflector#constantize'
+activesupport (8.0.2) lib/active_support/core_ext/string/inflections.rb:74:in 'String#constantize'
+actionpack (8.0.2) lib/action_dispatch/http/request.rb:99:in 'ActionDispatch::Request#controller_class_for'
+actionpack (8.0.2) lib/action_dispatch/http/request.rb:91:in 'ActionDispatch::Request#controller_class'
+actionpack (8.0.2) lib/action_dispatch/routing/route_set.rb:61:in 'ActionDispatch::Routing::RouteSet::Dispatcher#controller'
+actionpack (8.0.2) lib/action_dispatch/routing/route_set.rb:48:in 'ActionDispatch::Routing::RouteSet::Dispatcher#serve'
+actionpack (8.0.2) lib/action_dispatch/journey/router.rb:53:in 'block in ActionDispatch::Journey::Router#serve'
+actionpack (8.0.2) lib/action_dispatch/journey/router.rb:133:in 'block in ActionDispatch::Journey::Router#find_routes'
+actionpack (8.0.2) lib/action_dispatch/journey/router.rb:126:in 'Array#each'
+actionpack (8.0.2) lib/action_dispatch/journey/router.rb:126:in 'ActionDispatch::Journey::Router#find_routes'
+actionpack (8.0.2) lib/action_dispatch/journey/router.rb:34:in 'ActionDispatch::Journey::Router#serve'
+actionpack (8.0.2) lib/action_dispatch/routing/route_set.rb:908:in 'ActionDispatch::Routing::RouteSet#call'
+railties (8.0.2) lib/rails/engine/lazy_route_set.rb:68:in 'Rails::Engine::LazyRouteSet#call'
+rack (3.1.13) lib/rack/etag.rb:29:in 'Rack::ETag#call'
+rack (3.1.13) lib/rack/conditional_get.rb:43:in 'Rack::ConditionalGet#call'
+rack (3.1.13) lib/rack/head.rb:15:in 'Rack::Head#call'
+activerecord (8.0.2) lib/active_record/migration.rb:671:in 'ActiveRecord::Migration::CheckPending#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/callbacks.rb:31:in 'block in ActionDispatch::Callbacks#call'
+activesupport (8.0.2) lib/active_support/callbacks.rb:100:in 'ActiveSupport::Callbacks#run_callbacks'
+actionpack (8.0.2) lib/action_dispatch/middleware/callbacks.rb:30:in 'ActionDispatch::Callbacks#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/executor.rb:16:in 'ActionDispatch::Executor#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/actionable_exceptions.rb:18:in 'ActionDispatch::ActionableExceptions#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/debug_exceptions.rb:31:in 'ActionDispatch::DebugExceptions#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/show_exceptions.rb:32:in 'ActionDispatch::ShowExceptions#call'
+railties (8.0.2) lib/rails/rack/logger.rb:41:in 'Rails::Rack::Logger#call_app'
+railties (8.0.2) lib/rails/rack/logger.rb:29:in 'Rails::Rack::Logger#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/remote_ip.rb:96:in 'ActionDispatch::RemoteIp#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/request_id.rb:34:in 'ActionDispatch::RequestId#call'
+rack (3.1.13) lib/rack/runtime.rb:24:in 'Rack::Runtime#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/server_timing.rb:61:in 'block in ActionDispatch::ServerTiming#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/server_timing.rb:26:in 'ActionDispatch::ServerTiming::Subscriber#collect_events'
+actionpack (8.0.2) lib/action_dispatch/middleware/server_timing.rb:60:in 'ActionDispatch::ServerTiming#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/executor.rb:16:in 'ActionDispatch::Executor#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/static.rb:27:in 'ActionDispatch::Static#call'
+rack (3.1.13) lib/rack/sendfile.rb:114:in 'Rack::Sendfile#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/host_authorization.rb:143:in 'ActionDispatch::HostAuthorization#call'
+railties (8.0.2) lib/rails/engine.rb:535:in 'Rails::Engine#call'
+puma (6.6.0) lib/puma/configuration.rb:279:in 'Puma::Configuration::ConfigMiddleware#call'
+puma (6.6.0) lib/puma/request.rb:99:in 'block in Puma::Request#handle_request'
+puma (6.6.0) lib/puma/thread_pool.rb:390:in 'Puma::ThreadPool#with_force_shutdown'
+puma (6.6.0) lib/puma/request.rb:98:in 'Puma::Request#handle_request'
+puma (6.6.0) lib/puma/server.rb:472:in 'Puma::Server#process_client'
+puma (6.6.0) lib/puma/server.rb:254:in 'block in Puma::Server#run'
+puma (6.6.0) lib/puma/thread_pool.rb:167:in 'block in Puma::ThreadPool#spawn_thread'
+Started POST "/api/v1/transactions" for 172.18.0.1 at 2025-04-24 06:33:51 +0000
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Api'*/[0m
+  
+ActionController::RoutingError (uninitialized constant Api::V1::TransactionsController)
+Caused by: ActionDispatch::MissingController (uninitialized constant Api::V1::TransactionsController)
+Caused by: NameError (uninitialized constant Api::V1::TransactionsController)
+
+Information for: ActionController::RoutingError (uninitialized constant Api::V1::TransactionsController):
+  
+
+Information for cause: ActionDispatch::MissingController (uninitialized constant Api::V1::TransactionsController):
+  
+actionpack (8.0.2) lib/action_dispatch/http/request.rb:102:in 'ActionDispatch::Request#controller_class_for'
+actionpack (8.0.2) lib/action_dispatch/http/request.rb:91:in 'ActionDispatch::Request#controller_class'
+actionpack (8.0.2) lib/action_dispatch/routing/route_set.rb:61:in 'ActionDispatch::Routing::RouteSet::Dispatcher#controller'
+actionpack (8.0.2) lib/action_dispatch/routing/route_set.rb:48:in 'ActionDispatch::Routing::RouteSet::Dispatcher#serve'
+actionpack (8.0.2) lib/action_dispatch/journey/router.rb:53:in 'block in ActionDispatch::Journey::Router#serve'
+actionpack (8.0.2) lib/action_dispatch/journey/router.rb:133:in 'block in ActionDispatch::Journey::Router#find_routes'
+actionpack (8.0.2) lib/action_dispatch/journey/router.rb:126:in 'Array#each'
+actionpack (8.0.2) lib/action_dispatch/journey/router.rb:126:in 'ActionDispatch::Journey::Router#find_routes'
+actionpack (8.0.2) lib/action_dispatch/journey/router.rb:34:in 'ActionDispatch::Journey::Router#serve'
+actionpack (8.0.2) lib/action_dispatch/routing/route_set.rb:908:in 'ActionDispatch::Routing::RouteSet#call'
+railties (8.0.2) lib/rails/engine/lazy_route_set.rb:68:in 'Rails::Engine::LazyRouteSet#call'
+rack (3.1.13) lib/rack/etag.rb:29:in 'Rack::ETag#call'
+rack (3.1.13) lib/rack/conditional_get.rb:43:in 'Rack::ConditionalGet#call'
+rack (3.1.13) lib/rack/head.rb:15:in 'Rack::Head#call'
+activerecord (8.0.2) lib/active_record/migration.rb:671:in 'ActiveRecord::Migration::CheckPending#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/callbacks.rb:31:in 'block in ActionDispatch::Callbacks#call'
+activesupport (8.0.2) lib/active_support/callbacks.rb:100:in 'ActiveSupport::Callbacks#run_callbacks'
+actionpack (8.0.2) lib/action_dispatch/middleware/callbacks.rb:30:in 'ActionDispatch::Callbacks#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/executor.rb:16:in 'ActionDispatch::Executor#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/actionable_exceptions.rb:18:in 'ActionDispatch::ActionableExceptions#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/debug_exceptions.rb:31:in 'ActionDispatch::DebugExceptions#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/show_exceptions.rb:32:in 'ActionDispatch::ShowExceptions#call'
+railties (8.0.2) lib/rails/rack/logger.rb:41:in 'Rails::Rack::Logger#call_app'
+railties (8.0.2) lib/rails/rack/logger.rb:29:in 'Rails::Rack::Logger#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/remote_ip.rb:96:in 'ActionDispatch::RemoteIp#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/request_id.rb:34:in 'ActionDispatch::RequestId#call'
+rack (3.1.13) lib/rack/runtime.rb:24:in 'Rack::Runtime#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/server_timing.rb:61:in 'block in ActionDispatch::ServerTiming#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/server_timing.rb:26:in 'ActionDispatch::ServerTiming::Subscriber#collect_events'
+actionpack (8.0.2) lib/action_dispatch/middleware/server_timing.rb:60:in 'ActionDispatch::ServerTiming#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/executor.rb:16:in 'ActionDispatch::Executor#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/static.rb:27:in 'ActionDispatch::Static#call'
+rack (3.1.13) lib/rack/sendfile.rb:114:in 'Rack::Sendfile#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/host_authorization.rb:143:in 'ActionDispatch::HostAuthorization#call'
+railties (8.0.2) lib/rails/engine.rb:535:in 'Rails::Engine#call'
+puma (6.6.0) lib/puma/configuration.rb:279:in 'Puma::Configuration::ConfigMiddleware#call'
+puma (6.6.0) lib/puma/request.rb:99:in 'block in Puma::Request#handle_request'
+puma (6.6.0) lib/puma/thread_pool.rb:390:in 'Puma::ThreadPool#with_force_shutdown'
+puma (6.6.0) lib/puma/request.rb:98:in 'Puma::Request#handle_request'
+puma (6.6.0) lib/puma/server.rb:472:in 'Puma::Server#process_client'
+puma (6.6.0) lib/puma/server.rb:254:in 'block in Puma::Server#run'
+puma (6.6.0) lib/puma/thread_pool.rb:167:in 'block in Puma::ThreadPool#spawn_thread'
+
+Information for cause: NameError (uninitialized constant Api::V1::TransactionsController):
+  
+activesupport (8.0.2) lib/active_support/inflector/methods.rb:290:in 'ActiveSupport::Inflector#constantize'
+activesupport (8.0.2) lib/active_support/core_ext/string/inflections.rb:74:in 'String#constantize'
+actionpack (8.0.2) lib/action_dispatch/http/request.rb:99:in 'ActionDispatch::Request#controller_class_for'
+actionpack (8.0.2) lib/action_dispatch/http/request.rb:91:in 'ActionDispatch::Request#controller_class'
+actionpack (8.0.2) lib/action_dispatch/routing/route_set.rb:61:in 'ActionDispatch::Routing::RouteSet::Dispatcher#controller'
+actionpack (8.0.2) lib/action_dispatch/routing/route_set.rb:48:in 'ActionDispatch::Routing::RouteSet::Dispatcher#serve'
+actionpack (8.0.2) lib/action_dispatch/journey/router.rb:53:in 'block in ActionDispatch::Journey::Router#serve'
+actionpack (8.0.2) lib/action_dispatch/journey/router.rb:133:in 'block in ActionDispatch::Journey::Router#find_routes'
+actionpack (8.0.2) lib/action_dispatch/journey/router.rb:126:in 'Array#each'
+actionpack (8.0.2) lib/action_dispatch/journey/router.rb:126:in 'ActionDispatch::Journey::Router#find_routes'
+actionpack (8.0.2) lib/action_dispatch/journey/router.rb:34:in 'ActionDispatch::Journey::Router#serve'
+actionpack (8.0.2) lib/action_dispatch/routing/route_set.rb:908:in 'ActionDispatch::Routing::RouteSet#call'
+railties (8.0.2) lib/rails/engine/lazy_route_set.rb:68:in 'Rails::Engine::LazyRouteSet#call'
+rack (3.1.13) lib/rack/etag.rb:29:in 'Rack::ETag#call'
+rack (3.1.13) lib/rack/conditional_get.rb:43:in 'Rack::ConditionalGet#call'
+rack (3.1.13) lib/rack/head.rb:15:in 'Rack::Head#call'
+activerecord (8.0.2) lib/active_record/migration.rb:671:in 'ActiveRecord::Migration::CheckPending#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/callbacks.rb:31:in 'block in ActionDispatch::Callbacks#call'
+activesupport (8.0.2) lib/active_support/callbacks.rb:100:in 'ActiveSupport::Callbacks#run_callbacks'
+actionpack (8.0.2) lib/action_dispatch/middleware/callbacks.rb:30:in 'ActionDispatch::Callbacks#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/executor.rb:16:in 'ActionDispatch::Executor#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/actionable_exceptions.rb:18:in 'ActionDispatch::ActionableExceptions#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/debug_exceptions.rb:31:in 'ActionDispatch::DebugExceptions#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/show_exceptions.rb:32:in 'ActionDispatch::ShowExceptions#call'
+railties (8.0.2) lib/rails/rack/logger.rb:41:in 'Rails::Rack::Logger#call_app'
+railties (8.0.2) lib/rails/rack/logger.rb:29:in 'Rails::Rack::Logger#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/remote_ip.rb:96:in 'ActionDispatch::RemoteIp#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/request_id.rb:34:in 'ActionDispatch::RequestId#call'
+rack (3.1.13) lib/rack/runtime.rb:24:in 'Rack::Runtime#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/server_timing.rb:61:in 'block in ActionDispatch::ServerTiming#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/server_timing.rb:26:in 'ActionDispatch::ServerTiming::Subscriber#collect_events'
+actionpack (8.0.2) lib/action_dispatch/middleware/server_timing.rb:60:in 'ActionDispatch::ServerTiming#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/executor.rb:16:in 'ActionDispatch::Executor#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/static.rb:27:in 'ActionDispatch::Static#call'
+rack (3.1.13) lib/rack/sendfile.rb:114:in 'Rack::Sendfile#call'
+actionpack (8.0.2) lib/action_dispatch/middleware/host_authorization.rb:143:in 'ActionDispatch::HostAuthorization#call'
+railties (8.0.2) lib/rails/engine.rb:535:in 'Rails::Engine#call'
+puma (6.6.0) lib/puma/configuration.rb:279:in 'Puma::Configuration::ConfigMiddleware#call'
+puma (6.6.0) lib/puma/request.rb:99:in 'block in Puma::Request#handle_request'
+puma (6.6.0) lib/puma/thread_pool.rb:390:in 'Puma::ThreadPool#with_force_shutdown'
+puma (6.6.0) lib/puma/request.rb:98:in 'Puma::Request#handle_request'
+puma (6.6.0) lib/puma/server.rb:472:in 'Puma::Server#process_client'
+puma (6.6.0) lib/puma/server.rb:254:in 'block in Puma::Server#run'
+puma (6.6.0) lib/puma/thread_pool.rb:167:in 'block in Puma::ThreadPool#spawn_thread'
+Started POST "/api/v1/transactions" for 172.18.0.1 at 2025-04-24 06:41:30 +0000
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Api'*/[0m
+Processing by Api::V1::TransactionsController#create as */*
+  Parameters: {"transaction" => {"date" => "2025-04-23", "description" => "Grocery shopping", "amount" => 50.25, "category_id" => 1}}
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*action='create',application='Api',controller='transactions'*/[0m
+  ↳ app/controllers/api/v1/transactions_controller.rb:7:in 'Api::V1::TransactionsController#create'
+  [1m[36mTransaction Create (4.8ms)[0m  [1m[32mINSERT INTO "transactions" ("date", "description", "amount", "category_id", "flagged", "metadata", "created_at", "updated_at") VALUES ('2025-04-23', 'Grocery shopping', 50.25, 1, FALSE, '{}', '2025-04-24 06:41:31.033949', '2025-04-24 06:41:31.033949') RETURNING "id" /*action='create',application='Api',controller='transactions'*/[0m
+  ↳ app/controllers/api/v1/transactions_controller.rb:7:in 'Api::V1::TransactionsController#create'
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK /*action='create',application='Api',controller='transactions'*/[0m
+  ↳ app/controllers/api/v1/transactions_controller.rb:7:in 'Api::V1::TransactionsController#create'
+Completed 500 Internal Server Error in 37ms (ActiveRecord: 10.8ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+  
+ActiveRecord::InvalidForeignKey (PG::ForeignKeyViolation: ERROR:  insert or update on table "transactions" violates foreign key constraint "fk_rails_0ea2ad3927"
+DETAIL:  Key (category_id)=(1) is not present in table "categories".
+)
+Caused by: PG::ForeignKeyViolation (ERROR:  insert or update on table "transactions" violates foreign key constraint "fk_rails_0ea2ad3927"
+DETAIL:  Key (category_id)=(1) is not present in table "categories".
+)
+
+Information for: ActiveRecord::InvalidForeignKey (PG::ForeignKeyViolation: ERROR:  insert or update on table "transactions" violates foreign key constraint "fk_rails_0ea2ad3927"
+DETAIL:  Key (category_id)=(1) is not present in table "categories".
+):
+  
+
+Information for cause: PG::ForeignKeyViolation (ERROR:  insert or update on table "transactions" violates foreign key constraint "fk_rails_0ea2ad3927"
+DETAIL:  Key (category_id)=(1) is not present in table "categories".
+):
+  
+app/controllers/api/v1/transactions_controller.rb:7:in 'Api::V1::TransactionsController#create'
+Started POST "/api/v1/transactions" for 172.18.0.1 at 2025-04-24 06:43:45 +0000
+Processing by Api::V1::TransactionsController#create as */*
+  Parameters: {"transaction" => {"date" => "2025-04-23", "description" => "Grocery shopping", "amount" => 50.25}}
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mBEGIN /*action='create',application='Api',controller='transactions'*/[0m
+  ↳ app/controllers/api/v1/transactions_controller.rb:7:in 'Api::V1::TransactionsController#create'
+  [1m[36mTransaction Create (2.2ms)[0m  [1m[32mINSERT INTO "transactions" ("date", "description", "amount", "category_id", "flagged", "metadata", "created_at", "updated_at") VALUES ('2025-04-23', 'Grocery shopping', 50.25, NULL, FALSE, '{}', '2025-04-24 06:43:45.974439', '2025-04-24 06:43:45.974439') RETURNING "id" /*action='create',application='Api',controller='transactions'*/[0m
+  ↳ app/controllers/api/v1/transactions_controller.rb:7:in 'Api::V1::TransactionsController#create'
+  [1m[36mTRANSACTION (1.2ms)[0m  [1m[35mCOMMIT /*action='create',application='Api',controller='transactions'*/[0m
+  ↳ app/controllers/api/v1/transactions_controller.rb:7:in 'Api::V1::TransactionsController#create'
+  [1m[36mRule Load (1.5ms)[0m  [1m[34mSELECT "rules".* FROM "rules" /*action='create',application='Api',controller='transactions'*/[0m
+  ↳ app/models/transaction.rb:14:in 'Transaction#apply_rules'
+Completed 201 Created in 58ms (Views: 1.1ms | ActiveRecord: 4.4ms (2 queries, 0 cached) | GC: 8.7ms)
+
+
+Started GET "/api/v1/transactions" for 172.18.0.1 at 2025-04-24 06:47:29 +0000
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Api'*/[0m
+Processing by Api::V1::TransactionsController#index as */*
+  [1m[36mTransaction Count (0.8ms)[0m  [1m[34mSELECT COUNT(*) FROM "transactions" /*action='index',application='Api',controller='transactions'*/[0m
+  ↳ app/controllers/api/v1/transactions_controller.rb:14:in 'Api::V1::TransactionsController#index'
+  [1m[36mTransaction Load (0.2ms)[0m  [1m[34mSELECT "transactions".* FROM "transactions" ORDER BY "transactions"."date" DESC LIMIT 100 OFFSET 0 /*action='index',application='Api',controller='transactions'*/[0m
+  ↳ app/controllers/api/v1/transactions_controller.rb:10:in 'Api::V1::TransactionsController#index'
+Completed 200 OK in 83ms (Views: 36.7ms | ActiveRecord: 5.2ms (2 queries, 0 cached) | GC: 7.0ms)
+
+
+Started POST "/api/v1/transactions" for 172.18.0.1 at 2025-04-24 06:47:36 +0000
+Processing by Api::V1::TransactionsController#create as */*
+  Parameters: {"transaction" => {"date" => "2025-04-23", "description" => "Grocery shopping", "amount" => 50.25}}
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN /*action='create',application='Api',controller='transactions'*/[0m
+  ↳ app/controllers/api/v1/transactions_controller.rb:25:in 'Api::V1::TransactionsController#create'
+  [1m[36mTransaction Create (1.5ms)[0m  [1m[32mINSERT INTO "transactions" ("date", "description", "amount", "category_id", "flagged", "metadata", "created_at", "updated_at") VALUES ('2025-04-23', 'Grocery shopping', 50.25, NULL, FALSE, '{}', '2025-04-24 06:47:36.541292', '2025-04-24 06:47:36.541292') RETURNING "id" /*action='create',application='Api',controller='transactions'*/[0m
+  ↳ app/controllers/api/v1/transactions_controller.rb:25:in 'Api::V1::TransactionsController#create'
+  [1m[36mTRANSACTION (1.0ms)[0m  [1m[35mCOMMIT /*action='create',application='Api',controller='transactions'*/[0m
+  ↳ app/controllers/api/v1/transactions_controller.rb:25:in 'Api::V1::TransactionsController#create'
+  [1m[36mRule Load (0.6ms)[0m  [1m[34mSELECT "rules".* FROM "rules" /*action='create',application='Api',controller='transactions'*/[0m
+  ↳ app/models/transaction.rb:14:in 'Transaction#apply_rules'
+Completed 201 Created in 36ms (Views: 1.6ms | ActiveRecord: 2.4ms (2 queries, 0 cached) | GC: 1.1ms)
+
+
+Started POST "/api/v1/transactions" for 172.18.0.1 at 2025-04-24 06:47:37 +0000
+Processing by Api::V1::TransactionsController#create as */*
+  Parameters: {"transaction" => {"date" => "2025-04-23", "description" => "Grocery shopping", "amount" => 50.25}}
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN /*action='create',application='Api',controller='transactions'*/[0m
+  ↳ app/controllers/api/v1/transactions_controller.rb:25:in 'Api::V1::TransactionsController#create'
+  [1m[36mTransaction Create (1.7ms)[0m  [1m[32mINSERT INTO "transactions" ("date", "description", "amount", "category_id", "flagged", "metadata", "created_at", "updated_at") VALUES ('2025-04-23', 'Grocery shopping', 50.25, NULL, FALSE, '{}', '2025-04-24 06:47:37.201247', '2025-04-24 06:47:37.201247') RETURNING "id" /*action='create',application='Api',controller='transactions'*/[0m
+  ↳ app/controllers/api/v1/transactions_controller.rb:25:in 'Api::V1::TransactionsController#create'
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mCOMMIT /*action='create',application='Api',controller='transactions'*/[0m
+  ↳ app/controllers/api/v1/transactions_controller.rb:25:in 'Api::V1::TransactionsController#create'
+  [1m[36mRule Load (0.2ms)[0m  [1m[34mSELECT "rules".* FROM "rules" /*action='create',application='Api',controller='transactions'*/[0m
+  ↳ app/models/transaction.rb:14:in 'Transaction#apply_rules'
+Completed 201 Created in 17ms (Views: 2.5ms | ActiveRecord: 2.5ms (2 queries, 0 cached) | GC: 0.0ms)
+
+
+Started POST "/api/v1/transactions" for 172.18.0.1 at 2025-04-24 06:47:37 +0000
+Processing by Api::V1::TransactionsController#create as */*
+  Parameters: {"transaction" => {"date" => "2025-04-23", "description" => "Grocery shopping", "amount" => 50.25}}
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*action='create',application='Api',controller='transactions'*/[0m
+  ↳ app/controllers/api/v1/transactions_controller.rb:25:in 'Api::V1::TransactionsController#create'
+  [1m[36mTransaction Create (1.5ms)[0m  [1m[32mINSERT INTO "transactions" ("date", "description", "amount", "category_id", "flagged", "metadata", "created_at", "updated_at") VALUES ('2025-04-23', 'Grocery shopping', 50.25, NULL, FALSE, '{}', '2025-04-24 06:47:37.931945', '2025-04-24 06:47:37.931945') RETURNING "id" /*action='create',application='Api',controller='transactions'*/[0m
+  ↳ app/controllers/api/v1/transactions_controller.rb:25:in 'Api::V1::TransactionsController#create'
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT /*action='create',application='Api',controller='transactions'*/[0m
+  ↳ app/controllers/api/v1/transactions_controller.rb:25:in 'Api::V1::TransactionsController#create'
+  [1m[36mRule Load (0.2ms)[0m  [1m[34mSELECT "rules".* FROM "rules" /*action='create',application='Api',controller='transactions'*/[0m
+  ↳ app/models/transaction.rb:14:in 'Transaction#apply_rules'
+Completed 201 Created in 14ms (Views: 1.3ms | ActiveRecord: 2.5ms (2 queries, 0 cached) | GC: 0.9ms)
+
+
+Started GET "/api/v1/transactions" for 172.18.0.1 at 2025-04-24 06:47:40 +0000
+Processing by Api::V1::TransactionsController#index as */*
+  [1m[36mTransaction Count (0.3ms)[0m  [1m[34mSELECT COUNT(*) FROM "transactions" /*action='index',application='Api',controller='transactions'*/[0m
+  ↳ app/controllers/api/v1/transactions_controller.rb:14:in 'Api::V1::TransactionsController#index'
+  [1m[36mTransaction Load (0.3ms)[0m  [1m[34mSELECT "transactions".* FROM "transactions" ORDER BY "transactions"."date" DESC LIMIT 100 OFFSET 0 /*action='index',application='Api',controller='transactions'*/[0m
+  ↳ app/controllers/api/v1/transactions_controller.rb:10:in 'Api::V1::TransactionsController#index'
+Completed 200 OK in 17ms (Views: 10.1ms | ActiveRecord: 0.5ms (2 queries, 0 cached) | GC: 0.0ms)
+
+

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_27_000004) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_29_000001) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -38,6 +38,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_27_000004) do
     t.bigint "category_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "priority", default: 0, null: false
     t.index ["category_id"], name: "index_rules_on_category_id"
   end
 

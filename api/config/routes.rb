@@ -8,6 +8,7 @@ Rails.application.routes.draw do
       end
       
       resources :rules
+      resources :categories, only: [:index, :create]
     end
   end
 end

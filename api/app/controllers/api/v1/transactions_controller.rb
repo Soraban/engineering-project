@@ -2,13 +2,16 @@ module Api
   module V1
     class TransactionsController < ::ApplicationController
       def index
-        @transactions = ::Transaction.includes(:category)
+        @transactions = ::Transaction.includes(:category, :applied_rules)
                                    .order(date: :desc)
                                    .page(params[:page])
                                    .per(params[:per_page] || 100)
 
         render json: {
-          transactions: @transactions,
+          transactions: @transactions.as_json(include: {
+            category: { only: [:id, :name] },
+            applied_rules: { only: [:id, :condition_field, :condition_operator, :condition_value] }
+          }),
           pagination: {
             current_page: @transactions.current_page,
             next_page: @transactions.next_page,
@@ -24,7 +27,10 @@ module Api
         
         if @transaction.save
           @transaction.apply_rules
-          render json: @transaction, status: :created
+          render json: @transaction.as_json(include: {
+            category: { only: [:id, :name] },
+            applied_rules: { only: [:id, :condition_field, :condition_operator, :condition_value] }
+          }), status: :created
         else
           render json: { errors: @transaction.errors.full_messages }, status: :unprocessable_entity
         end
@@ -53,7 +59,9 @@ module Api
       private
 
       def transaction_params
-        params.require(:transaction).permit(:date, :description, :amount, :category_id, :flagged)
+        params.require(:transaction).permit(:date, :description, :amount, :category, :flagged).tap do |whitelisted|
+          whitelisted[:category_id] = whitelisted.delete(:category) if whitelisted[:category].present?
+        end
       end
     end
   end

@@ -22,7 +22,7 @@ default: &default
 
 development:
   <<: *default
-  database: api_development
+  url: postgresql://neondb_owner:npg_8GaMwYAeXy1B@ep-black-paper-a4bnbcg1-pooler.us-east-1.aws.neon.tech/neondb?sslmode=require
 
   # The specified database role being used to connect to PostgreSQL.
   # To create additional roles in PostgreSQL see `$ createuser --help`.
@@ -56,7 +56,7 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: api_test
+  url: postgresql://neondb_owner:npg_8GaMwYAeXy1B@ep-black-paper-a4bnbcg1-pooler.us-east-1.aws.neon.tech/neondb?sslmode=require
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is

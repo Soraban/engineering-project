@@ -4,22 +4,32 @@ import { Table, Pagination, Text, Badge } from '@mantine/core';
 import { api } from '../services/api';
 import { Transaction } from '../types/transaction';
 
+// This improved formatAmount function is bulletproof against type errors
 const formatAmount = (amount: string | number | null | undefined): string => {
-  // Handle null or undefined input
+  // Handle null or undefined
   if (amount === null || amount === undefined) {
-    return '$0.00'; // Or return 'N/A' or '' based on preference
+    return '$0.00';
   }
-
-  // Convert to number if it's a string
-  const num = typeof amount === 'string' ? parseFloat(amount) : amount;
-
-  // Check if the result is a valid, finite number
-  if (isNaN(num) || !isFinite(num)) {
-    return '$0.00'; // Or handle error appropriately
+  
+  // First convert to number safely, regardless of input type
+  let numericAmount: number;
+  
+  try {
+    // If it's already a number, this works fine
+    // If it's a string, Number() will convert it
+    numericAmount = Number(amount);
+    
+    // Check if we got a valid number
+    if (isNaN(numericAmount) || !isFinite(numericAmount)) {
+      return '$0.00';
+    }
+    
+    // Format with 2 decimal places - ONLY call toFixed on a number
+    return `$${numericAmount.toFixed(2)}`;
+  } catch (error) {
+    console.error('Error formatting amount:', error, amount);
+    return '$0.00';
   }
-
-  // Format with 2 decimal places
-  return `$${num.toFixed(2)}`;
 };
 
 export function TransactionsList() {
@@ -27,13 +37,20 @@ export function TransactionsList() {
   const { data, isLoading, error } = useQuery(
     ['transactions', page],
     () => api.transactions.list(page),
-    { keepPreviousData: true }
+    { 
+      keepPreviousData: true,
+      retry: 3,
+      onError: (err) => {
+        console.error('Error fetching transactions:', err);
+      }
+    }
   );
 
   if (isLoading) return <Text>Loading...</Text>;
-  if (error) return <Text color="red">Error loading transactions</Text>;
+  if (error) return <Text color="red">Error loading transactions: {(error as Error).message}</Text>;
+  if (!data || !data.transactions) return <Text>No transactions found</Text>;
 
-  const rows = data?.transactions.map((transaction: Transaction) => (
+  const rows = data.transactions.map((transaction: Transaction) => (
     <Table.Tr key={transaction.id}>
       <Table.Td>{new Date(transaction.date).toLocaleDateString()}</Table.Td>
       <Table.Td>{transaction.description}</Table.Td>

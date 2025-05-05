@@ -1,0 +1,10 @@
+date,description,amount,category,flagged
+2024-05-28,Amazon Store,172.2,Shopping,True
+2024-11-27,Mortgage,2849.29,Rent,False
+2024-01-08,Phone Bill,417.35,Utilities,False
+2024-11-24,Amazon,222.39,Dining,False
+2024-07-31,Apple Store,449.78,Shopping,False
+2024-11-30,House Payment,2563.65,Rent,True
+2024-03-28,Vacation,120.04,Travel,False
+2024-11-30,Dining Out,249.97,Entertainment,False
+2025-02-14,Airline Ticket,1227.45,Travel,True

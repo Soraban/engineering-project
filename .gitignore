@@ -1,0 +1,73 @@
+# Claude AI
+.claude/
+
+# Screenshots
+*.png
+*.jpg
+*.jpeg
+
+# Documentation (project-specific docs, not general README)
+PROJECT_OVERVIEW.md
+SETUP.md
+QUICKSTART.md
+
+# Backend (Rails)
+backend/log/*
+backend/tmp/*
+backend/storage/*
+backend/.bundle
+backend/vendor/bundle
+backend/node_modules
+backend/public/uploads
+backend/public/assets
+backend/.byebug_history
+backend/.env
+backend/.env.local
+backend/.env.*.local
+backend/config/master.key
+backend/config/credentials/*.key
+
+# Frontend (React)
+frontend/node_modules/
+frontend/dist/
+frontend/build/
+frontend/.env
+frontend/.env.local
+frontend/.env.*.local
+frontend/.vite/
+frontend/.DS_Store
+frontend/coverage/
+
+# Database
+*.sqlite3
+*.sqlite3-journal
+*.db
+
+# Docker
+.docker/
+docker-compose.override.yml
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

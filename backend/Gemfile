@@ -1,0 +1,46 @@
+source 'https://rubygems.org'
+
+ruby '~> 3.4.0'
+
+# Core Rails
+gem 'rails', '~> 8.0.0'
+
+# Database
+gem 'pg', '~> 1.5'
+
+# API
+gem 'rack-cors'
+
+# Server
+gem 'puma', '>= 5.0'
+
+# Background jobs (for async anomaly detection)
+gem 'sidekiq', '~> 7.0'
+
+# Caching
+gem 'redis', '>= 4.0'
+
+# Performance & Optimization
+gem 'bootsnap', require: false
+gem 'oj' # Fast JSON parsing
+gem 'kaminari' # Pagination
+gem 'csv' # CSV parsing
+gem 'rack-attack' # Rate limiting
+
+# Monitoring & Profiling
+gem 'rack-mini-profiler' # Performance profiling
+
+# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
+gem 'tzinfo-data', platforms: %i[ windows jruby ]
+
+group :development, :test do
+  gem 'debug', platforms: %i[ mri windows ], require: 'debug/prelude'
+  gem 'rspec-rails', '~> 6.0'
+  gem 'factory_bot_rails'
+  gem 'faker'
+  gem 'bullet' # N+1 query detection
+end
+
+group :development do
+  gem 'annotate'
+end

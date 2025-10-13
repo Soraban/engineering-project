@@ -1,0 +1,164 @@
+<div class="form-container">
+  <h1>Edit Transaction</h1>
+
+  <%= form_with model: @transaction, local: true do |f| %>
+    <% if @transaction.errors.any? %>
+      <div class="error-messages">
+        <h3><%= pluralize(@transaction.errors.count, "error") %> prohibited this transaction from being saved:</h3>
+        <ul>
+          <% @transaction.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="form-group">
+      <%= f.label :date %>
+      <%= f.date_field :date, class: 'form-control' %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :description %>
+      <%= f.text_area :description, class: 'form-control', rows: 3 %>
+      <small>This will be normalized automatically for duplicate detection</small>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :amount %>
+      <%= f.number_field :amount, step: 0.01, class: 'form-control' %>
+      <small>Enter positive for expenses, negative for refunds</small>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :category_id, 'Category' %>
+      <%= f.select :category_id,
+          options_for_select([['Select category...', '']] + @categories.map { |c| [c.name, c.id] }, @transaction.category_id),
+          {},
+          { class: 'form-control' } %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :status %>
+      <%= f.select :status,
+          options_for_select(Transaction.statuses.keys.map { |s| [s.humanize, s] }, @transaction.status),
+          {},
+          { class: 'form-control' } %>
+    </div>
+
+    <div class="form-actions">
+      <%= f.submit 'Update Transaction', class: 'btn btn-primary' %>
+      <%= link_to 'Cancel', transaction_path(@transaction), class: 'btn btn-secondary' %>
+      <%= button_to 'Delete', transaction_path(@transaction), method: :delete, 
+          data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+    </div>
+  <% end %>
+</div>
+
+<style>
+.form-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.form-container h1 {
+  margin-bottom: 30px;
+  color: #2c3e50;
+}
+
+.error-messages {
+  background: #fde8e8;
+  border: 1px solid #f5c6cb;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 20px;
+}
+
+.error-messages h3 {
+  color: #721c24;
+  margin: 0 0 10px 0;
+  font-size: 1em;
+}
+
+.error-messages ul {
+  margin: 0;
+  padding-left: 20px;
+  color: #721c24;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.form-group small {
+  display: block;
+  margin-top: 5px;
+  color: #7f8c8d;
+  font-size: 0.9em;
+}
+
+.form-control {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 1em;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: #3498db;
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
+.form-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 30px;
+}
+
+.btn {
+  padding: 12px 24px;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-primary {
+  background: #3498db;
+  color: white;
+}
+
+.btn-primary:hover {
+  background: #2980b9;
+}
+
+.btn-secondary {
+  background: #95a5a6;
+  color: white;
+}
+
+.btn-secondary:hover {
+  background: #7f8c8d;
+}
+
+.btn-danger {
+  background: #e74c3c;
+  color: white;
+}
+
+.btn-danger:hover {
+  background: #c0392b;
+}
+</style>

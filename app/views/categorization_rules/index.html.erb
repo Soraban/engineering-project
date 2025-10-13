@@ -1,0 +1,299 @@
+<div class="rules-container">
+  <div class="page-header">
+    <h1>Categorization Rules</h1>
+    <div class="header-actions">
+      <%= link_to '+ Create Rule', new_categorization_rule_path, class: 'btn btn-primary' %>
+      <%= button_to 'Apply All Rules', apply_categorization_rules_path, method: :post, class: 'btn btn-success' %>
+    </div>
+  </div>
+
+  <div class="rules-info">
+    <p>Rules are applied automatically to new transactions. Higher priority rules are applied first.</p>
+  </div>
+
+  <% if @rules.any? %>
+    <div class="rules-list">
+      <% @rules.each do |rule| %>
+        <div class="rule-card <%= 'inactive' unless rule.active? %>">
+          <div class="rule-header">
+            <div class="rule-title">
+              <h3><%= rule.name %></h3>
+              <span class="rule-type-badge"><%= rule.rule_type&.humanize %></span>
+              <span class="priority-badge">Priority: <%= rule.priority %></span>
+            </div>
+            <div class="rule-status">
+              <% if rule.active? %>
+                <span class="status-active">Active</span>
+              <% else %>
+                <span class="status-inactive">Inactive</span>
+              <% end %>
+            </div>
+          </div>
+
+          <div class="rule-details">
+            <div class="rule-info-grid">
+              <div class="info-item">
+                <strong>Category:</strong>
+                <span class="category-badge"><%= rule.category.name %></span>
+              </div>
+
+              <% if rule.rule_type == 'description_contains' %>
+                <div class="info-item">
+                  <strong>Pattern:</strong>
+                  <code><%= rule.pattern %></code>
+                </div>
+              <% elsif rule.rule_type == 'amount_threshold' %>
+                <div class="info-item">
+                  <strong>Condition:</strong>
+                  Amount <%= rule.conditions['operator'] %> <%= number_to_currency(rule.conditions['threshold']) %>
+                </div>
+              <% elsif rule.rule_type == 'date_range' %>
+                <div class="info-item">
+                  <strong>Date Range:</strong>
+                  <%= rule.conditions['start_date'] %> to <%= rule.conditions['end_date'] %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+
+          <div class="rule-actions">
+            <%= button_to 'Apply Now', apply_categorization_rule_path(rule), method: :post, class: 'btn-small btn-secondary' %>
+            <%= button_to rule.active? ? 'Deactivate' : 'Activate', 
+                toggle_categorization_rule_path(rule), method: :post, 
+                class: "btn-small #{rule.active? ? 'btn-warning' : 'btn-success'}" %>
+            <%= link_to 'Edit', edit_categorization_rule_path(rule), class: 'btn-small btn-link' %>
+            <%= button_to 'Delete', categorization_rule_path(rule), method: :delete, 
+                data: { confirm: 'Are you sure?' }, class: 'btn-small btn-danger' %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="pagination-container">
+      <%= paginate @rules %>
+    </div>
+  <% else %>
+    <div class="empty-state">
+      <h2>No categorization rules yet</h2>
+      <p>Create rules to automatically categorize your transactions</p>
+      <%= link_to 'Create Your First Rule', new_categorization_rule_path, class: 'btn btn-primary' %>
+    </div>
+  <% end %>
+</div>
+
+<style>
+.rules-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.header-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.rules-info {
+  background: #e3f2fd;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  border-left: 4px solid #2196f3;
+}
+
+.rules-info p {
+  margin: 0;
+  color: #1565c0;
+}
+
+.rules-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.rule-card {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  border-left: 4px solid #27ae60;
+}
+
+.rule-card.inactive {
+  border-left-color: #95a5a6;
+  opacity: 0.7;
+}
+
+.rule-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.rule-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.rule-title h3 {
+  margin: 0;
+  color: #2c3e50;
+}
+
+.rule-type-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  background: #3498db;
+  color: white;
+  border-radius: 12px;
+  font-size: 0.85em;
+}
+
+.priority-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  background: #9b59b6;
+  color: white;
+  border-radius: 12px;
+  font-size: 0.85em;
+}
+
+.status-active {
+  color: #27ae60;
+  font-weight: 600;
+}
+
+.status-inactive {
+  color: #95a5a6;
+  font-weight: 600;
+}
+
+.rule-details {
+  margin-bottom: 15px;
+}
+
+.rule-info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 15px;
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.info-item strong {
+  color: #666;
+}
+
+.info-item code {
+  background: #f8f9fa;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-family: monospace;
+}
+
+.category-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  background: #3498db;
+  color: white;
+  border-radius: 12px;
+  font-size: 0.9em;
+}
+
+.rule-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.btn, .btn-small {
+  padding: 10px 20px;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: inline-block;
+}
+
+.btn-small {
+  padding: 6px 12px;
+  font-size: 0.9em;
+}
+
+.btn-primary {
+  background: #3498db;
+  color: white;
+}
+
+.btn-primary:hover {
+  background: #2980b9;
+}
+
+.btn-success {
+  background: #27ae60;
+  color: white;
+}
+
+.btn-success:hover {
+  background: #229954;
+}
+
+.btn-secondary {
+  background: #95a5a6;
+  color: white;
+}
+
+.btn-warning {
+  background: #f39c12;
+  color: white;
+}
+
+.btn-danger {
+  background: #e74c3c;
+  color: white;
+}
+
+.btn-link {
+  color: #3498db;
+  background: transparent;
+}
+
+.empty-state {
+  background: white;
+  border-radius: 8px;
+  padding: 60px 20px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.empty-state h2 {
+  color: #2c3e50;
+  margin-bottom: 10px;
+}
+
+.empty-state p {
+  color: #7f8c8d;
+  margin-bottom: 20px;
+}
+
+.pagination-container {
+  margin-top: 20px;
+  text-align: center;
+}
+</style>

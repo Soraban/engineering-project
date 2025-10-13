@@ -1,0 +1,251 @@
+<div class="form-container">
+  <h1><%= @rule.new_record? ? 'Create New Rule' : 'Edit Rule' %></h1>
+
+  <%= form_with model: @rule, local: true do |f| %>
+    <% if @rule.errors.any? %>
+      <div class="error-messages">
+        <h3><%= pluralize(@rule.errors.count, "error") %> prohibited this rule from being saved:</h3>
+        <ul>
+          <% @rule.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="form-group">
+      <%= f.label :name, 'Rule Name' %>
+      <%= f.text_field :name, class: 'form-control', placeholder: 'e.g., Amazon Purchases' %>
+      <small>Give your rule a descriptive name</small>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :rule_type, 'Rule Type' %>
+      <%= f.select :rule_type, 
+          [
+            ['Description Contains', 'description_contains'],
+            ['Amount Threshold', 'amount_threshold'],
+            ['Date Range', 'date_range']
+          ],
+          {}, 
+          { class: 'form-control', id: 'rule-type-select', onchange: 'updateRuleFields()' } %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :category_id, 'Target Category' %>
+      <%= f.select :category_id,
+          options_for_select(@categories.map { |c| [c.name, c.id] }, @rule.category_id),
+          { prompt: 'Select category...' },
+          { class: 'form-control' } %>
+      <small>Transactions matching this rule will be categorized as this</small>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :priority, 'Priority' %>
+      <%= f.number_field :priority, class: 'form-control', value: @rule.priority || 10 %>
+      <small>Higher priority rules are applied first (0-100)</small>
+    </div>
+
+    <!-- Description Contains Fields -->
+    <div id="description-fields" class="rule-specific-fields" style="<%= 'display: none;' unless @rule.rule_type == 'description_contains' %>">
+      <div class="form-group">
+        <%= f.label :pattern, 'Description Pattern' %>
+        <%= f.text_field :pattern, class: 'form-control', placeholder: 'e.g., amazon, starbucks' %>
+        <small>Matches if transaction description contains this text (case-insensitive)</small>
+      </div>
+    </div>
+
+    <!-- Amount Threshold Fields -->
+    <div id="amount-fields" class="rule-specific-fields" style="<%= 'display: none;' unless @rule.rule_type == 'amount_threshold' %>">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Operator</label>
+          <select name="categorization_rule[conditions][operator]" class="form-control">
+            <option value=">" <%= 'selected' if @rule.conditions&.dig('operator') == '>' %>>Greater than (>)</option>
+            <option value=">=" <%= 'selected' if @rule.conditions&.dig('operator') == '>=' %>>Greater than or equal (>=)</option>
+            <option value="<" <%= 'selected' if @rule.conditions&.dig('operator') == '<' %>>Less than (<)</option>
+            <option value="<=" <%= 'selected' if @rule.conditions&.dig('operator') == '<=' %>>Less than or equal (<=)</option>
+            <option value="==" <%= 'selected' if @rule.conditions&.dig('operator') == '==' %>>Equal to (==)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Threshold Amount</label>
+          <input type="number" step="0.01" name="categorization_rule[conditions][threshold]" 
+                 value="<%= @rule.conditions&.dig('threshold') %>" 
+                 class="form-control" placeholder="1000.00">
+          <small>e.g., 1000 for transactions over $1000</small>
+        </div>
+      </div>
+    </div>
+
+    <!-- Date Range Fields -->
+    <div id="date-fields" class="rule-specific-fields" style="<%= 'display: none;' unless @rule.rule_type == 'date_range' %>">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Start Date</label>
+          <input type="date" name="categorization_rule[conditions][start_date]" 
+                 value="<%= @rule.conditions&.dig('start_date') %>" 
+                 class="form-control">
+        </div>
+        <div class="form-group">
+          <label>End Date</label>
+          <input type="date" name="categorization_rule[conditions][end_date]" 
+                 value="<%= @rule.conditions&.dig('end_date') %>" 
+                 class="form-control">
+        </div>
+      </div>
+      <small>Matches transactions within this date range</small>
+    </div>
+
+    <div class="form-group">
+      <label>
+        <%= f.check_box :active, checked: @rule.active? %>
+        Active
+      </label>
+      <small>Only active rules are applied automatically</small>
+    </div>
+
+    <div class="form-actions">
+      <%= f.submit (@rule.new_record? ? 'Create Rule' : 'Update Rule'), class: 'btn btn-primary' %>
+      <%= link_to 'Cancel', categorization_rules_path, class: 'btn btn-secondary' %>
+    </div>
+  <% end %>
+</div>
+
+<script>
+function updateRuleFields() {
+  const ruleType = document.getElementById('rule-type-select').value;
+  const descFields = document.getElementById('description-fields');
+  const amountFields = document.getElementById('amount-fields');
+  const dateFields = document.getElementById('date-fields');
+
+  // Hide all first
+  descFields.style.display = 'none';
+  amountFields.style.display = 'none';
+  dateFields.style.display = 'none';
+
+  // Show relevant fields
+  if (ruleType === 'description_contains') {
+    descFields.style.display = 'block';
+  } else if (ruleType === 'amount_threshold') {
+    amountFields.style.display = 'block';
+  } else if (ruleType === 'date_range') {
+    dateFields.style.display = 'block';
+  }
+}
+
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', updateRuleFields);
+</script>
+
+<style>
+.form-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.form-container h1 {
+  margin-bottom: 30px;
+  color: #2c3e50;
+}
+
+.error-messages {
+  background: #fde8e8;
+  border: 1px solid #f5c6cb;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 20px;
+}
+
+.error-messages h3 {
+  color: #721c24;
+  margin: 0 0 10px 0;
+  font-size: 1em;
+}
+
+.error-messages ul {
+  margin: 0;
+  padding-left: 20px;
+  color: #721c24;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.form-group small {
+  display: block;
+  margin-top: 5px;
+  color: #7f8c8d;
+  font-size: 0.9em;
+}
+
+.form-control {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 1em;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: #3498db;
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.rule-specific-fields {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+  margin: 20px 0;
+}
+
+.form-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 30px;
+}
+
+.btn {
+  padding: 12px 24px;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-primary {
+  background: #3498db;
+  color: white;
+}
+
+.btn-primary:hover {
+  background: #2980b9;
+}
+
+.btn-secondary {
+  background: #95a5a6;
+  color: white;
+}
+
+.btn-secondary:hover {
+  background: #7f8c8d;
+}
+</style>

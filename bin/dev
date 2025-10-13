@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+if ! command -v foreman &> /dev/null
+then
+  echo "Installing foreman..."
+  gem install foreman
+fi
+
+# Use foreman to run both web server and background jobs
+exec foreman start -f Procfile.dev "$@"

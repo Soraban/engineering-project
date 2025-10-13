@@ -1,0 +1,345 @@
+<div class="import-container">
+  <h1>Import Transactions from CSV</h1>
+
+  <div class="import-instructions">
+    <h3>Instructions</h3>
+    <ul>
+      <li>Your CSV file must have headers: <code>date</code>, <code>description</code>, <code>amount</code>, <code>category</code></li>
+      <li>Supported date formats: YYYY-MM-DD, MM/DD/YYYY, DD/MM/YYYY, and more</li>
+      <li>Amounts can include currency symbols ($, €, £) and commas</li>
+      <li>Category is optional - rules will auto-categorize if left blank</li>
+      <li><strong>Large files (1000+ rows)</strong> will be processed in the background - you'll see a status page</li>
+      <li><strong>Small files (&lt; 1000 rows)</strong> will be processed immediately</li>
+    </ul>
+    
+    <div class="download-template">
+      <%= link_to '📥 Download Sample CSV Template', '/sample_transactions.csv', class: 'btn btn-secondary', download: true %>
+    </div>
+  </div>
+
+  <%= form_with url: import_transactions_path, method: :post, multipart: true, local: true, class: 'import-form', id: 'import-form' do |f| %>
+    <div class="form-group">
+      <%= f.label :file, 'Select CSV File' %>
+      <div class="file-input-wrapper">
+        <%= f.file_field :file, accept: '.csv', class: 'file-input', required: true %>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <%= f.submit 'Import Transactions', class: 'btn btn-primary btn-large', id: 'import-submit' %>
+      <%= link_to 'Cancel', transactions_path, class: 'btn btn-secondary' %>
+    </div>
+
+    <!-- Loading indicator -->
+    <div id="import-loading" class="import-loading" style="display: none;">
+      <div class="spinner"></div>
+      <p class="loading-text">Processing your import...</p>
+      <p class="loading-subtext">This may take a few moments for large files.</p>
+    </div>
+  <% end %>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const form = document.getElementById('import-form');
+      const submitButton = document.getElementById('import-submit');
+      const loadingDiv = document.getElementById('import-loading');
+      
+      if (form && submitButton && loadingDiv) {
+        form.addEventListener('submit', function(e) {
+          const fileInput = form.querySelector('input[type="file"]');
+          
+          // Only show spinner if file is selected
+          if (fileInput && fileInput.files.length > 0) {
+            // Show spinner immediately
+            loadingDiv.style.display = 'block';
+            submitButton.disabled = true;
+            submitButton.value = 'Processing...';
+            
+            // Hide the form to make spinner more prominent
+            form.querySelector('.form-group').style.display = 'none';
+            form.querySelector('.form-actions').style.display = 'none';
+          }
+        });
+      }
+    });
+  </script>
+
+  <div class="import-features">
+    <h3>Import Features</h3>
+    <div class="features-grid">
+      <div class="feature-card">
+        <h4>🔍 Edge Case Handling</h4>
+        <p>Handles missing fields, malformed data, and empty rows gracefully</p>
+      </div>
+      
+      <div class="feature-card">
+        <h4>🚫 Duplicate Detection</h4>
+        <p>Automatically flags duplicate transactions for your review</p>
+      </div>
+      
+      <div class="feature-card">
+        <h4>⚡ Auto-Categorization</h4>
+        <p>Your categorization rules will be automatically applied to imported transactions</p>
+      </div>
+      
+      <div class="feature-card">
+        <h4>🔔 Anomaly Detection</h4>
+        <p>Imported transactions are checked for unusual patterns and potential fraud</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Example Preview -->
+  <div class="example-section">
+    <h3>Example CSV Format</h3>
+    <pre class="csv-example">date,description,amount,category
+2024-01-15,Amazon Purchase - Electronics,299.99,Shopping
+2024-01-16,Whole Foods Market,67.50,Food & Dining
+2024-01-17,Shell Gas Station,45.00,Transportation
+2024-01-18,Netflix Subscription,15.99,Entertainment</pre>
+  </div>
+</div>
+
+<style>
+.import-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+h1 {
+  color: #2c3e50;
+  margin-bottom: 30px;
+}
+
+.import-instructions {
+  background: #e3f2fd;
+  padding: 25px;
+  border-radius: 8px;
+  margin-bottom: 30px;
+  border-left: 4px solid #2196f3;
+}
+
+.import-instructions h3 {
+  margin-top: 0;
+  color: #1565c0;
+}
+
+.import-instructions ul {
+  margin: 15px 0;
+  padding-left: 25px;
+}
+
+.import-instructions li {
+  margin: 8px 0;
+  color: #1976d2;
+}
+
+.import-instructions code {
+  background: white;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-family: 'Courier New', monospace;
+  color: #c0392b;
+}
+
+.download-template {
+  margin-top: 20px;
+}
+
+.import-form {
+  background: white;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  margin-bottom: 30px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: 600;
+  color: #2c3e50;
+  font-size: 1.1em;
+}
+
+.file-input-wrapper {
+  border: 2px dashed #3498db;
+  border-radius: 8px;
+  padding: 40px;
+  text-align: center;
+  background: #f8f9fa;
+  transition: all 0.3s;
+}
+
+.file-input-wrapper:hover {
+  background: #e3f2fd;
+  border-color: #2980b9;
+}
+
+.file-input {
+  width: 100%;
+  padding: 10px;
+  font-size: 1em;
+}
+
+.form-actions {
+  display: flex;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+.btn {
+  padding: 12px 24px;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-large {
+  padding: 16px 32px;
+  font-size: 1.1em;
+}
+
+.btn-primary {
+  background: #3498db;
+  color: white;
+}
+
+.btn-primary:hover {
+  background: #2980b9;
+}
+
+.btn-secondary {
+  background: #95a5a6;
+  color: white;
+}
+
+.btn-secondary:hover {
+  background: #7f8c8d;
+}
+
+.import-features {
+  background: white;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  margin-bottom: 30px;
+}
+
+.import-features h3 {
+  margin-top: 0;
+  color: #2c3e50;
+  margin-bottom: 20px;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.feature-card {
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border-top: 3px solid #3498db;
+}
+
+.feature-card h4 {
+  margin: 0 0 10px 0;
+  color: #2c3e50;
+  font-size: 1em;
+}
+
+.feature-card p {
+  margin: 0;
+  color: #7f8c8d;
+  font-size: 0.9em;
+  line-height: 1.5;
+}
+
+.example-section {
+  background: white;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.example-section h3 {
+  margin-top: 0;
+  color: #2c3e50;
+  margin-bottom: 15px;
+}
+
+.csv-example {
+  background: #2c3e50;
+  color: #ecf0f1;
+  padding: 20px;
+  border-radius: 6px;
+  overflow-x: auto;
+  font-family: 'Courier New', monospace;
+  font-size: 0.9em;
+  line-height: 1.6;
+}
+
+.anomalies-section {
+  margin-bottom: 30px;
+}
+
+.anomaly-card {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 15px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.quick-actions {
+  display: flex;
+  gap: 15px;
+}
+
+.import-loading {
+  text-align: center;
+  padding: 40px;
+  background: #fff3cd;
+  border: 2px solid #ffc107;
+  border-radius: 8px;
+  margin-top: 30px;
+}
+
+.spinner {
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #3498db;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 20px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading-text {
+  font-size: 1.2em;
+  font-weight: 600;
+  color: #2c3e50;
+  margin: 10px 0;
+}
+
+.loading-subtext {
+  color: #7f8c8d;
+  font-size: 0.95em;
+}
+</style>

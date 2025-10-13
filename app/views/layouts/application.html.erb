@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= content_for(:title) || "Soraban Challenge" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= action_cable_meta_tag %>
+
+    <%= yield :head %>
+
+    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
+    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
+
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/icon.png">
+
+    <%# Includes all stylesheet files in app/assets/stylesheets %>
+    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body>
+    <nav class="main-nav">
+      <div class="nav-container">
+        <div class="nav-brand">
+          <%= link_to '💰 Transaction Manager', root_path %>
+        </div>
+        
+        <div class="nav-links">
+          <%= link_to 'Dashboard', dashboard_path, class: 'nav-link' %>
+          <%= link_to 'Transactions', transactions_path, class: 'nav-link' %>
+          <%= link_to 'Review', review_dashboard_path, class: 'nav-link nav-link-review' %>
+          <%= link_to 'Rules', categorization_rules_path, class: 'nav-link' %>
+          <%= link_to 'Import', import_transactions_path, class: 'nav-link' %>
+        </div>
+      </div>
+    </nav>
+
+    <% if flash[:notice] %>
+      <div class="flash-notice"><%= flash[:notice] %></div>
+    <% end %>
+    
+    <% if flash[:alert] %>
+      <div class="flash-alert"><%= flash[:alert] %></div>
+    <% end %>
+
+    <main class="main-content">
+      <%= yield %>
+    </main>
+
+    <footer class="main-footer">
+      <p>Transaction Management System | <%= link_to 'Download Sample CSV', '/sample_transactions.csv', download: true %></p>
+    </footer>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        background: #f5f7fa;
+        color: #2c3e50;
+        line-height: 1.6;
+      }
+
+      .main-nav {
+        background: #2c3e50;
+        color: white;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+      }
+
+      .nav-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 60px;
+      }
+
+      .nav-brand a {
+        color: white;
+        text-decoration: none;
+        font-size: 1.3em;
+        font-weight: 700;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 5px;
+      }
+
+      .nav-link {
+        color: white;
+        text-decoration: none;
+        padding: 8px 16px;
+        border-radius: 6px;
+        transition: background 0.2s;
+        font-weight: 500;
+      }
+
+      .nav-link:hover {
+        background: rgba(255,255,255,0.1);
+      }
+
+      .nav-link-review {
+        background: #e74c3c;
+      }
+
+      .nav-link-review:hover {
+        background: #c0392b;
+      }
+
+      .flash-notice {
+        background: #d4edda;
+        border: 1px solid #c3e6cb;
+        color: #155724;
+        padding: 15px 20px;
+        margin: 20px auto;
+        max-width: 1400px;
+        border-radius: 6px;
+      }
+
+      .flash-alert {
+        background: #f8d7da;
+        border: 1px solid #f5c6cb;
+        color: #721c24;
+        padding: 15px 20px;
+        margin: 20px auto;
+        max-width: 1400px;
+        border-radius: 6px;
+      }
+
+      .main-content {
+        min-height: calc(100vh - 140px);
+        padding: 20px 0;
+      }
+
+      .main-footer {
+        background: #2c3e50;
+        color: white;
+        text-align: center;
+        padding: 20px;
+        margin-top: 40px;
+      }
+
+      .main-footer p {
+        margin: 0;
+      }
+
+      .main-footer a {
+        color: #3498db;
+        text-decoration: none;
+      }
+
+      .main-footer a:hover {
+        text-decoration: underline;
+      }
+
+      h1, h2, h3 {
+        color: #2c3e50;
+      }
+    </style>
+  </body>
+</html>

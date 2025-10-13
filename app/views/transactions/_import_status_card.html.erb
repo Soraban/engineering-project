@@ -1,0 +1,150 @@
+<div id="status-card">
+<% if status['status'] == 'queued' %>
+  <div class="status-queued">
+    <div class="spinner"></div>
+    <h2>Import Queued</h2>
+    <p class="subtitle">Your import will start momentarily</p>
+  </div>
+<% elsif status['status'] == 'processing' %>
+  <div class="status-processing">
+    <% if status['phase'] == 'importing' %>
+      <div class="phase-header">
+        <div class="spinner"></div>
+        <div class="phase-info">
+          <h2>Importing Transactions</h2>
+          <p class="subtitle">Processing your CSV file</p>
+        </div>
+      </div>
+      
+      <% if status['processed'] %>
+        <div class="progress-display">
+          <div class="big-number"><%= number_with_delimiter(status['processed']) %></div>
+          <div class="progress-label">Transactions Imported</div>
+        </div>
+      <% end %>
+      
+    <% elsif status['phase'] == 'anomaly_detection' %>
+      <div class="phase-header">
+        <div class="checkmark-icon">✓</div>
+        <div class="phase-info">
+          <h2>Import Complete!</h2>
+          <p class="subtitle"><%= number_with_delimiter(status['success']) %> transactions imported</p>
+        </div>
+      </div>
+      
+      <div class="progress-display secondary">
+        <div class="spinner-small"></div>
+        <div class="progress-info">
+          <div class="progress-label-large">Running Anomaly Detection</div>
+          <% if status['anomaly_batch'] && status['anomaly_total_batches'] %>
+            <div class="progress-bar-container">
+              <div class="progress-bar" style="width: <%= (status['anomaly_batch'].to_f / status['anomaly_total_batches'] * 100).round %>%"></div>
+            </div>
+            <div class="progress-text">Batch <%= status['anomaly_batch'] %> of <%= status['anomaly_total_batches'] %></div>
+          <% else %>
+            <div class="progress-text">Starting...</div>
+          <% end %>
+        </div>
+      </div>
+      
+    <% else %>
+      <div class="spinner"></div>
+      <h2>Processing...</h2>
+    <% end %>
+    
+    <% if status['started_at'] %>
+      <p class="timestamp">Started at <%= Time.parse(status['started_at']).strftime('%l:%M %p').strip %></p>
+    <% end %>
+  </div>
+<% elsif status['status'] == 'completed' %>
+  <div class="status-completed">
+    <!-- Success Header -->
+    <div class="completion-header">
+      <div class="success-circle">
+        <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+          <circle cx="40" cy="40" r="38" stroke="#27ae60" stroke-width="4" fill="white"/>
+          <path d="M25 40 L35 50 L55 30" stroke="#27ae60" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <h2 class="success-title">Import Complete!</h2>
+      <p class="success-subtitle">Your transactions have been successfully imported</p>
+    </div>
+    
+    <!-- Stats Grid -->
+    <div class="completion-stats">
+      <div class="stat-card stat-primary">
+        <div class="stat-icon">✓</div>
+        <div class="stat-content">
+          <div class="stat-number"><%= number_with_delimiter(status['success']) %></div>
+          <div class="stat-label">Transactions Imported</div>
+        </div>
+      </div>
+      
+      <% if status['errors']&.any? %>
+        <div class="stat-card stat-warning">
+          <div class="stat-icon">⚠</div>
+          <div class="stat-content">
+            <div class="stat-number"><%= status['errors'].count %></div>
+            <div class="stat-label">Rows Skipped</div>
+          </div>
+        </div>
+      <% end %>
+      
+      <% if status['phase'] == 'anomaly_detection_complete' %>
+        <div class="stat-card stat-info">
+          <div class="stat-icon">🔍</div>
+          <div class="stat-content">
+            <div class="stat-number">✓</div>
+            <div class="stat-label">Anomaly Detection Complete</div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    
+    <!-- Timestamp -->
+    <div class="completion-time">
+      Completed at <%= Time.parse(status['completed_at']).strftime('%l:%M %p on %B %e') %>
+    </div>
+    
+    <% if status['errors']&.any? %>
+      <div class="error-details">
+        <h3>⚠️ Skipped Rows</h3>
+        <p class="error-intro">The following rows could not be imported:</p>
+        <div class="error-list">
+          <% status['errors'].first(10).each_with_index do |error, index| %>
+            <div class="error-row">
+              <span class="error-number">#<%= index + 1 %></span>
+              <% parts = error.split(' - Row data: ') %>
+              <span class="error-reason"><%= parts[0] %></span>
+              <% if parts[1] %>
+                <span class="error-arrow">→</span>
+                <span class="error-data-inline"><%= parts[1] %></span>
+              <% end %>
+            </div>
+          <% end %>
+          <% if status['errors'].count > 10 %>
+            <div class="error-row more">
+              <span class="error-text">... and <%= status['errors'].count - 10 %> more errors</span>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+    
+    <div class="actions">
+      <%= link_to 'View Transactions', transactions_path, class: 'btn btn-primary' %>
+      <%= link_to 'Import Another File', import_transactions_path, class: 'btn btn-secondary' %>
+    </div>
+  </div>
+<% elsif status['status'] == 'failed' %>
+  <div class="status-failed">
+    <h2>❌ Import Failed</h2>
+    <p class="error-message"><%= status['error'] %></p>
+    <div class="actions">
+      <%= link_to 'Try Again', import_transactions_path, class: 'btn btn-primary' %>
+      <%= link_to 'Back to Transactions', transactions_path, class: 'btn btn-secondary' %>
+    </div>
+  </div>
+<% end %>
+</div>
+

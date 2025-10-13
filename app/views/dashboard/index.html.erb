@@ -1,0 +1,428 @@
+<div class="dashboard-container">
+  <h1>Transaction Dashboard</h1>
+
+  <!-- Statistics Overview -->
+  <div class="stats-grid">
+    <div class="stat-card">
+      <h3>Total Transactions</h3>
+      <p class="stat-number"><%= number_with_delimiter(@total_transactions) %></p>
+    </div>
+    
+    <div class="stat-card warning">
+      <h3>Uncategorized</h3>
+      <p class="stat-number"><%= number_with_delimiter(@uncategorized_count) %></p>
+      <%= link_to 'Review', transactions_path(uncategorized: true), class: 'stat-link' %>
+    </div>
+    
+    <div class="stat-card alert">
+      <h3>Flagged Transactions</h3>
+      <p class="stat-number"><%= number_with_delimiter(@flagged_count) %></p>
+      <%= link_to 'Review', review_dashboard_path(filter: 'flagged'), class: 'stat-link' %>
+    </div>
+    
+    <div class="stat-card critical">
+      <h3>Unresolved Anomalies</h3>
+      <p class="stat-number"><%= number_with_delimiter(@unresolved_anomalies_count) %></p>
+      <%= link_to 'Review', review_dashboard_path(filter: 'anomalies'), class: 'stat-link' %>
+    </div>
+  </div>
+
+  <!-- Anomaly Breakdown -->
+  <% if @anomalies_by_type.any? %>
+    <div class="section">
+      <h2>Anomalies by Type</h2>
+      <div class="anomaly-breakdown">
+        <% @anomalies_by_type.each do |type, count| %>
+          <div class="anomaly-item">
+            <span class="anomaly-label"><%= type.humanize %></span>
+            <span class="anomaly-count"><%= count %></span>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Anomalies by Severity</h2>
+      <div class="severity-breakdown">
+        <% @anomalies_by_severity.each do |severity, count| %>
+          <div class="severity-item severity-<%= severity %>">
+            <span class="severity-label"><%= severity.upcase %></span>
+            <span class="severity-count"><%= count %></span>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
+  <!-- Transactions Needing Review -->
+  <div class="section">
+    <h2>Transactions Needing Review</h2>
+    <% if @needs_review.any? %>
+      <div class="table-container">
+        <table class="transactions-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Description</th>
+              <th>Amount</th>
+              <th>Category</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @needs_review.each do |transaction| %>
+              <tr class="<%= 'flagged' if transaction.flagged? %>">
+                <td><%= transaction.date.strftime('%Y-%m-%d') %></td>
+                <td><%= truncate(transaction.description, length: 50) %></td>
+                <td class="amount"><%= number_to_currency(transaction.amount) %></td>
+                <td>
+                  <% if transaction.category %>
+                    <span class="category-badge"><%= transaction.category.name %></span>
+                  <% else %>
+                    <span class="badge-uncategorized">Uncategorized</span>
+                  <% end %>
+                </td>
+                <td>
+                  <span class="status-badge status-<%= transaction.status %>">
+                    <%= transaction.status.humanize %>
+                  </span>
+                  <% if transaction.flagged? %>
+                    <span class="badge-flagged">⚠ Flagged</span>
+                  <% end %>
+                </td>
+                <td>
+                  <%= link_to 'View', transaction_path(transaction), class: 'btn btn-sm' %>
+                  <%= link_to 'Edit', edit_transaction_path(transaction), class: 'btn btn-sm' %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+      <%= link_to 'View All Pending Reviews', review_dashboard_path, class: 'btn btn-primary' %>
+    <% else %>
+      <p class="empty-state">No transactions need review at this time! 🎉</p>
+    <% end %>
+  </div>
+
+  <!-- Category Distribution -->
+  <% if @category_stats.any? %>
+    <div class="section">
+      <h2>Top Categories</h2>
+      <div class="category-stats">
+        <% @category_stats.each do |stat| %>
+          <div class="category-stat-item">
+            <div class="category-name"><%= stat.category %></div>
+            <div class="category-details">
+              <span class="transaction-count"><%= stat.count %> transactions</span>
+              <span class="total-amount"><%= number_to_currency(stat.total) %></span>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
+  <!-- Quick Actions -->
+  <div class="section quick-actions">
+    <h2>Quick Actions</h2>
+    <div class="action-buttons">
+      <%= link_to '+ Add Transaction', new_transaction_path, class: 'btn btn-primary' %>
+      <%= link_to '📤 Import CSV', import_transactions_path, class: 'btn btn-secondary' %>
+      <%= link_to '⚙️ Manage Rules', categorization_rules_path, class: 'btn btn-secondary' %>
+      <%= link_to '📊 All Transactions', transactions_path, class: 'btn btn-secondary' %>
+    </div>
+  </div>
+</div>
+
+<style>
+.dashboard-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+h1 {
+  color: #2c3e50;
+  margin-bottom: 30px;
+}
+
+h2 {
+  color: #34495e;
+  margin-bottom: 20px;
+  font-size: 1.5em;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+.stat-card {
+  background: white;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  border-left: 4px solid #3498db;
+}
+
+.stat-card.warning {
+  border-left-color: #f39c12;
+}
+
+.stat-card.alert {
+  border-left-color: #e74c3c;
+}
+
+.stat-card.critical {
+  border-left-color: #c0392b;
+}
+
+.stat-card h3 {
+  margin: 0 0 10px 0;
+  font-size: 0.9em;
+  color: #7f8c8d;
+  text-transform: uppercase;
+}
+
+.stat-number {
+  font-size: 2.5em;
+  font-weight: bold;
+  color: #2c3e50;
+  margin: 10px 0;
+}
+
+.stat-link {
+  display: inline-block;
+  margin-top: 10px;
+  color: #3498db;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.stat-link:hover {
+  text-decoration: underline;
+}
+
+.section {
+  background: white;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  margin-bottom: 30px;
+}
+
+.anomaly-breakdown, .severity-breakdown {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+}
+
+.anomaly-item, .severity-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 6px;
+  border-left: 3px solid #3498db;
+}
+
+.severity-item.severity-low {
+  border-left-color: #27ae60;
+}
+
+.severity-item.severity-medium {
+  border-left-color: #f39c12;
+}
+
+.severity-item.severity-high {
+  border-left-color: #e74c3c;
+}
+
+.severity-item.severity-critical {
+  border-left-color: #c0392b;
+}
+
+.anomaly-label, .severity-label {
+  font-weight: 600;
+}
+
+.anomaly-count, .severity-count {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+.table-container {
+  overflow-x: auto;
+  margin-bottom: 20px;
+}
+
+.transactions-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.transactions-table th {
+  background: #f8f9fa;
+  padding: 12px;
+  text-align: left;
+  font-weight: 600;
+  border-bottom: 2px solid #dee2e6;
+}
+
+.transactions-table td {
+  padding: 12px;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.transactions-table tr:hover {
+  background: #f8f9fa;
+}
+
+.transactions-table tr.flagged {
+  background: #fff3cd;
+}
+
+.amount {
+  font-weight: 600;
+  text-align: right;
+}
+
+.category-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  background: #3498db;
+  color: white;
+  border-radius: 12px;
+  font-size: 0.85em;
+}
+
+.badge-uncategorized {
+  display: inline-block;
+  padding: 4px 12px;
+  background: #95a5a6;
+  color: white;
+  border-radius: 12px;
+  font-size: 0.85em;
+}
+
+.badge-flagged {
+  display: inline-block;
+  padding: 4px 8px;
+  background: #e74c3c;
+  color: white;
+  border-radius: 12px;
+  font-size: 0.85em;
+  margin-left: 5px;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 0.85em;
+}
+
+.status-badge.status-pending {
+  background: #f39c12;
+  color: white;
+}
+
+.status-badge.status-reviewed {
+  background: #27ae60;
+  color: white;
+}
+
+.status-badge.status-flagged {
+  background: #e74c3c;
+  color: white;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 40px;
+  color: #7f8c8d;
+  font-size: 1.2em;
+}
+
+.category-stats {
+  display: grid;
+  gap: 15px;
+}
+
+.category-stat-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 6px;
+}
+
+.category-name {
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.category-details {
+  display: flex;
+  gap: 20px;
+}
+
+.transaction-count {
+  color: #7f8c8d;
+}
+
+.total-amount {
+  font-weight: 600;
+  color: #27ae60;
+}
+
+.quick-actions .action-buttons {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.btn-sm {
+  padding: 6px 12px;
+  font-size: 0.9em;
+}
+
+.btn-primary {
+  background: #3498db;
+  color: white;
+}
+
+.btn-primary:hover {
+  background: #2980b9;
+}
+
+.btn-secondary {
+  background: #95a5a6;
+  color: white;
+}
+
+.btn-secondary:hover {
+  background: #7f8c8d;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+</style>

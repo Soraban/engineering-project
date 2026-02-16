@@ -13,10 +13,20 @@ module Api
       if transaction.save
         render json: transaction, status: :created
       else
-        render json: { errors: transaction.errors.full_messages }, status: :unprocessable_entity
+        render json: { errors: transaction.errors.full_messages }, status: :unprocessable_content
       end
     end
 
+    def import
+      file = params[:file]
+      return render json: { errors: ["No file uploaded"] }, status: :unprocessable_content if file.nil?
+    
+      result = Transactions::CsvImporter.new(file: file).call
+      render json: result, status: :ok
+    rescue Transactions::CsvImporter::MalformedCsvError
+      render json: { errors: ["Invalid CSV file"] }, status: :unprocessable_content
+    end
+    
     private
 
     def transaction_params

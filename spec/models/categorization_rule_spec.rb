@@ -13,7 +13,7 @@ RSpec.describe CategorizationRule, type: :model do
       expect(subject).not_to be_valid
       expect(subject.errors[:pattern]).to include("can't be blank")
     end
-  
+
     it "is invalid without a category" do
       subject.category = nil
       expect(subject).not_to be_valid

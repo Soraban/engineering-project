@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_02_17_214216) do
+ActiveRecord::Schema[8.0].define(version: 2026_02_17_222104) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -33,5 +33,8 @@ ActiveRecord::Schema[8.0].define(version: 2026_02_17_214216) do
     t.datetime "updated_at", null: false
     t.boolean "flagged", default: false, null: false
     t.string "flag_reason"
+    t.index ["category"], name: "index_transactions_on_category"
+    t.index ["date", "amount", "description"], name: "idx_transactions_dedupe"
+    t.index ["flagged"], name: "index_transactions_on_flagged"
   end
 end

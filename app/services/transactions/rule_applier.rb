@@ -21,6 +21,15 @@ module Transactions
 
     private
 
+    def add_flag(reason)
+      existing = @transaction.flag_reason.to_s.split(",").map(&:strip).reject(&:blank?)
+      return if existing.include?(reason)
+
+      existing << reason
+      @transaction.flagged = true
+      @transaction.flag_reason = existing.join(",")
+    end
+
     def apply_description_contains(rule)
       return unless @transaction.category.blank?
       return if rule.pattern.blank? || rule.category.blank?
@@ -35,8 +44,7 @@ module Transactions
       return if @transaction.amount.nil?
 
       if @transaction.amount > rule.min_amount
-        @transaction.flagged = true
-        @transaction.flag_reason = "High Value"
+        add_flag(rule.category.presence || "High Value")
       end
     end
   end

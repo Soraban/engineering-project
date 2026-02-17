@@ -4,5 +4,6 @@ Rails.application.routes.draw do
     resources :transactions, only: [ :index, :create ]
     post "transactions/import", to: "transactions#import"
     patch "transactions/bulk_update", to: "transactions#bulk_update"
+    resources :rules, only: [ :index, :create ]
   end
 end

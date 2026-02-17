@@ -12,7 +12,8 @@ module Api
       Transactions::RuleApplier.new(transaction).call
 
       if transaction.save
-        render json: transaction, status: :created
+        Transactions::AnomalyDetector.new(transaction).call
+        render json: transaction.reload, status: :created
       else
         render json: { errors: transaction.errors.full_messages }, status: :unprocessable_content
       end

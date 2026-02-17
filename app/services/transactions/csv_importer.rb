@@ -13,6 +13,8 @@ module Transactions
       skipped_duplicates = 0
       row_errors = []
 
+      amount_stats = Transactions::AnomalyDetector.amount_stats
+
       CSV.foreach(@file.path, headers: true).with_index(2) do |row, line_no|
         attrs = normalize_row(row)
 
@@ -30,20 +32,18 @@ module Transactions
         Transactions::RuleApplier.new(tx).call
 
         if tx.save
+          Transactions::AnomalyDetector.call(tx, amount_stats: amount_stats)
           created += 1
         else
           row_errors << { line: line_no, errors: tx.errors.full_messages, row: row.to_h }
         end
       end
 
-      {
-        created: created,
-        skipped_duplicates: skipped_duplicates,
-        row_errors: row_errors
-      }
+      { created: created, skipped_duplicates: skipped_duplicates, row_errors: row_errors }
     rescue CSV::MalformedCSVError
       raise MalformedCsvError
     end
+
 
 
     class MalformedCsvError < StandardError; end

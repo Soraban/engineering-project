@@ -27,6 +27,7 @@ module Transactions
         end
 
         tx = Transaction.new(attrs.slice(:date, :description, :amount, :category))
+        Transactions::RuleApplier.new(tx).call
 
         if tx.save
           created += 1

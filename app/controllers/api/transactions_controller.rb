@@ -9,6 +9,7 @@ module Api
 
     def create
       transaction = Transaction.new(transaction_params)
+      Transactions::RuleApplier.new(transaction).call
 
       if transaction.save
         render json: transaction, status: :created

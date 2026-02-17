@@ -39,4 +39,43 @@ RSpec.describe "Api::Transactions", type: :request do
       expect(response).to have_http_status(:unprocessable_content)
     end
   end
+
+  describe "GET /api/transactions pagination" do
+    before do
+      5.times do |i|
+        Transaction.create!(
+          date: Date.today,
+          description: "tx#{i}",
+          amount: 10
+        )
+      end
+    end
+  
+    it "respects limit parameter" do
+      get "/api/transactions", params: { limit: 2 }
+  
+      expect(response).to have_http_status(:ok)
+      body = JSON.parse(response.body)
+  
+      expect(body.length).to eq(2)
+    end
+  
+    it "respects offset parameter" do
+      get "/api/transactions", params: { limit: 2, offset: 2 }
+  
+      expect(response).to have_http_status(:ok)
+      body = JSON.parse(response.body)
+  
+      expect(body.length).to eq(2)
+    end
+  
+    it "caps limit to max allowed value" do
+      get "/api/transactions", params: { limit: 10_000 }
+  
+      expect(response).to have_http_status(:ok)
+      body = JSON.parse(response.body)
+  
+      expect(body.length).to be <= 500
+    end
+  end  
 end

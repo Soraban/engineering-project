@@ -3,7 +3,14 @@ module Api
     DEFAULT_PAGE_SIZE = 100
 
     def index
-      transactions = Transaction.order(date: :desc, created_at: :desc).limit(DEFAULT_PAGE_SIZE)
+      limit  = (params[:limit] || DEFAULT_PAGE_SIZE).to_i.clamp(1, 500)
+      offset = (params[:offset] || 0).to_i
+
+      transactions = Transaction
+        .order(date: :desc, created_at: :desc)
+        .limit(limit)
+        .offset(offset)
+      
       render json: transactions
     end
 

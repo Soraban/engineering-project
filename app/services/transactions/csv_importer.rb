@@ -4,7 +4,6 @@ require "csv"
 
 module Transactions
   class CsvImporter
-
     def initialize(file:)
       @file = file
     end
@@ -13,29 +12,29 @@ module Transactions
       created = 0
       skipped_duplicates = 0
       row_errors = []
-    
+
       CSV.foreach(@file.path, headers: true).with_index(2) do |row, line_no|
         attrs = normalize_row(row)
-    
+
         if attrs[:errors].any?
           row_errors << { line: line_no, errors: attrs[:errors] }
           next
         end
-    
+
         if Transaction.exists?(date: attrs[:date], description: attrs[:description], amount: attrs[:amount])
           skipped_duplicates += 1
           next
         end
-    
+
         tx = Transaction.new(attrs.slice(:date, :description, :amount, :category))
-    
+
         if tx.save
           created += 1
         else
           row_errors << { line: line_no, errors: tx.errors.full_messages, row: row.to_h }
         end
       end
-    
+
       {
         created: created,
         skipped_duplicates: skipped_duplicates,
@@ -44,7 +43,7 @@ module Transactions
     rescue CSV::MalformedCSVError
       raise MalformedCsvError
     end
-    
+
 
     class MalformedCsvError < StandardError; end
 

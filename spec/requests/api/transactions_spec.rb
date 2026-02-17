@@ -36,7 +36,7 @@ RSpec.describe "Api::Transactions", type: :request do
         transaction: { description: "Missing fields" }
       }
 
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
     end
   end
 end

@@ -9,7 +9,7 @@ RSpec.describe "Transactions CSV import", type: :request do
         2026-02-16,Lunch,12.50,
       CSV
 
-      file = Tempfile.new(["transactions", ".csv"])
+      file = Tempfile.new([ "transactions", ".csv" ])
       file.write(csv)
       file.rewind
 
@@ -36,7 +36,7 @@ RSpec.describe "Transactions CSV import", type: :request do
     it "returns an error for malformed csv" do
       bad_csv = "date,description,amount\n\"unclosed"
 
-      file = Tempfile.new(["bad", ".csv"])
+      file = Tempfile.new([ "bad", ".csv" ])
       file.write(bad_csv)
       file.rewind
 

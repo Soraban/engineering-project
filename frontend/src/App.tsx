@@ -1,17 +1,20 @@
 import { useEffect, useState } from "react"
-import { createTransaction, listTransactions, type Transaction } from "./api"
+import { createTransaction, listTransactions, importTransactionsCsv, type Transaction, type ImportResult } from "./api"
 import { formatCurrency } from "./utils/money"
 import "./App.css"
 
 export default function App() {
   const [transactions, setTransactions] = useState<Transaction[]>([])
+  const [importResult, setImportResult] = useState<ImportResult | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [csvFile, setCsvFile] = useState<File | null>(null)
 
   const [date, setDate] = useState("")
   const [description, setDescription] = useState("")
   const [amount, setAmount] = useState("")
   const [category, setCategory] = useState("")
+  const [importing, setImporting] = useState(false)
 
   async function refresh() {
     setError(null)
@@ -50,6 +53,27 @@ export default function App() {
     }
   }
 
+  async function onImport(e: React.FormEvent) {
+    e.preventDefault()
+    if (!csvFile) return
+  
+    setError(null)
+    setImportResult(null)
+    setImporting(true)
+  
+    try {
+      const result = await importTransactionsCsv(csvFile)
+      setImportResult(result)
+      setCsvFile(null)
+      await refresh()
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Unknown error")
+    } finally {
+      setImporting(false)
+    }
+  }
+  
+
   return (
     <div className="container">
       <h1>Bookkeeping</h1>
@@ -86,6 +110,54 @@ export default function App() {
         </form>
 
         {error && <p className="error">{error}</p>}
+      </section>
+      <section className="card">
+        <h2>Import CSV</h2>
+
+        <form onSubmit={onImport}>
+          <div className="formGrid" style={{ gridTemplateColumns: "2fr 1fr" }}>
+            <label className="label">
+              CSV file (headers: date, description, amount, category)
+              <input
+                className="input"
+                type="file"
+                accept=".csv,text/csv"
+                onChange={(e) => setCsvFile(e.target.files?.[0] ?? null)}
+              />
+            </label>
+
+            <div className="actions" style={{ marginTop: 0, alignSelf: "end" }}>
+              <button className="button" type="submit" disabled={!csvFile || importing}>
+                {importing ? "Importing…" : "Import"}
+              </button>
+            </div>
+          </div>
+        </form>
+
+        {importResult && (
+          <div style={{ marginTop: 12 }}>
+            <p>
+              Imported <strong>{importResult.created}</strong> transactions.{" "}
+              Skipped <strong>{importResult.skipped_duplicates}</strong> duplicates.{" "}
+              <strong>{importResult.row_errors.length}</strong> rows had errors.
+            </p>
+
+            {importResult.row_errors.length > 0 && (
+              <>
+                <p className="error">
+                  {importResult.row_errors.length} row(s) had errors:
+                </p>
+                <ul>
+                  {importResult.row_errors.slice(0, 5).map((re) => (
+                    <li key={re.line}>
+                      Line {re.line}: {re.errors.join(", ")}
+                    </li>
+                  ))}
+                </ul>
+              </>
+            )}
+          </div>
+        )}
       </section>
 
       <section className="card">

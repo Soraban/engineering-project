@@ -1,0 +1,8 @@
+date,description,amount,category
+2026-02-16,Coffee,5.99,Food
+2026-02-16,Lunch,12.50,
+,Missing Date,10.00,Misc
+2026-02-16,Bad Amount,abc,Errors
+2026-02-16,Duplicate with same price,5.99,Food
+2026-02-16,coffee,5.99,Food
+2026-02-16,COFFEE,5.99,Food

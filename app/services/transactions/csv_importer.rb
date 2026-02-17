@@ -51,10 +51,10 @@ module Transactions
     private
 
     def normalize_row(row)
-      raw = row.to_h.transform_keys { |k| k.to_s.strip.downcase }
+      raw = row.to_h.transform_keys { |k| normalize_description(k) }
 
       date_str = raw["date"]
-      desc     = raw["description"]
+      desc     = normalize_description(raw["description"])
       amt_str  = raw["amount"]
       category = raw["category"]
 
@@ -71,11 +71,16 @@ module Transactions
 
       {
         date: date,
-        description: desc&.strip,
+        description: desc,
         amount: amount,
         category: category&.strip,
         errors: errors
       }
+    end
+
+    def normalize_description(value)
+      return nil if value.blank?
+      value.to_s.strip.downcase
     end
 
     def parse_date(value)

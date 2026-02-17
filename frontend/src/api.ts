@@ -14,6 +14,29 @@ export async function listTransactions(): Promise<Transaction[]> {
   return res.json()
 }
 
+export type ImportResult = {
+  created: number
+  skipped_duplicates: number
+  row_errors: Array<{ line: number; errors: string[] }>
+}
+
+export async function importTransactionsCsv(file: File): Promise<ImportResult> {
+  const form = new FormData()
+  form.append("file", file)
+
+  const res = await fetch("/api/transactions/import", {
+    method: "POST",
+    body: form,
+  })
+
+  if (!res.ok) {
+    const body = await res.json().catch(() => ({}))
+    throw new Error(body?.errors?.join(", ") || `Import failed (${res.status})`)
+  }
+
+  return res.json()
+}
+
 export async function createTransaction(input: {
   date: string
   description: string

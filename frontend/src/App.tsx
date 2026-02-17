@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { createTransaction, listTransactions, importTransactionsCsv, type Transaction, type ImportResult } from "./api"
+import { bulkCategorize, createTransaction, listTransactions, importTransactionsCsv, type Transaction, type ImportResult } from "./api"
 import { formatCurrency } from "./utils/money"
 import "./App.css"
 
@@ -9,6 +9,9 @@ export default function App() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [csvFile, setCsvFile] = useState<File | null>(null)
+  const [selectedIds, setSelectedIds] = useState<Set<number>>(new Set())
+  const [bulkCategory, setBulkCategory] = useState("")
+  const [bulkUpdating, setBulkUpdating] = useState(false)
 
   const [date, setDate] = useState("")
   const [description, setDescription] = useState("")
@@ -33,6 +36,18 @@ export default function App() {
     refresh()
   }, [])
 
+  function toggleSelected(id: number) {
+    setSelectedIds((prev) => {
+      const next = new Set(prev)
+      next.has(id) ? next.delete(id) : next.add(id)
+      return next
+    })
+  }
+  
+  function clearSelection() {
+    setSelectedIds(new Set())
+  }
+  
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault()
     setError(null)
@@ -72,7 +87,35 @@ export default function App() {
       setImporting(false)
     }
   }
+
+  async function onBulkCategorize(e: React.FormEvent) {
+    e.preventDefault()
+    setError(null)
   
+    const ids = Array.from(selectedIds)
+    if (ids.length === 0) {
+      setError("No transactions selected")
+      return
+    }
+  
+    const category = bulkCategory.trim()
+    if (category.length === 0) {
+      setError("Category is required")
+      return
+    }
+  
+    setBulkUpdating(true)
+    try {
+      await bulkCategorize({ transactionIds: ids, category })
+      setBulkCategory("")
+      clearSelection()
+      await refresh()
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Unknown error")
+    } finally {
+      setBulkUpdating(false)
+    }
+  }
 
   return (
     <div className="container">
@@ -161,6 +204,30 @@ export default function App() {
       </section>
 
       <section className="card">
+        <h2>Bulk categorize</h2>
+
+        <form onSubmit={onBulkCategorize}>
+          <div className="formGrid" style={{ gridTemplateColumns: "2fr 1fr" }}>
+            <label className="label">
+              Category for selected ({selectedIds.size})
+              <input
+                className="input"
+                value={bulkCategory}
+                onChange={(e) => setBulkCategory(e.target.value)}
+                placeholder="Food"
+              />
+            </label>
+
+            <div className="actions" style={{ marginTop: 0, alignSelf: "end" }}>
+              <button className="button" type="submit" disabled={bulkUpdating || selectedIds.size === 0}>
+                {bulkUpdating ? "Applying…" : "Apply"}
+              </button>
+            </div>
+          </div>
+        </form>
+      </section>
+
+      <section className="card">
         <h2>Transactions</h2>
 
         {loading ? (
@@ -171,6 +238,7 @@ export default function App() {
           <table className="table">
             <thead>
               <tr>
+                <th style={{ width: "1%" }}></th>
                 <th align="left">Date</th>
                 <th align="left">Description</th>
                 <th align="right">Amount</th>
@@ -180,6 +248,13 @@ export default function App() {
             <tbody>
               {transactions.map((t) => (
                 <tr key={t.id}>
+                  <td>
+                    <input
+                      type="checkbox"
+                      checked={selectedIds.has(t.id)}
+                      onChange={() => toggleSelected(t.id)}
+                    />
+                  </td>
                   <td className="mono">{t.date}</td>
                   <td>{t.description}</td>
                   <td className="mono" style={{ textAlign: "right" }}>{formatCurrency(t.amount)}</td>

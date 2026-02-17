@@ -37,6 +37,25 @@ export async function importTransactionsCsv(file: File): Promise<ImportResult> {
   return res.json()
 }
 
+export async function bulkCategorize(input: { transactionIds: number[]; category: string }): Promise<{ updated: number }> {
+  const res = await fetch("/api/transactions/bulk_update", {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      transaction_ids: input.transactionIds,
+      category: input.category,
+    }),
+  })
+
+  if (!res.ok) {
+    const body = await res.json().catch(() => ({}))
+    throw new Error(body?.errors?.join(", ") || `Bulk update failed (${res.status})`)
+  }
+
+  return res.json()
+}
+
+
 export async function createTransaction(input: {
   date: string
   description: string

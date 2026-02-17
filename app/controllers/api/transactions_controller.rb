@@ -19,14 +19,39 @@ module Api
 
     def import
       file = params[:file]
-      return render json: { errors: ["No file uploaded"] }, status: :unprocessable_content if file.nil?
-    
+      return render json: { errors: [ "No file uploaded" ] }, status: :unprocessable_content if file.nil?
+
       result = Transactions::CsvImporter.new(file: file).call
       render json: result, status: :ok
     rescue Transactions::CsvImporter::MalformedCsvError
-      render json: { errors: ["Invalid CSV file"] }, status: :unprocessable_content
+      render json: { errors: [ "Invalid CSV file" ] }, status: :unprocessable_content
     end
-    
+
+    def bulk_update
+      ids = Array(params[:transaction_ids])
+        .filter_map { |id| Integer(id, exception: false) }
+        .uniq
+
+      category = params[:category].to_s
+
+      if ids.empty?
+        return render json: { errors: [ "No transactions selected" ] }, status: :unprocessable_content
+      end
+
+      # Require category for bulk update.
+      if category.strip.empty?
+        return render json: { errors: [ "Category is required" ] }, status: :unprocessable_content
+      end
+
+      updated_count =
+        Transaction
+          .where(id: ids)
+          .update_all(category: category.strip, updated_at: Time.current)
+
+      render json: { updated: updated_count }, status: :ok
+    end
+
+
     private
 
     def transaction_params

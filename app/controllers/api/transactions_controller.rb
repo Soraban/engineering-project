@@ -10,7 +10,7 @@ module Api
         .order(date: :desc, created_at: :desc)
         .limit(limit)
         .offset(offset)
-      
+
       render json: transactions
     end
 
@@ -60,11 +60,51 @@ module Api
       render json: { updated: updated_count }, status: :ok
     end
 
+    def review
+      limit  = (params[:limit] || DEFAULT_PAGE_SIZE).to_i.clamp(1, 500)
+
+      flagged = Transaction.where(flagged: true)
+                           .order(date: :desc, created_at: :desc)
+                           .limit(limit)
+
+      uncategorized = Transaction.where(category: [ nil, "" ])
+                                 .order(date: :desc, created_at: :desc)
+                                 .limit(limit)
+
+      render json: { flagged: flagged, uncategorized: uncategorized }, status: :ok
+    end
+
+    def update
+      transaction = Transaction.find(params[:id])
+
+      flagged_param_present = params[:transaction]&.key?(:flagged)
+      flagged_cast = ActiveModel::Type::Boolean.new.cast(params.dig(:transaction, :flagged))
+      approving = flagged_param_present && (flagged_cast == false)
+
+      if transaction.update(transaction_params)
+        if approving
+          transaction.update!(flagged: false, flag_reason: nil)
+        else
+          Transactions::RuleApplier.new(transaction).call
+          transaction.save!
+          Transactions::AnomalyDetector.new(transaction).call
+        end
+
+        render json: transaction.reload, status: :ok
+      else
+        render json: { errors: transaction.errors.full_messages }, status: :unprocessable_content
+      end
+    end
+
+    def destroy
+      Transaction.find(params[:id]).destroy!
+      head :no_content
+    end
 
     private
 
     def transaction_params
-      params.require(:transaction).permit(:date, :description, :amount, :category)
+      params.require(:transaction).permit(:date, :description, :amount, :category, :flagged)
     end
   end
 end

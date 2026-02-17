@@ -49,7 +49,7 @@ module Transactions
       desc = @tx.description.to_s.strip
       desc.blank? || desc.length < 3 || @tx.date.blank? || @tx.amount.blank?
     end
-     
+
 
     def potential_duplicate?
       Transaction

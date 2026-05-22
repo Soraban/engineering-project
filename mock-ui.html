@@ -1,0 +1,1165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Soraban Bookkeeping — Mock UI</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #F7F6F3;
+    --surface: #FFFFFF;
+    --surface2: #F0EFEBs;
+    --border: #E2E0DA;
+    --border2: #CDCBC4;
+    --text: #1A1917;
+    --text2: #6B6860;
+    --text3: #9C9A92;
+    --accent: #1C5CFF;
+    --accent-light: #EEF2FF;
+    --amber: #D97706;
+    --amber-light: #FEF3C7;
+    --red: #DC2626;
+    --red-light: #FEF2F2;
+    --green: #16A34A;
+    --green-light: #F0FDF4;
+    --purple: #7C3AED;
+    --purple-light: #F5F3FF;
+    --teal: #0D9488;
+    --teal-light: #F0FDFA;
+    --nav-w: 220px;
+    --font: 'DM Sans', sans-serif;
+    --mono: 'DM Mono', monospace;
+  }
+
+  body { font-family: var(--font); background: var(--bg); color: var(--text); min-height: 100vh; display: flex; font-size: 14px; }
+
+  /* SIDEBAR NAV */
+  .sidebar {
+    width: var(--nav-w);
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    padding: 0;
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    display: flex; flex-direction: column;
+  }
+
+  .logo {
+    padding: 20px 20px 16px;
+    border-bottom: 1px solid var(--border);
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -0.3px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .logo-mark {
+    width: 28px; height: 28px;
+    background: var(--text);
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .logo-mark svg { color: white; }
+
+  .nav-section { padding: 12px 10px 4px; }
+  .nav-label { font-size: 10px; font-weight: 600; letter-spacing: 0.8px; color: var(--text3); text-transform: uppercase; padding: 0 10px 6px; }
+  .nav-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 8px 10px; border-radius: 7px;
+    font-size: 13.5px; font-weight: 400; color: var(--text2);
+    cursor: pointer; transition: all 0.1s;
+    text-decoration: none;
+    user-select: none;
+    margin-bottom: 1px;
+  }
+  .nav-item:hover { background: var(--bg); color: var(--text); }
+  .nav-item.active { background: var(--accent-light); color: var(--accent); font-weight: 500; }
+  .nav-item svg { opacity: 0.7; flex-shrink: 0; }
+  .nav-item.active svg { opacity: 1; }
+  .nav-badge {
+    margin-left: auto;
+    font-size: 11px; font-weight: 600;
+    background: var(--amber-light); color: var(--amber);
+    border-radius: 10px; padding: 1px 7px;
+  }
+  .nav-badge.red { background: var(--red-light); color: var(--red); }
+
+  .nav-footer {
+    margin-top: auto;
+    padding: 12px 10px;
+    border-top: 1px solid var(--border);
+  }
+  .user-pill {
+    display: flex; align-items: center; gap: 10px;
+    padding: 8px 10px; border-radius: 7px;
+    cursor: pointer;
+  }
+  .user-pill:hover { background: var(--bg); }
+  .avatar {
+    width: 30px; height: 30px; border-radius: 50%;
+    background: linear-gradient(135deg, #3B82F6, #8B5CF6);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 600; color: white; flex-shrink: 0;
+  }
+  .user-info { flex: 1; min-width: 0; }
+  .user-name { font-size: 13px; font-weight: 500; }
+  .user-role { font-size: 11px; color: var(--text3); }
+
+  /* MAIN CONTENT */
+  .main {
+    margin-left: var(--nav-w);
+    flex: 1; display: flex; flex-direction: column;
+  }
+
+  /* SCREENS */
+  .screen { display: none; flex-direction: column; min-height: 100vh; }
+  .screen.active { display: flex; }
+
+  /* PAGE HEADER */
+  .page-header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 28px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .page-title { font-size: 18px; font-weight: 600; letter-spacing: -0.3px; flex: 1; }
+  .page-subtitle { font-size: 13px; color: var(--text2); font-weight: 400; }
+
+  /* BUTTONS */
+  .btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 7px 14px; border-radius: 7px;
+    font-size: 13px; font-weight: 500; font-family: var(--font);
+    cursor: pointer; border: 1px solid var(--border2);
+    background: var(--surface); color: var(--text);
+    transition: all 0.1s; white-space: nowrap;
+  }
+  .btn:hover { background: var(--bg); }
+  .btn:active { transform: scale(0.98); }
+  .btn-primary { background: var(--text); color: white; border-color: var(--text); }
+  .btn-primary:hover { background: #333; }
+  .btn-danger { background: var(--red-light); color: var(--red); border-color: #FECACA; }
+  .btn-success { background: var(--green-light); color: var(--green); border-color: #BBF7D0; }
+  .btn-sm { padding: 4px 10px; font-size: 12px; }
+  .btn-xs { padding: 3px 8px; font-size: 11px; border-radius: 5px; }
+
+  /* FILTER BAR */
+  .filter-bar {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 28px;
+    display: flex; align-items: center; gap: 8px;
+    flex-wrap: wrap;
+  }
+  .filter-input {
+    display: flex; align-items: center; gap: 6px;
+    border: 1px solid var(--border); border-radius: 7px;
+    padding: 6px 10px; background: var(--surface);
+    font-family: var(--font); font-size: 13px; color: var(--text);
+    outline: none;
+  }
+  input.filter-input, select.filter-input { cursor: text; }
+  select.filter-input { cursor: pointer; appearance: none; padding-right: 24px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%236B6860'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 8px center; }
+  input.filter-input:focus, select.filter-input:focus { border-color: var(--accent); box-shadow: 0 0 0 2px rgba(28,92,255,0.1); }
+  .search-input { width: 220px; }
+
+  /* TABLE */
+  .table-container { flex: 1; overflow: auto; padding: 0; }
+  table { width: 100%; border-collapse: collapse; }
+  thead { position: sticky; top: 0; z-index: 10; background: var(--surface); }
+  th {
+    text-align: left; font-size: 11.5px; font-weight: 600;
+    letter-spacing: 0.3px; color: var(--text3); text-transform: uppercase;
+    padding: 10px 16px; border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+  }
+  td { padding: 10px 16px; border-bottom: 1px solid var(--border); font-size: 13.5px; vertical-align: middle; }
+  tr:hover td { background: #FAFAF8; }
+  tr.flagged td { background: #FFFBF0; }
+  tr.flagged td:first-child { border-left: 3px solid var(--amber); }
+
+  .cb { width: 16px; height: 16px; cursor: pointer; accent-color: var(--accent); }
+
+  /* BADGES & PILLS */
+  .badge {
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 2px 8px; border-radius: 20px;
+    font-size: 11.5px; font-weight: 500; white-space: nowrap;
+  }
+  .badge-amber { background: var(--amber-light); color: var(--amber); }
+  .badge-red { background: var(--red-light); color: var(--red); }
+  .badge-green { background: var(--green-light); color: var(--green); }
+  .badge-blue { background: var(--accent-light); color: var(--accent); }
+  .badge-purple { background: var(--purple-light); color: var(--purple); }
+  .badge-teal { background: var(--teal-light); color: var(--teal); }
+  .badge-gray { background: #F0EFEBs; background: #EDECE9; color: var(--text2); }
+
+  .status-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+  .dot-amber { background: var(--amber); }
+  .dot-green { background: var(--green); }
+  .dot-gray { background: var(--text3); }
+
+  /* AMOUNT */
+  .amount { font-family: var(--mono); font-size: 13px; text-align: right; }
+  .amount.positive { color: var(--green); }
+  .amount.negative { color: var(--text); }
+  .amount.large { color: var(--red); font-weight: 500; }
+
+  /* BULK ACTION BAR */
+  .bulk-bar {
+    position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+    background: var(--text); color: white;
+    border-radius: 12px; padding: 12px 16px;
+    display: flex; align-items: center; gap: 12px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    font-size: 13.5px;
+    z-index: 100;
+    opacity: 0; pointer-events: none;
+    transition: all 0.2s;
+  }
+  .bulk-bar.visible { opacity: 1; pointer-events: all; }
+  .bulk-count { font-weight: 600; color: #93C5FD; }
+  .bulk-divider { width: 1px; height: 20px; background: rgba(255,255,255,0.2); }
+  .bulk-select {
+    background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+    color: white; border-radius: 6px; padding: 5px 10px; font-family: var(--font); font-size: 13px;
+    appearance: none; cursor: pointer;
+  }
+  .btn-bulk { padding: 6px 14px; border-radius: 7px; font-size: 13px; font-weight: 500; font-family: var(--font); cursor: pointer; border: none; }
+  .btn-bulk-apply { background: var(--accent); color: white; }
+  .btn-bulk-cancel { background: rgba(255,255,255,0.15); color: white; }
+
+  /* CONTENT AREA */
+  .content { padding: 24px 28px; flex: 1; }
+
+  /* STAT CARDS */
+  .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 24px; }
+  .stat-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 10px; padding: 16px 18px;
+  }
+  .stat-label { font-size: 12px; color: var(--text2); font-weight: 500; margin-bottom: 8px; }
+  .stat-value { font-size: 26px; font-weight: 600; letter-spacing: -0.5px; }
+  .stat-sub { font-size: 11.5px; color: var(--text3); margin-top: 4px; }
+  .stat-card.warn .stat-value { color: var(--amber); }
+  .stat-card.danger .stat-value { color: var(--red); }
+  .stat-card.ok .stat-value { color: var(--green); }
+
+  /* SECTION HEADERS */
+  .section-header {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 14px;
+  }
+  .section-title { font-size: 15px; font-weight: 600; }
+  .section-count {
+    font-size: 12px; background: var(--bg); border: 1px solid var(--border);
+    border-radius: 20px; padding: 1px 9px; color: var(--text2);
+  }
+  .section-action { margin-left: auto; }
+
+  /* CARD */
+  .card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 10px; overflow: hidden; margin-bottom: 20px;
+  }
+
+  /* SLIDE-OVER */
+  .overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.35); z-index: 200; }
+  .overlay.open { display: block; }
+  .slideover {
+    position: fixed; top: 0; right: 0; bottom: 0; width: 440px;
+    background: var(--surface); z-index: 201;
+    transform: translateX(100%); transition: transform 0.25s ease;
+    display: flex; flex-direction: column;
+    box-shadow: -4px 0 24px rgba(0,0,0,0.08);
+  }
+  .slideover.open { transform: translateX(0); }
+  .slideover-header {
+    padding: 20px 24px 16px;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 12px;
+  }
+  .slideover-title { font-size: 16px; font-weight: 600; flex: 1; }
+  .slideover-body { padding: 20px 24px; flex: 1; overflow-y: auto; }
+  .slideover-footer {
+    padding: 16px 24px;
+    border-top: 1px solid var(--border);
+    display: flex; gap: 10px;
+  }
+
+  /* FORM ELEMENTS */
+  .field { margin-bottom: 16px; }
+  .field-label { font-size: 12.5px; font-weight: 500; color: var(--text2); margin-bottom: 6px; display: block; }
+  .field-input {
+    width: 100%; padding: 8px 12px;
+    border: 1px solid var(--border2); border-radius: 7px;
+    font-family: var(--font); font-size: 13.5px; color: var(--text);
+    background: var(--surface); outline: none; transition: border 0.1s;
+  }
+  .field-input:focus { border-color: var(--accent); box-shadow: 0 0 0 2px rgba(28,92,255,0.1); }
+  .field-row { display: flex; gap: 10px; }
+  .field-row .field { flex: 1; }
+  .field-hint { font-size: 11.5px; color: var(--text3); margin-top: 4px; }
+
+  /* CONDITION BUILDER */
+  .condition-row {
+    display: flex; gap: 8px; align-items: center;
+    background: var(--bg); border-radius: 8px; padding: 10px 12px;
+    margin-bottom: 8px;
+  }
+  .condition-row select, .condition-row input {
+    font-family: var(--font); font-size: 13px; color: var(--text);
+    border: 1px solid var(--border2); border-radius: 6px;
+    padding: 5px 8px; background: var(--surface); outline: none; flex: 1;
+  }
+
+  /* PROGRESS */
+  .progress-wrap { background: var(--bg); border-radius: 20px; height: 6px; overflow: hidden; margin: 8px 0; }
+  .progress-bar { height: 100%; border-radius: 20px; background: var(--accent); transition: width 0.5s; }
+
+  /* DROPZONE */
+  .dropzone {
+    border: 2px dashed var(--border2); border-radius: 12px;
+    padding: 48px 24px; text-align: center; cursor: pointer;
+    transition: all 0.2s;
+  }
+  .dropzone:hover, .dropzone.drag { border-color: var(--accent); background: var(--accent-light); }
+  .dropzone-icon { font-size: 40px; margin-bottom: 12px; }
+  .dropzone-title { font-size: 15px; font-weight: 500; margin-bottom: 6px; }
+  .dropzone-sub { font-size: 13px; color: var(--text3); }
+
+  /* IMPORT STATUS */
+  .import-status {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 10px; padding: 20px 24px; margin-top: 16px;
+  }
+  .import-status-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+  .import-filename { font-weight: 500; font-size: 14px; }
+  .import-meta { font-size: 12px; color: var(--text3); }
+
+  /* RULE ITEM */
+  .rule-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 14px 18px; border-bottom: 1px solid var(--border);
+  }
+  .rule-item:last-child { border-bottom: none; }
+  .rule-drag { cursor: grab; color: var(--text3); }
+  .rule-info { flex: 1; }
+  .rule-name { font-size: 13.5px; font-weight: 500; margin-bottom: 3px; }
+  .rule-condition { font-size: 12px; color: var(--text2); font-family: var(--mono); }
+  .rule-action { font-size: 12px; color: var(--accent); margin-top: 2px; }
+
+  /* TOGGLE */
+  .toggle { position: relative; width: 34px; height: 20px; flex-shrink: 0; }
+  .toggle input { opacity: 0; width: 0; height: 0; }
+  .toggle-slider {
+    position: absolute; inset: 0; border-radius: 20px;
+    background: var(--border2); cursor: pointer; transition: 0.2s;
+  }
+  .toggle input:checked + .toggle-slider { background: var(--green); }
+  .toggle-slider::after {
+    content: ''; position: absolute; width: 14px; height: 14px;
+    border-radius: 50%; background: white; top: 3px; left: 3px; transition: 0.2s;
+  }
+  .toggle input:checked + .toggle-slider::after { transform: translateX(14px); }
+
+  /* CHART PLACEHOLDER */
+  .chart-placeholder {
+    background: var(--bg); border-radius: 8px;
+    height: 180px; display: flex; align-items: center; justify-content: center;
+    color: var(--text3); font-size: 13px; gap: 8px; flex-direction: column;
+  }
+  .chart-bars { display: flex; align-items: flex-end; gap: 6px; height: 80px; }
+  .chart-bar { border-radius: 4px 4px 0 0; background: var(--accent); opacity: 0.7; min-width: 24px; transition: opacity 0.2s; }
+  .chart-bar:hover { opacity: 1; }
+
+  /* ANOMALY DETAIL */
+  .anomaly-detail {
+    background: var(--amber-light); border: 1px solid #FDE68A;
+    border-radius: 8px; padding: 10px 14px; margin-top: 8px;
+    font-size: 12.5px; color: #92400E;
+  }
+
+  /* EMPTY STATE */
+  .empty { text-align: center; padding: 48px 24px; color: var(--text2); }
+  .empty-icon { font-size: 32px; margin-bottom: 10px; }
+  .empty-title { font-size: 15px; font-weight: 500; color: var(--text); margin-bottom: 6px; }
+  .empty-sub { font-size: 13px; }
+
+  /* TABS */
+  .tabs { display: flex; gap: 0; border-bottom: 1px solid var(--border); padding: 0 28px; background: var(--surface); }
+  .tab {
+    padding: 10px 16px; font-size: 13.5px; font-weight: 500; cursor: pointer;
+    border-bottom: 2px solid transparent; margin-bottom: -1px; color: var(--text2);
+    transition: all 0.1s;
+  }
+  .tab.active { color: var(--text); border-bottom-color: var(--text); }
+  .tab:hover:not(.active) { color: var(--text); }
+
+  /* SPINNER */
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .spinner { width: 16px; height: 16px; border: 2px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.7s linear infinite; }
+
+  /* CATEGORY INLINE SELECT */
+  .cat-select {
+    border: none; background: transparent; font-family: var(--mono);
+    font-size: 12px; color: var(--text2); cursor: pointer;
+    padding: 2px 4px; border-radius: 4px;
+  }
+  .cat-select:hover { background: var(--bg); }
+
+  /* ACTION MENU */
+  .action-cell { display: flex; gap: 4px; }
+
+  /* NOTICE */
+  .notice {
+    display: flex; align-items: center; gap: 10px;
+    padding: 12px 16px; border-radius: 8px; font-size: 13px;
+    margin-bottom: 16px;
+  }
+  .notice-info { background: var(--accent-light); color: #1E40AF; border: 1px solid #BFDBFE; }
+  .notice-warn { background: var(--amber-light); color: #92400E; border: 1px solid #FDE68A; }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 5px; height: 5px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 10px; }
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<nav class="sidebar">
+  <div class="logo">
+    <div class="logo-mark">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="1" y="1" width="5.5" height="5.5" rx="1.5" fill="white"/>
+        <rect x="7.5" y="1" width="5.5" height="5.5" rx="1.5" fill="white" opacity="0.6"/>
+        <rect x="1" y="7.5" width="5.5" height="5.5" rx="1.5" fill="white" opacity="0.6"/>
+        <rect x="7.5" y="7.5" width="5.5" height="5.5" rx="1.5" fill="white" opacity="0.3"/>
+      </svg>
+    </div>
+    Soraban
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-label">Overview</div>
+    <a class="nav-item" data-screen="dashboard" onclick="goto('dashboard')">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+      Dashboard
+      <span class="nav-badge red">27</span>
+    </a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-label">Bookkeeping</div>
+    <a class="nav-item active" data-screen="transactions" onclick="goto('transactions')">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 12h6M9 16h4"/></svg>
+      Transactions
+      <span class="nav-badge">143</span>
+    </a>
+    <a class="nav-item" data-screen="rules" onclick="goto('rules')">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+      Rules
+    </a>
+    <a class="nav-item" data-screen="import" onclick="goto('import')">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      CSV Import
+    </a>
+  </div>
+
+  <div class="nav-footer">
+    <div class="user-pill">
+      <div class="avatar">JD</div>
+      <div class="user-info">
+        <div class="user-name">Jane Doe</div>
+        <div class="user-role">Admin</div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- ============================
+       SCREEN: TRANSACTIONS
+       ============================ -->
+  <div class="screen active" id="screen-transactions">
+    <div class="page-header">
+      <div>
+        <div class="page-title">Transactions</div>
+        <div class="page-subtitle">10,482 total · 143 uncategorized · 27 flagged</div>
+      </div>
+      <button class="btn" onclick="openImport()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Import CSV
+      </button>
+      <button class="btn btn-primary" onclick="openAddTransaction()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Add Transaction
+      </button>
+    </div>
+
+    <div class="filter-bar">
+      <input type="text" class="filter-input search-input" placeholder="Search description…">
+      <select class="filter-input">
+        <option>All Status</option>
+        <option>Pending</option>
+        <option>Flagged</option>
+        <option>Uncategorized</option>
+        <option>Reviewed</option>
+      </select>
+      <select class="filter-input">
+        <option>All Categories</option>
+        <option>Shopping</option>
+        <option>Food</option>
+        <option>Housing</option>
+        <option>Entertainment</option>
+        <option>Travel</option>
+        <option>Healthcare</option>
+      </select>
+      <input type="text" class="filter-input" placeholder="From date" style="width:120px">
+      <input type="text" class="filter-input" placeholder="To date" style="width:120px">
+      <div style="margin-left:auto; display:flex; gap:6px">
+        <button class="btn btn-sm">Clear filters</button>
+        <span style="font-size:12px;color:var(--text3);align-self:center">Showing 50 of 10,482</span>
+      </div>
+    </div>
+
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th style="width:40px"><input type="checkbox" class="cb" id="check-all" onchange="toggleAll(this)"></th>
+            <th style="width:110px">Date</th>
+            <th>Description</th>
+            <th style="width:120px">Amount</th>
+            <th style="width:160px">Category</th>
+            <th style="width:120px">Status</th>
+            <th style="width:120px">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="tx-body">
+        </tbody>
+      </table>
+      <div style="text-align:center;padding:20px">
+        <button class="btn">Load more (10,432 remaining)</button>
+      </div>
+    </div>
+
+    <!-- BULK ACTION BAR -->
+    <div class="bulk-bar" id="bulk-bar">
+      <span><span class="bulk-count" id="bulk-count">0</span> selected</span>
+      <div class="bulk-divider"></div>
+      <select class="bulk-select">
+        <option>Set category...</option>
+        <option>Shopping</option>
+        <option>Food</option>
+        <option>Housing</option>
+        <option>Entertainment</option>
+        <option>Travel</option>
+      </select>
+      <button class="btn-bulk btn-bulk-apply">Apply</button>
+      <button class="btn-bulk btn-bulk-cancel" onclick="clearSelection()">Cancel</button>
+    </div>
+  </div>
+
+  <!-- ============================
+       SCREEN: DASHBOARD
+       ============================ -->
+  <div class="screen" id="screen-dashboard">
+    <div class="page-header">
+      <div>
+        <div class="page-title">Review Dashboard</div>
+        <div class="page-subtitle">Transactions requiring your attention</div>
+      </div>
+      <button class="btn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/></svg>
+        Refresh
+      </button>
+    </div>
+
+    <div class="content">
+      <div class="stats-row">
+        <div class="stat-card warn">
+          <div class="stat-label">Uncategorized</div>
+          <div class="stat-value">143</div>
+          <div class="stat-sub">Need category assignment</div>
+        </div>
+        <div class="stat-card danger">
+          <div class="stat-label">Flagged Anomalies</div>
+          <div class="stat-value">27</div>
+          <div class="stat-sub">Require manual review</div>
+        </div>
+        <div class="stat-card ok">
+          <div class="stat-label">Reviewed Today</div>
+          <div class="stat-value">12</div>
+          <div class="stat-sub">+3 from yesterday</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Total Transactions</div>
+          <div class="stat-value">10,482</div>
+          <div class="stat-sub">Since Jan 1, 2024</div>
+        </div>
+      </div>
+
+      <!-- Spending chart -->
+      <div class="card" style="margin-bottom:20px">
+        <div style="padding:16px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px">
+          <span style="font-size:14px;font-weight:600">Spending by Category</span>
+          <span style="font-size:12px;color:var(--text3)">Last 30 days</span>
+          <select class="filter-input" style="margin-left:auto;font-size:12px;padding:4px 8px">
+            <option>Last 30 days</option>
+            <option>Last 3 months</option>
+            <option>This year</option>
+          </select>
+        </div>
+        <div style="padding:20px 18px">
+          <div style="display:flex;align-items:flex-end;gap:12px;height:120px">
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px">
+              <span style="font-size:11px;color:var(--text3)">$2.2k</span>
+              <div style="background:var(--accent);border-radius:4px 4px 0 0;width:100%;height:72%;opacity:0.8"></div>
+              <span style="font-size:11px;color:var(--text2)">Housing</span>
+            </div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px">
+              <span style="font-size:11px;color:var(--text3)">$840</span>
+              <div style="background:var(--teal);border-radius:4px 4px 0 0;width:100%;height:38%;opacity:0.8"></div>
+              <span style="font-size:11px;color:var(--text2)">Food</span>
+            </div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px">
+              <span style="font-size:11px;color:var(--text3)">$620</span>
+              <div style="background:var(--purple);border-radius:4px 4px 0 0;width:100%;height:28%;opacity:0.8"></div>
+              <span style="font-size:11px;color:var(--text2)">Shopping</span>
+            </div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px">
+              <span style="font-size:11px;color:var(--text3)">$410</span>
+              <div style="background:var(--amber);border-radius:4px 4px 0 0;width:100%;height:19%;opacity:0.8"></div>
+              <span style="font-size:11px;color:var(--text2)">Travel</span>
+            </div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px">
+              <span style="font-size:11px;color:var(--text3)">$180</span>
+              <div style="background:var(--red);border-radius:4px 4px 0 0;width:100%;height:8%;opacity:0.8"></div>
+              <span style="font-size:11px;color:var(--text2)">Health</span>
+            </div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px">
+              <span style="font-size:11px;color:var(--text3)">$96</span>
+              <div style="background:var(--text3);border-radius:4px 4px 0 0;width:100%;height:4%;opacity:0.8"></div>
+              <span style="font-size:11px;color:var(--text2)">Other</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Flagged anomalies -->
+      <div class="section-header">
+        <span class="section-title">Flagged Anomalies</span>
+        <span class="section-count">27</span>
+        <button class="btn btn-sm section-action" onclick="goto('transactions')">View all →</button>
+      </div>
+      <div class="card">
+        <table style="width:100%">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Description</th>
+              <th>Amount</th>
+              <th>Anomaly</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="color:var(--text2);font-size:12.5px">Jan 17, 2024</td>
+              <td><span style="color:var(--text3);font-style:italic;font-size:13px">— no description —</span></td>
+              <td class="amount large">$8,500.00</td>
+              <td><span class="badge badge-red">High Value</span> <span class="badge badge-amber" style="margin-left:4px">Missing Info</span></td>
+              <td class="action-cell">
+                <button class="btn btn-xs btn-success">Approve</button>
+                <button class="btn btn-xs">Edit</button>
+                <button class="btn btn-xs btn-danger">Delete</button>
+              </td>
+            </tr>
+            <tr>
+              <td style="color:var(--text2);font-size:12.5px">Jan 15, 2024</td>
+              <td>Amazon Purchase</td>
+              <td class="amount">$49.99</td>
+              <td><span class="badge badge-amber">Duplicate</span></td>
+              <td class="action-cell">
+                <button class="btn btn-xs btn-success">Approve</button>
+                <button class="btn btn-xs">Edit</button>
+                <button class="btn btn-xs btn-danger">Delete</button>
+              </td>
+            </tr>
+            <tr>
+              <td style="color:var(--text2);font-size:12.5px">Jan 22, 2024</td>
+              <td>Wire Transfer INTL</td>
+              <td class="amount large">$15,200.00</td>
+              <td><span class="badge badge-red">Unusual Amount</span></td>
+              <td class="action-cell">
+                <button class="btn btn-xs btn-success">Approve</button>
+                <button class="btn btn-xs">Edit</button>
+                <button class="btn btn-xs btn-danger">Delete</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Uncategorized -->
+      <div class="section-header" style="margin-top:8px">
+        <span class="section-title">Uncategorized Transactions</span>
+        <span class="section-count">143</span>
+      </div>
+      <div class="card">
+        <table style="width:100%">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Description</th>
+              <th>Amount</th>
+              <th>Category</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="color:var(--text2);font-size:12.5px">Jan 16, 2024</td>
+              <td>Whole Foods Market</td>
+              <td class="amount">$127.43</td>
+              <td>
+                <select class="field-input" style="padding:4px 8px;font-size:12px;width:140px">
+                  <option>— assign category —</option>
+                  <option selected>Food</option>
+                  <option>Shopping</option>
+                  <option>Housing</option>
+                </select>
+              </td>
+              <td class="action-cell">
+                <button class="btn btn-xs btn-success">Save</button>
+              </td>
+            </tr>
+            <tr>
+              <td style="color:var(--text2);font-size:12.5px">Jan 20, 2024</td>
+              <td>AMZN MKTP US*2F4KL</td>
+              <td class="amount">$23.11</td>
+              <td>
+                <select class="field-input" style="padding:4px 8px;font-size:12px;width:140px">
+                  <option>— assign category —</option>
+                  <option>Food</option>
+                  <option selected>Shopping</option>
+                </select>
+              </td>
+              <td class="action-cell">
+                <button class="btn btn-xs btn-success">Save</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================
+       SCREEN: RULES
+       ============================ -->
+  <div class="screen" id="screen-rules">
+    <div class="page-header">
+      <div>
+        <div class="page-title">Rules</div>
+        <div class="page-subtitle">Auto-categorize transactions as they arrive</div>
+      </div>
+      <button class="btn btn-primary" onclick="openNewRule()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        New Rule
+      </button>
+    </div>
+
+    <div class="notice notice-info" style="margin:16px 28px 0">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      Rules run in priority order (top → bottom). Drag to reorder. Rules apply automatically to new and imported transactions.
+    </div>
+
+    <div class="content" style="padding-top:16px">
+      <div class="card">
+        <div class="rule-item">
+          <span class="rule-drag">⠿</span>
+          <div style="width:22px;height:22px;background:var(--bg);border:1px solid var(--border);border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--text3)">1</div>
+          <div class="rule-info">
+            <div class="rule-name">Amazon → Shopping</div>
+            <div class="rule-condition">description contains "Amazon" or "AMZN"</div>
+            <div class="rule-action">→ Set category: Shopping</div>
+          </div>
+          <span class="badge badge-blue">12,043 matches</span>
+          <label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label>
+          <button class="btn btn-xs">Edit</button>
+          <button class="btn btn-xs btn-danger">Delete</button>
+        </div>
+        <div class="rule-item">
+          <span class="rule-drag">⠿</span>
+          <div style="width:22px;height:22px;background:var(--bg);border:1px solid var(--border);border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--text3)">2</div>
+          <div class="rule-info">
+            <div class="rule-name">High Value Flag</div>
+            <div class="rule-condition">amount > 1000</div>
+            <div class="rule-action">→ Flag as: High Value</div>
+          </div>
+          <span class="badge badge-amber">342 matches</span>
+          <label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label>
+          <button class="btn btn-xs">Edit</button>
+          <button class="btn btn-xs btn-danger">Delete</button>
+        </div>
+        <div class="rule-item">
+          <span class="rule-drag">⠿</span>
+          <div style="width:22px;height:22px;background:var(--bg);border:1px solid var(--border);border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--text3)">3</div>
+          <div class="rule-info">
+            <div class="rule-name">Netflix / Spotify → Entertainment</div>
+            <div class="rule-condition">description contains "Netflix" or "Spotify"</div>
+            <div class="rule-action">→ Set category: Entertainment</div>
+          </div>
+          <span class="badge badge-blue">24 matches</span>
+          <label class="toggle"><input type="checkbox"><span class="toggle-slider"></span></label>
+          <button class="btn btn-xs">Edit</button>
+          <button class="btn btn-xs btn-danger">Delete</button>
+        </div>
+        <div class="rule-item">
+          <span class="rule-drag">⠿</span>
+          <div style="width:22px;height:22px;background:var(--bg);border:1px solid var(--border);border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--text3)">4</div>
+          <div class="rule-info">
+            <div class="rule-name">Rent Payment → Housing</div>
+            <div class="rule-condition">description matches /rent|lease/i</div>
+            <div class="rule-action">→ Set category: Housing</div>
+          </div>
+          <span class="badge badge-blue">12 matches</span>
+          <label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label>
+          <button class="btn btn-xs">Edit</button>
+          <button class="btn btn-xs btn-danger">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================
+       SCREEN: CSV IMPORT
+       ============================ -->
+  <div class="screen" id="screen-import">
+    <div class="page-header">
+      <div>
+        <div class="page-title">CSV Import</div>
+        <div class="page-subtitle">Import transactions in bulk. Rules and anomaly detection run automatically.</div>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="notice notice-info">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        Expected columns: <strong>date</strong>, <strong>description</strong>, <strong>amount</strong>, <strong>category</strong> (category is optional). Date format: YYYY-MM-DD.
+      </div>
+
+      <div class="dropzone" id="dropzone" onclick="simulateUpload()" ondragover="event.preventDefault();this.classList.add('drag')" ondragleave="this.classList.remove('drag')">
+        <div class="dropzone-icon">📂</div>
+        <div class="dropzone-title">Drop your CSV here, or click to browse</div>
+        <div class="dropzone-sub">Supports up to 1M+ rows · Processed in background · Edge cases handled automatically</div>
+        <button class="btn" style="margin-top:16px;pointer-events:none">Choose file</button>
+      </div>
+
+      <!-- Import in progress (shown after upload) -->
+      <div class="import-status" id="import-status" style="display:none">
+        <div class="import-status-header">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          <span class="import-filename">transactions_jan2024.csv</span>
+          <span class="badge badge-blue" style="margin-left:auto" id="import-badge">Processing...</span>
+        </div>
+        <div class="import-meta" id="import-row-count">Processing row 0 of 50,000…</div>
+        <div class="progress-wrap" style="margin:12px 0">
+          <div class="progress-bar" id="import-progress" style="width:0%"></div>
+        </div>
+        <div style="display:flex;gap:16px;font-size:12.5px;color:var(--text2);margin-top:8px">
+          <span id="import-imported">✓ 0 imported</span>
+          <span id="import-skipped">⚠ 0 skipped</span>
+          <span id="import-flagged">🔴 0 flagged</span>
+        </div>
+      </div>
+
+      <!-- Import complete -->
+      <div class="import-status" id="import-complete" style="display:none;background:var(--green-light);border-color:#BBF7D0">
+        <div class="import-status-header">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--green)"><polyline points="20 6 9 17 4 12"/></svg>
+          <span class="import-filename" style="color:var(--green)">Import complete!</span>
+        </div>
+        <div style="font-size:13px;color:var(--text2);margin-top:4px">
+          49,891 transactions imported · 109 skipped (see errors) · 23 anomalies flagged
+        </div>
+        <div style="display:flex;gap:10px;margin-top:14px">
+          <button class="btn btn-sm btn-success" onclick="goto('dashboard')">View Dashboard →</button>
+          <button class="btn btn-sm">Download error report</button>
+        </div>
+      </div>
+
+      <!-- SAMPLE CSV PREVIEW (shown after file selection) -->
+      <div id="csv-preview" style="display:none;margin-top:20px">
+        <div class="section-header">
+          <span class="section-title">Preview — first 5 rows</span>
+          <span class="section-count">50,000 total rows detected</span>
+        </div>
+        <div class="card" style="overflow:auto">
+          <table style="width:100%;font-size:12.5px">
+            <thead>
+              <tr>
+                <th>date</th>
+                <th>description</th>
+                <th>amount</th>
+                <th>category</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>2024-01-15</td><td>Amazon Purchase</td><td>$49.99</td><td>—</td><td><span class="badge badge-green">OK</span></td></tr>
+              <tr class="flagged"><td>2024-01-15</td><td>Amazon Purchase</td><td>$49.99</td><td>—</td><td><span class="badge badge-amber">Duplicate</span></td></tr>
+              <tr><td>2024-01-16</td><td>Whole Foods</td><td>$127.43</td><td>—</td><td><span class="badge badge-green">OK</span></td></tr>
+              <tr class="flagged"><td>2024-01-17</td><td><em style="color:var(--text3)">—</em></td><td>$8,500.00</td><td>—</td><td><span class="badge badge-red">High Value + Missing</span></td></tr>
+              <tr><td>2024-01-18</td><td>Netflix</td><td>$15.99</td><td>Entertainment</td><td><span class="badge badge-green">OK</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div style="display:flex;gap:10px;margin-top:14px">
+          <button class="btn btn-primary" onclick="startImport()">Import 50,000 rows</button>
+          <button class="btn">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE-OVER: Add Transaction -->
+<div class="overlay" id="overlay-tx" onclick="closeAllSliders()"></div>
+<div class="slideover" id="slideover-tx">
+  <div class="slideover-header">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+    <span class="slideover-title">Add Transaction</span>
+    <button class="btn btn-sm" onclick="closeAllSliders()">✕</button>
+  </div>
+  <div class="slideover-body">
+    <div class="field">
+      <label class="field-label">Date *</label>
+      <input type="date" class="field-input" value="2024-01-19">
+    </div>
+    <div class="field">
+      <label class="field-label">Description</label>
+      <input type="text" class="field-input" placeholder="e.g. Amazon Purchase, Rent Payment…">
+      <div class="field-hint">Leave blank to flag as missing metadata</div>
+    </div>
+    <div class="field">
+      <label class="field-label">Amount *</label>
+      <input type="number" class="field-input" placeholder="0.00" step="0.01">
+    </div>
+    <div class="field">
+      <label class="field-label">Category</label>
+      <select class="field-input">
+        <option value="">— uncategorized —</option>
+        <option>Shopping</option>
+        <option>Food</option>
+        <option>Housing</option>
+        <option>Entertainment</option>
+        <option>Travel</option>
+        <option>Healthcare</option>
+      </select>
+      <div class="field-hint">Rules will auto-assign if left blank</div>
+    </div>
+    <div class="anomaly-detail" style="display:none" id="anomaly-preview">
+      ⚠ This transaction will be flagged as <strong>high value</strong> based on your rules (amount > $1,000).
+    </div>
+  </div>
+  <div class="slideover-footer">
+    <button class="btn btn-primary" style="flex:1">Save Transaction</button>
+    <button class="btn" onclick="closeAllSliders()">Cancel</button>
+  </div>
+</div>
+
+<!-- SLIDE-OVER: New Rule -->
+<div class="overlay" id="overlay-rule" onclick="closeAllSliders()"></div>
+<div class="slideover" id="slideover-rule">
+  <div class="slideover-header">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+    <span class="slideover-title">New Rule</span>
+    <button class="btn btn-sm" onclick="closeAllSliders()">✕</button>
+  </div>
+  <div class="slideover-body">
+    <div class="field">
+      <label class="field-label">Rule Name *</label>
+      <input type="text" class="field-input" placeholder="e.g. Amazon → Shopping">
+    </div>
+
+    <div class="field">
+      <label class="field-label">Condition</label>
+      <div class="condition-row">
+        <select style="flex:0 0 130px">
+          <option>Description</option>
+          <option>Amount</option>
+          <option>Category</option>
+        </select>
+        <select style="flex:0 0 110px">
+          <option>contains</option>
+          <option>matches regex</option>
+          <option>is exactly</option>
+        </select>
+        <input type="text" placeholder="Amazon" style="flex:1">
+      </div>
+      <button class="btn btn-sm" style="margin-top:6px">+ Add condition (AND)</button>
+    </div>
+
+    <div class="field">
+      <label class="field-label">Action</label>
+      <div class="condition-row">
+        <select style="flex:0 0 160px">
+          <option>Set category</option>
+          <option>Flag as high value</option>
+          <option>Add tag</option>
+        </select>
+        <select style="flex:1">
+          <option>Shopping</option>
+          <option>Food</option>
+          <option>Housing</option>
+          <option>Entertainment</option>
+          <option>Travel</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="field-label">Priority</label>
+      <input type="number" class="field-input" value="5" min="1" max="100" style="width:100px">
+      <div class="field-hint">Lower number = runs first. Rules with same priority run alphabetically.</div>
+    </div>
+
+    <div class="notice notice-info" style="margin-top:8px">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      Saving this rule will apply it retroactively to all uncategorized transactions matching the condition.
+    </div>
+  </div>
+  <div class="slideover-footer">
+    <button class="btn btn-primary" style="flex:1" onclick="closeAllSliders()">Save Rule</button>
+    <button class="btn" onclick="closeAllSliders()">Cancel</button>
+  </div>
+</div>
+
+<script>
+const transactions = [
+  { date:'Jan 15, 2024', desc:'Amazon Purchase', amount:'$49.99',  cat:'Shopping',     status:'reviewed', anomalies:[] },
+  { date:'Jan 15, 2024', desc:'Amazon Purchase', amount:'$49.99',  cat:'',             status:'flagged',  anomalies:['Duplicate'] },
+  { date:'Jan 16, 2024', desc:'Whole Foods Market', amount:'$127.43', cat:'',          status:'pending',  anomalies:[] },
+  { date:'Jan 17, 2024', desc:'',               amount:'$8,500.00',cat:'',             status:'flagged',  anomalies:['High Value','Missing Info'] },
+  { date:'Jan 18, 2024', desc:'Netflix',         amount:'$15.99', cat:'Entertainment', status:'reviewed', anomalies:[] },
+  { date:'Jan 19, 2024', desc:'Rent Payment',    amount:'$2,200.00', cat:'Housing',    status:'reviewed', anomalies:[] },
+  { date:'Jan 20, 2024', desc:'AMZN MKTP US*2F4KL', amount:'$23.11', cat:'',          status:'pending',  anomalies:[] },
+  { date:'Jan 21, 2024', desc:'Starbucks',       amount:'$6.75',  cat:'Food',          status:'reviewed', anomalies:[] },
+  { date:'Jan 22, 2024', desc:'Wire Transfer INTL', amount:'$15,200.00', cat:'',       status:'flagged',  anomalies:['Unusual Amount'] },
+  { date:'Jan 23, 2024', desc:'Gym Membership',  amount:'$49.00', cat:'Health',        status:'pending',  anomalies:[] },
+];
+
+function badgeFor(anomaly) {
+  const map = { 'Duplicate':'badge-amber','High Value':'badge-red','Missing Info':'badge-amber','Unusual Amount':'badge-red' };
+  return `<span class="badge ${map[anomaly]||'badge-gray'}" style="margin-right:3px">${anomaly}</span>`;
+}
+function statusBadge(s) {
+  if(s==='reviewed') return `<span class="badge badge-green"><span class="status-dot dot-green"></span>Reviewed</span>`;
+  if(s==='flagged')  return `<span class="badge badge-red"><span class="status-dot" style="background:var(--red)"></span>Flagged</span>`;
+  return `<span class="badge badge-gray"><span class="status-dot dot-gray"></span>Pending</span>`;
+}
+function catBadge(cat) {
+  if(!cat) return `<span style="color:var(--text3);font-size:12px;font-style:italic">— uncategorized —</span>`;
+  return `<span class="badge badge-teal">${cat}</span>`;
+}
+
+let selected = new Set();
+
+function renderTable() {
+  const body = document.getElementById('tx-body');
+  body.innerHTML = transactions.map((t,i) => `
+    <tr class="${t.status==='flagged'?'flagged':''}" id="row-${i}">
+      <td><input type="checkbox" class="cb" onchange="toggleRow(${i},this)" ${selected.has(i)?'checked':''}></td>
+      <td style="color:var(--text2);font-size:12.5px">${t.date}</td>
+      <td>${t.desc ? t.desc : '<em style="color:var(--text3)">— no description —</em>'}
+          ${t.anomalies.map(badgeFor).join('')}</td>
+      <td class="amount ${parseFloat(t.amount.replace(/[$,]/g,''))>1000?'large':''}">${t.amount}</td>
+      <td>${catBadge(t.cat)}</td>
+      <td>${statusBadge(t.status)}</td>
+      <td class="action-cell">
+        <button class="btn btn-xs">Edit</button>
+        <button class="btn btn-xs btn-danger">Delete</button>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function toggleRow(i, el) {
+  if(el.checked) selected.add(i); else selected.delete(i);
+  updateBulkBar();
+}
+function toggleAll(el) {
+  if(el.checked) transactions.forEach((_,i)=>selected.add(i)); else selected.clear();
+  renderTable(); updateBulkBar();
+}
+function clearSelection() {
+  selected.clear(); renderTable(); updateBulkBar();
+  document.getElementById('check-all').checked=false;
+}
+function updateBulkBar() {
+  const bar = document.getElementById('bulk-bar');
+  document.getElementById('bulk-count').textContent = selected.size;
+  bar.classList.toggle('visible', selected.size > 0);
+}
+
+renderTable();
+
+function goto(screen) {
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  document.getElementById('screen-'+screen).classList.add('active');
+  document.querySelector('[data-screen="'+screen+'"]').classList.add('active');
+}
+
+function openAddTransaction() {
+  document.getElementById('overlay-tx').classList.add('open');
+  document.getElementById('slideover-tx').classList.add('open');
+}
+function openNewRule() {
+  document.getElementById('overlay-rule').classList.add('open');
+  document.getElementById('slideover-rule').classList.add('open');
+}
+function openImport() { goto('import'); }
+function closeAllSliders() {
+  document.querySelectorAll('.overlay,.slideover').forEach(e=>e.classList.remove('open'));
+}
+
+let importTimer;
+function simulateUpload() {
+  document.getElementById('dropzone').style.display='none';
+  document.getElementById('csv-preview').style.display='block';
+}
+
+function startImport() {
+  document.getElementById('csv-preview').style.display='none';
+  const status = document.getElementById('import-status');
+  status.style.display='block';
+  let progress=0, row=0;
+  const total=50000;
+  importTimer = setInterval(()=>{
+    progress = Math.min(progress+2, 100);
+    row = Math.round(progress/100*total);
+    document.getElementById('import-progress').style.width=progress+'%';
+    document.getElementById('import-row-count').textContent=`Processing row ${row.toLocaleString()} of ${total.toLocaleString()}…`;
+    document.getElementById('import-imported').textContent=`✓ ${Math.round(row*0.998).toLocaleString()} imported`;
+    document.getElementById('import-skipped').textContent=`⚠ ${Math.round(row*0.002)} skipped`;
+    document.getElementById('import-flagged').textContent=`🔴 ${Math.round(row*0.00046)} flagged`;
+    if(progress>=100) {
+      clearInterval(importTimer);
+      status.style.display='none';
+      document.getElementById('import-complete').style.display='block';
+    }
+  }, 80);
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,86 @@
+services:
+  - type: web
+    name: bookkeeping-api
+    runtime: ruby
+    repo: https://github.com/zondude/engineering-project.git
+    branch: feat/bookkeeping
+    buildCommand: cd backend && bundle install && bundle exec rails db:migrate && bundle exec rails db:seed
+    startCommand: cd backend && bundle exec puma -C config/puma.rb
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: bookkeeping-db
+          property: connectionString
+      - key: REDIS_URL
+        fromService:
+          name: bookkeeping-redis
+          type: redis
+          property: connectionString
+      - key: RAILS_MASTER_KEY
+        sync: false
+      - key: RAILS_ENV
+        value: production
+      - key: RACK_ENV
+        value: production
+      - key: SECRET_KEY_BASE
+        generateValue: true
+      - key: FRONTEND_URL
+        value: https://bookkeeping-frontend-s92e.onrender.com
+
+  - type: worker
+    name: bookkeeping-sidekiq
+    runtime: ruby
+    repo: https://github.com/zondude/engineering-project.git
+    branch: feat/bookkeeping
+    buildCommand: cd backend && bundle install
+    startCommand: cd backend && bundle exec sidekiq
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: bookkeeping-db
+          property: connectionString
+      - key: REDIS_URL
+        fromService:
+          name: bookkeeping-redis
+          type: redis
+          property: connectionString
+      - key: RAILS_MASTER_KEY
+        sync: false
+      - key: RAILS_ENV
+        value: production
+      - key: SECRET_KEY_BASE
+        fromService:
+          type: web
+          name: bookkeeping-api
+          envVarKey: SECRET_KEY_BASE
+
+  - type: web
+    name: bookkeeping-frontend
+    runtime: static
+    repo: https://github.com/zondude/engineering-project.git
+    branch: feat/bookkeeping
+    buildCommand: cd frontend && npm install && npm run build
+    staticPublishPath: ./frontend/dist
+    headers:
+      - path: /*
+        name: X-Frame-Options
+        value: SAMEORIGIN
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    envVars:
+      - key: VITE_API_URL
+        value: https://bookkeeping-api-bnhh.onrender.com
+
+  - type: redis
+    name: bookkeeping-redis
+    plan: free
+    maxmemoryPolicy: noeviction
+    ipAllowList: []
+
+databases:
+  - name: bookkeeping-db
+    databaseName: bookkeeping
+    user: bookkeeping
+    plan: free

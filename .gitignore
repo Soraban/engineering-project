@@ -1,0 +1,37 @@
+# macOS
+.DS_Store
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Claude
+.claude/
+
+# Backend
+backend/log/
+backend/tmp/
+backend/storage/
+backend/.bundle/
+backend/vendor/bundle/
+backend/db/*.sqlite3
+backend/db/*.sqlite3-*
+backend/config/master.key
+backend/config/credentials/*.key
+backend/public/uploads/
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.env.local
+frontend/.env.production
+
+# Environment
+.env
+.env.local
+
+# Plan files (keep for reference)
+# PLAN.md
+# mock-ui.html

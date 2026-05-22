@@ -1,0 +1,26 @@
+date,description,amount,category
+2024-07-01,Rent Payment,2200.00,Housing
+2024-07-02,Whole Foods Market,124.56,Food & Dining
+2024-07-03,Shell Gas,48.22,Transportation
+2024-07-04,Amazon Purchase,67.89,Shopping
+2024-07-05,Netflix,15.99,Entertainment
+2024-07-05,Spotify,11.99,Subscriptions
+2024-07-06,Uber Eats,28.50,Food & Dining
+2024-07-08,AMZN MKTP US*4K8L2,89.99,
+2024-07-09,Starbucks,6.25,
+2024-07-10,PG&E Electric,142.18,Utilities
+2024-07-12,Costco,287.43,Shopping
+2024-07-12,Costco,287.43,Shopping
+2024-07-14,Delta Airlines,485.00,Travel
+2024-07-15,Marriott Hotel,310.00,Travel
+2024-07-16,Uber Trip,22.50,Transportation
+2024-07-17,Lyft,18.75,Transportation
+2024-07-18,Chipotle,14.85,Food & Dining
+2024-07-19,Best Buy,899.00,Shopping
+2024-07-20,Adobe Creative Cloud,54.99,Subscriptions
+2024-07-22,Trader Joes,72.33,Food & Dining
+2024-07-24,GitHub Pro,4.00,Subscriptions
+2024-07-25,,1850.00,
+2024-07-26,Comcast Internet,89.99,Utilities
+2024-07-28,Doordash,32.18,Food & Dining
+2024-07-30,CVS Pharmacy,18.42,Healthcare

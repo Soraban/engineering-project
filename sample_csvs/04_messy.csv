@@ -1,0 +1,11 @@
+date,description,amount,category
+2024-06-01,Valid Transaction,25.00,Shopping
+not-a-date,Bad Date Row,15.00,Food & Dining
+2024-06-03,Bad Amount Row,not_a_number,Shopping
+2024-06-04,"Whole Foods, San Francisco",87.42,Food & Dining
+2024-06-05,Has Quotes "in" Description,12.00,Shopping
+2024-06-06,Comma, in description,33.50,Shopping
+2024-06-07,,42.00,
+2024-06-08,Trailing Spaces   ,15.75,Food & Dining
+2024-06-09,Negative Refund,-25.00,Shopping
+2024-06-10,Currency Symbol,$199.99,Shopping

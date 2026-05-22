@@ -1,0 +1,4 @@
+:queues:
+  - [critical, 3]
+  - [default, 2]
+  - [ai, 1]

@@ -1,0 +1,44 @@
+source "https://rubygems.org"
+
+gem "rails", "~> 7.2.3", ">= 7.2.3.1"
+gem "pg", "~> 1.1"
+gem "puma", ">= 5.0"
+gem "rack-cors"
+
+# Auth
+gem "devise"
+gem "devise-jwt"
+
+# Business logic
+gem "smarter_csv"
+gem "statesman"
+gem "pg_search"
+gem "sidekiq"
+gem "redis"
+gem "http"
+
+# Serialization
+gem "blueprinter"
+
+# csv was extracted from stdlib to a bundled gem in Ruby 3.4 — must be declared
+gem "csv"
+
+# Seed data generation (used by db:seed in all environments)
+gem "faker"
+
+gem "tzinfo-data", platforms: %i[ windows jruby ]
+gem "bootsnap", require: false
+
+group :development, :test do
+  gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
+  gem "rspec-rails"
+  gem "factory_bot_rails"
+  gem "shoulda-matchers"
+end
+
+group :test do
+  gem "database_cleaner-active_record"
+  gem "webmock"
+end
+
+

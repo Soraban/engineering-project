@@ -2,10 +2,8 @@
 The following is a take-home project for Soraban engineering candidates.
 
 ## Submission Instructions
-- Fork the repository
-- Create a pull request to your forked repository (not the origin Soraban repository) with your project submission
-- In the pull request, include any necessary sample files and a Loom (or other video) showcasing the functionality you built and explains how the code works
-- Submit the link to your pull request
+- Repository — give read access to @seanmcoleman with a README that covers setup
+- Video Walkthrough — Loom (or other video) showcasing the functionality you built and explains how the code works
 
 # **Scalable Bookkeeping System with Automated Categorization**
 
@@ -15,7 +13,7 @@ Build a **minimal yet scalable bookkeeping system** with the following features:
 
 1. **Record & Import Transactions** – Users can manually add transactions or import a CSV.
 2. **Bulk Actions & Automated Categorization** – Users can categorize multiple transactions at once, and automatically assign category (AI-based or rule based).
-3. **Anomaly Detection** – Identify and flag unusual/suspicous transactions (e.g., large amounts, duplicates, missing metadata).
+3. **Anomaly Detection** – Identify and flag unusual/suspicious transactions (e.g., large amounts, duplicates, missing metadata).
 4. **Scalability & Performance Optimization** – Efficiently handle large data sets (e.g., 1m+ transactions).
 5. **User-friendly Review System** – A dashboard that highlights transactions needing review.
 

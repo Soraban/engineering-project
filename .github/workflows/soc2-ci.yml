@@ -1,0 +1,49 @@
+# SOC 2 baseline check. Provides the required status check named "ci"
+# (enforced by the org ruleset "SOC 2 baseline - default branch").
+# Add repo-specific lint/tests in scripts/ci.sh (executable) and they run here.
+name: SOC2 CI
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  ci:
+    name: ci
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Secret scan (gitleaks)
+        env:
+          GITLEAKS_VERSION: "8.30.1"
+          GITLEAKS_SHA256: "551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470eb"
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          set -euo pipefail
+          cd "$RUNNER_TEMP"
+          curl -sSfL -o gitleaks.tgz "https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}/gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz"
+          echo "${GITLEAKS_SHA256}  gitleaks.tgz" | sha256sum -c -
+          tar -xzf gitleaks.tgz gitleaks
+          cd "$GITHUB_WORKSPACE"
+          if [ -n "${BASE_SHA}" ]; then
+            "$RUNNER_TEMP/gitleaks" git --redact --verbose --log-opts="${BASE_SHA}..${HEAD_SHA}" .
+          else
+            "$RUNNER_TEMP/gitleaks" dir --redact --verbose .
+          fi
+
+      - name: Repo checks (scripts/ci.sh)
+        run: |
+          if [ -x scripts/ci.sh ]; then
+            scripts/ci.sh
+          else
+            echo "No executable scripts/ci.sh found. Add repo lint/tests there."
+          fi
